@@ -9,7 +9,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase
 
 // Your Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyA34p9etp_BjR108MisCs0--C6ZSur3JWY",
+  apiKey:  "AIzaSyA34p9etp_BjR1O8MisCs0--C6ZSUr3JWY",
   authDomain: "gaming-beast-f73e3.firebaseapp.com",
   projectId: "gaming-beast-f73e3",
   storageBucket: "gaming-beast-f73e3.firebasestorage.app",
