@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamer Profile - Gaming Beast</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#050816',
+                        primary: '#7C3AED',
+                        gblue: '#3B82F6',
+                        gcyan: '#06B6D4',
+                        gpink: '#EC4899',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050816;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #7C3AED;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Text Gradients & Glows */
+        .neon-text-purple { text-shadow: 0 0 15px rgba(124, 58, 237, 0.6); }
+        .text-gradient {
+            background: linear-gradient(to right, #7C3AED, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Avatar & Banner */
+        .avatar-glow { box-shadow: 0 0 25px rgba(124, 58, 237, 0.5); }
+        .banner-overlay { background: linear-gradient(to top, #050816 0%, transparent 100%); }
+
+        /* Progress Bar Animation */
+        .xp-bar-fill {
+            transition: width 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Loader */
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid #06B6D4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col pb-20">
+
+    <!-- Loading Screen (Visible while fetching Firebase data) -->
+    <div id="pageLoader" class="fixed inset-0 z-50 bg-darkbg flex flex-col items-center justify-center">
+        <div class="loader mb-4"></div>
+        <p class="font-orbitron font-bold text-gcyan tracking-widest animate-pulse">SYNCING DATA...</p>
+    </div>
+
+    <!-- Top Navbar -->
+    <nav class="w-full glass-panel border-b border-white/10 px-6 py-4 flex items-center justify-between sticky top-0 z-40">
+        <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span class="font-semibold text-sm">Back to Dashboard</span>
+        </a>
+        <div class="font-orbitron font-black text-xl tracking-wider text-gradient neon-text-purple">
+            GAMING<span class="text-white">BEAST</span>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 mt-6 space-y-6 hidden" id="profileContent">
+        
+        <!-- HEADER / BANNER SECTION -->
+        <section class="w-full relative rounded-3xl overflow-hidden glass-panel border-white/10">
+            <!-- Banner Image -->
+            <div id="uiBanner" class="w-full h-48 md:h-72 bg-cover bg-center bg-no-repeat transition-all duration-500" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
+                <div class="absolute inset-0 banner-overlay"></div>
+            </div>
+
+            <!-- Profile Info Overlay -->
+            <div class="px-6 md:px-10 pb-8 flex flex-col md:flex-row items-center md:items-end gap-6 -mt-16 md:-mt-20 relative z-10">
+                <!-- Avatar -->
+                <div class="relative">
+                    <img id="uiAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Gamer" alt="Avatar" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-darkbg bg-gray-900 object-cover avatar-glow z-20 relative">
+                    <div class="absolute bottom-2 right-2 w-5 h-5 bg-green-500 rounded-full border-2 border-darkbg z-30" title="Online"></div>
+                </div>
+
+                <!-- Text Info -->
+                <div class="flex-1 text-center md:text-left space-y-1 mt-4 md:mt-0">
+                    <h1 id="uiUsername" class="font-orbitron font-black text-3xl md:text-4xl text-white">Loading...</h1>
+                    <p id="uiEmail" class="text-gcyan text-sm font-medium tracking-wide"></p>
+                    <p id="uiBio" class="text-gray-400 text-sm max-w-2xl mt-2 line-clamp-2">Just a passionate gamer exploring the digital realms.</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-3">
+                    <button onclick="openEditModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl font-semibold text-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-pen"></i> Edit Profile
+                    </button>
+                    <button class="px-4 py-2.5 bg-primary hover:bg-primary/80 rounded-xl transition-all shadow-lg shadow-primary/30">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- Level & XP -->
+            <div class="glass-panel p-5 rounded-2xl col-span-2 flex flex-col justify-center border-l-4 border-l-primary">
+                <div class="flex justify-between items-end mb-2">
+                    <div>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">Current Rank</p>
+                        <h3 class="font-orbitron font-bold text-2xl text-white flex items-center gap-2">
+                            Level <span id="uiLevel" class="text-gradient">1</span>
+                        </h3>
+                    </div>
+                    <p class="text-xs text-gray-400 font-semibold"><span id="uiXp">0</span> / <span id="uiXpMax">1000</span> XP</p>
+                </div>
+                <div class="w-full bg-white/5 rounded-full h-2.5 overflow-hidden">
+                    <div id="uiXpBar" class="bg-gradient-to-r from-primary to-gcyan h-2.5 rounded-full xp-bar-fill shadow-[0_0_10px_#06B6D4]" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Coins -->
+            <div class="glass-panel p-5 rounded-2xl flex items-center gap-4 border-l-4 border-l-yellow-500">
+                <div class="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-500 text-xl">
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">G-Coins</p>
+                    <h3 id="uiCoins" class="font-orbitron font-bold text-2xl text-white">0</h3>
+                </div>
+            </div>
+
+            <!-- Streak -->
+            <div class="glass-panel p-5 rounded-2xl flex items-center gap-4 border-l-4 border-l-gpink">
+                <div class="w-12 h-12 rounded-xl bg-gpink/10 flex items-center justify-center text-gpink text-xl">
+                    <i class="fa-solid fa-fire"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">Login Streak</p>
+                    <h3 class="font-orbitron font-bold text-2xl text-white"><span id="uiStreak">0</span><span class="text-sm text-gray-400 ml-1">Days</span></h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN CONTENT GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left Column: Badges & Details -->
+            <div class="space-y-6">
+                <!-- Badges -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="font-orbitron font-bold text-lg border-b border-white/10 pb-3 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-medal text-primary"></i> Achievement Badges
+                    </h3>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="glass-card p-3 rounded-xl flex flex-col items-center gap-2 text-center group cursor-pointer" title="Beta Tester">
+                            <i class="fa-solid fa-bug text-2xl text-gcyan group-hover:scale-110 transition-transform"></i>
+                            <span class="text-[10px] font-bold text-gray-400">Beta Tester</span>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl flex flex-col items-center gap-2 text-center group cursor-pointer" title="7-Day Streak">
+                            <i class="fa-solid fa-fire-flame-curved text-2xl text-gpink group-hover:scale-110 transition-transform"></i>
+                            <span class="text-[10px] font-bold text-gray-400">On Fire</span>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl flex flex-col items-center gap-2 text-center group cursor-pointer opacity-40 grayscale" title="Win 10 Tournaments (Locked)">
+                            <i class="fa-solid fa-trophy text-2xl text-yellow-500"></i>
+                            <span class="text-[10px] font-bold text-gray-400">Champion</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="font-orbitron font-bold text-lg border-b border-white/10 pb-3 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-gblue"></i> Player Info
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Member Since</span>
+                            <span id="uiJoined" class="font-bold text-white">...</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Region</span>
+                            <span class="font-bold text-white">Global Grid</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Status</span>
+                            <span class="font-bold text-green-400">Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Games & Activity -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Favorite Games -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="font-orbitron font-bold text-lg border-b border-white/10 pb-3 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-heart text-red-500"></i> Favorite Titles
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="glass-card rounded-xl overflow-hidden flex items-center gap-4 p-3 cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-lg object-cover">
+                            <div>
+                                <h4 class="font-bold text-sm">Valorant</h4>
+                                <p class="text-xs text-primary font-semibold">Ascendant 2</p>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl overflow-hidden flex items-center gap-4 p-3 cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1623934199716-dc28818a6ec7?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-lg object-cover">
+                            <div>
+                                <h4 class="font-bold text-sm">Minecraft</h4>
+                                <p class="text-xs text-gcyan font-semibold">1,240 Hours</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Logs -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="font-orbitron font-bold text-lg border-b border-white/10 pb-3 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-gray-400"></i> Recent Matrix Activity
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-gamepad text-primary text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm"><span class="font-bold text-white">Played a match</span> in <span class="text-gcyan cursor-pointer hover:underline">CS2 Competitive</span></p>
+                                <p class="text-xs text-gray-500 mt-0.5">2 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-coins text-yellow-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm"><span class="font-bold text-white">Earned 50 G-Coins</span> for daily login streak</p>
+                                <p class="text-xs text-gray-500 mt-0.5">10 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-10 h-10 rounded-full bg-gpink/20 flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-user-plus text-gpink text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm"><span class="font-bold text-white">Joined community</span> <span class="text-primary cursor-pointer hover:underline">Minecraft India Node</span></p>
+                                <p class="text-xs text-gray-500 mt-0.5">1 day ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- EDIT PROFILE MODAL (Hidden by default) -->
+    <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeEditModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-white/20 rounded-2xl p-6 md:p-8 m-4 shadow-2xl transform scale-95 transition-transform duration-300" id="modalBox">
+            <h2 class="font-orbitron font-bold text-2xl text-white mb-6 border-b border-white/10 pb-4">
+                Configure Protocol
+            </h2>
+            
+            <form id="editForm" class="space-y-4">
+                <!-- Username -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Display Name</label>
+                    <input type="text" id="editUsername" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" required>
+                </div>
+                
+                <!-- Bio -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Bio / Status</label>
+                    <textarea id="editBio" rows="3" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"></textarea>
+                </div>
+
+                <!-- Avatar URL -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Avatar URL (Image Link)</label>
+                    <input type="url" id="editAvatar" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gcyan focus:ring-1 focus:ring-gcyan transition-all">
+                </div>
+
+                <!-- Banner URL -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Banner URL (Image Link)</label>
+                    <input type="url" id="editBanner" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gcyan focus:ring-1 focus:ring-gcyan transition-all">
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-end gap-3 pt-4 border-t border-white/10 mt-6">
+                    <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-white/5 hover:bg-white/10 text-white transition-all">Cancel</button>
+                    <button type="submit" id="saveBtn" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-primary hover:bg-primary/80 text-white flex items-center gap-2 transition-all shadow-lg shadow-primary/20">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Save Matrix
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- FIREBASE MODULAR SDK LOGIC -->
+    <script type="module">
+        // Import Firebase v9 Modular SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // ==========================================
+        // ⚠️ PASTE YOUR ACTUAL FIREBASE CONFIG HERE ⚠️
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Global variable to store current user's DB info
+        let currentDbUser = null;
+        let currentUserUid = null;
+
+        // UI Elements
+        const uiElements = {
+            loader: document.getElementById('pageLoader'),
+            content: document.getElementById('profileContent'),
+            banner: document.getElementById('uiBanner'),
+            avatar: document.getElementById('uiAvatar'),
+            username: document.getElementById('uiUsername'),
+            email: document.getElementById('uiEmail'),
+            bio: document.getElementById('uiBio'),
+            level: document.getElementById('uiLevel'),
+            xp: document.getElementById('uiXp'),
+            xpMax: document.getElementById('uiXpMax'),
+            xpBar: document.getElementById('uiXpBar'),
+            coins: document.getElementById('uiCoins'),
+            streak: document.getElementById('uiStreak'),
+            joined: document.getElementById('uiJoined')
+        };
+
+        // Check Auth State
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is signed in.
+                currentUserUid = user.uid;
+                await loadUserProfile(user);
+            } else {
+                // Not signed in? Redirect to dashboard
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Load or Create Profile in Firestore
+        async function loadUserProfile(authUser) {
+            const userRef = doc(db, "users", authUser.uid);
+            
+            try {
+                const docSnap = await getDoc(userRef);
+                
+                if (docSnap.exists()) {
+                    // Document exists, use DB data
+                    currentDbUser = docSnap.data();
+                } else {
+                    // First time viewing profile, create default DB entry
+                    const defaultAvatar = authUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${authUser.displayName || 'Gamer'}`;
+                    const defaultBanner = 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';
+                    
+                    currentDbUser = {
+                        username: authUser.displayName || "Unknown Gamer",
+                        email: authUser.email,
+                        bio: "Just a passionate gamer exploring the digital realms.",
+                        avatar: defaultAvatar,
+                        banner: defaultBanner,
+                        level: 1,
+                        xp: 150,
+                        xpMax: 1000,
+                        coins: 500,
+                        streak: 1,
+                        joinedAt: new Date().toISOString()
+                    };
+                    
+                    await setDoc(userRef, currentDbUser);
+                }
+
+                // Update UI with Data
+                updateProfileUI(currentDbUser);
+                
+                // Hide Loader, Show Content
+                uiElements.loader.style.display = 'none';
+                uiElements.content.classList.remove('hidden');
+
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+                alert("Failed to sync matrix data. Check console.");
+            }
+        }
+
+        // Update DOM Elements
+        function updateProfileUI(data) {
+            uiElements.username.innerText = data.username;
+            uiElements.email.innerText = data.email;
+            uiElements.bio.innerText = data.bio;
+            uiElements.avatar.src = data.avatar;
+            uiElements.banner.style.backgroundImage = `url('${data.banner}')`;
+            
+            uiElements.level.innerText = data.level || 1;
+            uiElements.xp.innerText = data.xp || 0;
+            uiElements.xpMax.innerText = data.xpMax || 1000;
+            uiElements.coins.innerText = data.coins || 0;
+            uiElements.streak.innerText = data.streak || 0;
+
+            // Format Date
+            const joinDate = new Date(data.joinedAt);
+            uiElements.joined.innerText = joinDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+            // Calculate XP Bar width
+            const xpPercent = Math.min((data.xp / data.xpMax) * 100, 100);
+            setTimeout(() => {
+                uiElements.xpBar.style.width = `${xpPercent}%`;
+            }, 500); // slight delay for animation effect
+        }
+
+
+        // ==========================================
+        // Modal & Form Logic (Exposed to window for HTML inline onclick)
+        // ==========================================
+        
+        const modal = document.getElementById('editModal');
+        const modalBox = document.getElementById('modalBox');
+        const editForm = document.getElementById('editForm');
+        
+        window.openEditModal = () => {
+            if(!currentDbUser) return;
+            
+            // Populate form with current data
+            document.getElementById('editUsername').value = currentDbUser.username || '';
+            document.getElementById('editBio').value = currentDbUser.bio || '';
+            document.getElementById('editAvatar').value = currentDbUser.avatar || '';
+            document.getElementById('editBanner').value = currentDbUser.banner || '';
+
+            // Show modal with animation
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalBox.classList.remove('scale-95');
+            }, 10);
+        };
+
+        window.closeEditModal = () => {
+            // Hide modal with animation
+            modal.classList.add('opacity-0');
+            modalBox.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        };
+
+        // Handle Form Submit
+        editForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('saveBtn');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+            btn.disabled = true;
+
+            const updatedData = {
+                username: document.getElementById('editUsername').value,
+                bio: document.getElementById('editBio').value,
+                avatar: document.getElementById('editAvatar').value,
+                banner: document.getElementById('editBanner').value
+            };
+
+            try {
+                // Update Firestore
+                const userRef = doc(db, "users", currentUserUid);
+                await updateDoc(userRef, updatedData);
+
+                // Update Local State & UI
+                currentDbUser = { ...currentDbUser, ...updatedData };
+                updateProfileUI(currentDbUser);
+                
+                closeEditModal();
+            } catch (error) {
+                console.error("Error updating profile:", error);
+                alert("Failed to update profile.");
+            } finally {
+                // Reset Button
+                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Save Matrix`;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
