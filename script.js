@@ -20,6 +20,8 @@ const userInfo = document.getElementById('userInfo');
 const userAvatar = document.getElementById('userAvatar');
 const userName = document.getElementById('userName');
 const userEmail = document.getElementById('userEmail');
+const navUserName = document.getElementById('navUserName');
+const navUserAvatar = document.getElementById('navUserAvatar');
 
 // Google Login
 loginBtn?.addEventListener('click', async () => {
@@ -71,17 +73,59 @@ logoutBtn?.addEventListener('click', async () => {
 
 // Auto Login State
 onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    // Show user info
-    loginBtn.classList.add('hidden');
-    userInfo.classList.remove('hidden');
 
-    userAvatar.src = user.photoURL || 'https://api.dicebear.com/7.x/bottts/svg?seed=Beast';
-    userName.textContent = user.displayName || 'Beast Player';
-    userEmail.textContent = user.email;
+  if (user) {
+
+    loginBtn?.classList.add('hidden');
+    userInfo?.classList.remove('hidden');
+
+    // Get Firestore Profile
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    let profile = {};
+
+    if (userSnap.exists()) {
+      profile = userSnap.data();
+    }
+
+    // Avatar
+    const avatar =
+      profile.avatar ||
+      user.photoURL ||
+      `https://api.dicebear.com/7.x/bottts/svg?seed=${user.displayName}`;
+
+    // Username
+    const username =
+      profile.username ||
+      user.displayName ||
+      "Beast Player";
+
+    // Email
+    const email =
+      profile.email ||
+      user.email;
+
+    // Existing UI
+    if (userAvatar) userAvatar.src = avatar;
+    if (userName) userName.textContent = username;
+    if (userEmail) userEmail.textContent = email;
+
+    // Navbar UI
+    if (navUserAvatar) navUserAvatar.src = avatar;
+    if (navUserName) navUserName.textContent = `${username} 👋`;
+
   } else {
-    // Show login button
-    loginBtn.classList.remove('hidden');
-    userInfo.classList.add('hidden');
+
+    loginBtn?.classList.remove('hidden');
+    userInfo?.classList.add('hidden');
+
+    if (navUserName)
+      navUserName.textContent = "Guest";
+
+    if (navUserAvatar)
+      navUserAvatar.src =
+        "https://api.dicebear.com/7.x/bottts/svg?seed=Guest";
   }
+
 });
