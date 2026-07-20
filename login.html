@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaming Beast Login</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+background:#050816;
+font-family:'Plus Jakarta Sans',sans-serif;
+overflow:hidden;
+}
+
+.bg{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top,#7c3aed22,transparent 45%),
+radial-gradient(circle at bottom,#06b6d422,transparent 40%);
+}
+
+.card{
+backdrop-filter:blur(18px);
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+font-family:Orbitron;
+}
+
+.glow{
+box-shadow:0 0 30px rgba(124,58,237,.35);
+}
+</style>
+
+</head>
+
+<body class="text-white">
+
+<div class="bg"></div>
+
+<div class="min-h-screen flex justify-center items-center relative z-10 p-5">
+
+<div class="card glow rounded-3xl w-full max-w-md p-10 text-center">
+
+<h1 class="logo text-4xl font-black mb-3">
+GAMING
+<span class="text-purple-400">BEAST</span>
+</h1>
+
+<p class="text-gray-400 mb-10">
+Continue with Google to access your account.
+</p>
+
+<button
+id="googleLogin"
+class="w-full bg-white text-black rounded-xl py-4 font-bold hover:scale-105 duration-300">
+
+Continue with Google
+
+</button>
+
+<p class="text-gray-500 text-sm mt-8">
+Secure Login powered by Firebase
+</p>
+
+</div>
+
+</div>
+
+<script type="module" src="login.js"></script>
+
+</body>
+</html>
