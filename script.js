@@ -14,14 +14,10 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js';
 
 // Elements
-const loginBtn = document.getElementById('loginBtn');
-const logoutBtn = document.getElementById('logoutBtn');
-const userInfo = document.getElementById('userInfo');
-const userAvatar = document.getElementById('userAvatar');
-const userName = document.getElementById('userName');
-const userEmail = document.getElementById('userEmail');
-const navUserName = document.getElementById('navUserName');
-const navUserAvatar = document.getElementById('navUserAvatar');
+const loginBtn = document.getElementById("loginBtn");
+
+const navUserName = document.getElementById("navUserName");
+const navUserAvatar = document.getElementById("navUserAvatar");
 
 // Google Login
 loginBtn?.addEventListener('click', async () => {
@@ -117,15 +113,23 @@ onAuthStateChanged(auth, async (user) => {
 
   } else {
 
-    loginBtn?.classList.remove('hidden');
-    userInfo?.classList.add('hidden');
 
-    if (navUserName)
-      navUserName.textContent = "Guest";
+    if(user){
 
-    if (navUserAvatar)
-      navUserAvatar.src =
+    loginBtn.classList.add("hidden");
+
+    navUserName.textContent = user.displayName || "Beast Player";
+
+    navUserAvatar.src =
+        user.photoURL ||
+        "https://api.dicebear.com/7.x/bottts/svg?seed=Beast";
+
+}else{
+
+    loginBtn.classList.remove("hidden");
+
+    navUserName.textContent = "Guest";
+
+    navUserAvatar.src =
         "https://api.dicebear.com/7.x/bottts/svg?seed=Guest";
-  }
-
-});
+}
