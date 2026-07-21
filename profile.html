@@ -386,55 +386,125 @@
             joined: document.getElementById('uiJoined')
         };
 
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                currentUserUid = user.uid;
-                await loadUserProfile(user);
-            } else {
-                window.location.href = 'index.html';
-            }
-        });
+       // Level Calculate karne ka Formula Function
+function calculateLevelData(xp) {
+    if (xp < 100) return { level: 1, xpMax: 100 };
+    if (xp < 300) return { level: 2, xpMax: 300 };
+    if (xp < 600) return { level: 3, xpMax: 600 };
+    if (xp < 1000) return { level: 4, xpMax: 1000 };
+    
+    // Level 5 ke baad har level par 500 XP extra
+    const level = Math.floor((xp - 1000) / 500) + 5;
+    const xpMax = 1000 + (level - 4) * 500;
+    return { level, xpMax };
+}
 
-        async function loadUserProfile(authUser) {
-            const userRef = doc(db, "users", authUser.uid);
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        currentUserUid = user.uid;
+        await loadUserProfile(user);
+    } else {
+        window.location.href = 'index.html';
+    }
+});
+
+async function loadUserProfile(authUser) {
+    const userRef = doc(db, "users", authUser.uid);
+    
+    try {
+        const docSnap = await getDoc(userRef);
+        const now = new Date();
+        const todayStr = now.toISOString().split('T')[0]; // Format: "YYYY-MM-DD"
+
+        if (docSnap.exists()) {
+            currentDbUser = docSnap.data();
             
-            try {
-                const docSnap = await getDoc(userRef);
-                
-                if (docSnap.exists()) {
-                    currentDbUser = docSnap.data();
+            // Daily Login Reward & Streak Logic
+            const lastLoginDate = currentDbUser.lastLogin ? currentDbUser.lastLogin.split('T')[0] : null;
+
+            if (lastLoginDate !== todayStr) {
+                let newStreak = currentDbUser.streak || 0;
+
+                if (lastLoginDate) {
+                    const lastDateObj = new Date(lastLoginDate);
+                    const diffDays = Math.floor((now - lastDateObj) / (1000 * 60 * 60 * 24));
+
+                    if (diffDays === 1) {
+                        newStreak += 1; // Consecutive day login
+                    } else if (diffDays > 1) {
+                        newStreak = 1; // Streak broken, reset to 1
+                    }
                 } else {
-                    const defaultAvatar = authUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${authUser.displayName || 'Gamer'}`;
-                    const defaultBanner = 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';
-                    
-                    currentDbUser = {
-                        username: authUser.displayName || "Unknown Gamer",
-                        email: authUser.email,
-                        bio: "Just a passionate gamer exploring the digital realms.",
-                        avatar: defaultAvatar,
-                        banner: defaultBanner,
-                        level: 1,
-                        xp: 150,
-                        xpMax: 1000,
-                        coins: 500,
-                        streak: 1,
-                        joinedAt: new Date().toISOString()
-                    };
-                    
-                    await setDoc(userRef, currentDbUser);
+                    newStreak = 1;
                 }
 
-                updateProfileUI(currentDbUser);
-                
-                uiElements.loader.style.display = 'none';
-                uiElements.content.classList.remove('hidden');
+                // Auto Reward Credit
+                const addedCoins = 50;
+                const addedXp = 20;
 
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-                alert("Failed to sync matrix data. Check console.");
+                currentDbUser.coins = (currentDbUser.coins || 0) + addedCoins;
+                currentDbUser.xp = (currentDbUser.xp || 0) + addedXp;
+                currentDbUser.streak = newStreak;
+                currentDbUser.lastLogin = now.toISOString();
+
+                // Calculate Level according to updated XP
+                const levelData = calculateLevelData(currentDbUser.xp);
+                currentDbUser.level = levelData.level;
+                currentDbUser.xpMax = levelData.xpMax;
+
+                // Save Updated Data to Firestore
+                await updateDoc(userRef, {
+                    coins: currentDbUser.coins,
+                    xp: currentDbUser.xp,
+                    streak: currentDbUser.streak,
+                    lastLogin: currentDbUser.lastLogin,
+                    level: currentDbUser.level,
+                    xpMax: currentDbUser.xpMax
+                });
+
+                console.log(`🎉 Daily Reward Claimed! +${addedCoins} Coins, +${addedXp} XP`);
             }
+
+        } else {
+            // New User First Time Creation
+            const defaultAvatar = authUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${authUser.displayName || 'Gamer'}`;
+            const defaultBanner = 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';
+            
+            const levelData = calculateLevelData(150); // Starting XP = 150
+
+            currentDbUser = {
+                username: authUser.displayName || "Unknown Gamer",
+                email: authUser.email,
+                bio: "Just a passionate gamer exploring the digital realms.",
+                avatar: defaultAvatar,
+                banner: defaultBanner,
+                level: levelData.level,
+                xp: 150,
+                xpMax: levelData.xpMax,
+                coins: 500,
+                streak: 1,
+                joinedAt: now.toISOString(),
+                lastLogin: now.toISOString()
+            };
+            
+            await setDoc(userRef, currentDbUser);
         }
 
+        // Sync Level & XP Calculations with UI
+        const levelInfo = calculateLevelData(currentDbUser.xp || 0);
+        currentDbUser.level = levelInfo.level;
+        currentDbUser.xpMax = levelInfo.xpMax;
+
+        updateProfileUI(currentDbUser);
+        
+        uiElements.loader.style.display = 'none';
+        uiElements.content.classList.remove('hidden');
+
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("Failed to sync matrix data. Check console.");
+    }
+}
         function updateProfileUI(data) {
             uiElements.username.innerText = data.username || 'Gamer';
             uiElements.email.innerText = data.email || '';
