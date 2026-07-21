@@ -80,9 +80,12 @@ logoutBtn?.addEventListener('click', async () => {
 // Auth State Listener (Auto Update UI)
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    // User is Logged In
-    loginBtn?.classList.add('hidden');
-    navProfileSection?.classList.remove('hidden');
+    // 1. Logged In: Hide Login Button, Show Profile
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (navProfileSection) {
+      navProfileSection.classList.remove('hidden');
+      navProfileSection.style.display = 'flex'; // Fixes inline style issue
+    }
 
     let profile = {};
     try {
@@ -109,11 +112,14 @@ onAuthStateChanged(auth, async (user) => {
     if (userEmail) userEmail.textContent = email;
 
   } else {
-    // User is Logged Out / Guest
-    loginBtn?.classList.remove('hidden');
-    navProfileSection?.classList.add('hidden');
+    // 2. Logged Out / Guest: Show Login Button, Hide Profile
+    if (loginBtn) loginBtn.style.display = 'inline-block';
+    if (navProfileSection) {
+      navProfileSection.classList.add('hidden');
+      navProfileSection.style.display = 'none';
+    }
 
     if (navUserName) navUserName.textContent = "Guest";
     if (navUserAvatar) navUserAvatar.src = "https://api.dicebear.com/7.x/bottts/svg?seed=Guest";
   }
-});
+}); 
