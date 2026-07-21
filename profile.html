@@ -35,7 +35,7 @@
     <style>
         body {
             background-color: #050816;
-            color: #ffffff;
+            color: #ffffff
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
         }
@@ -523,6 +523,7 @@ async function loadUserProfile(authUser) {
 
         updateProfileUI(currentDbUser);
         
+       // loadUserProfile function ka end:
         uiElements.loader.style.display = 'none';
         uiElements.content.classList.remove('hidden');
 
@@ -530,7 +531,10 @@ async function loadUserProfile(authUser) {
         console.error("Error fetching user data:", error);
         alert("Failed to sync matrix data. Check console.");
     }
-}
+} // <--- loadUserProfile ka bracket
+
+// Agar koi aur event listener hai toh wo yahan aayega
+
         function updateProfileUI(data) {
             uiElements.username.innerText = data.username || 'Gamer';
             uiElements.email.innerText = data.email || '';
