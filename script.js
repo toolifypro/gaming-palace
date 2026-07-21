@@ -1,4 +1,4 @@
-import { auth, provider, db } from './firebase.js';
+import { auth, provider, db } from './fire.js'; // Verify karein agar file ka naam fire.js hai
 import {
   signInWithPopup,
   signOut,
@@ -13,23 +13,33 @@ import {
   serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js';
 
-// Elements
+// DOM Elements
 const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const navProfileSection = document.getElementById("navProfileSection");
 
 const navUserName = document.getElementById("navUserName");
 const navUserAvatar = document.getElementById("navUserAvatar");
 
-// Google Login
-loginBtn?.addEventListener('click', async () => {
+// Page Profile Elements (if on profile page)
+const userName = document.getElementById("userName");
+const userEmail = document.getElementById("userEmail");
+const userAvatar = document.getElementById("userAvatar");
+
+// Google Login Handler
+loginBtn?.addEventListener('click', async (e) => {
+  // Prevent page navigation if it's a link click
+  if (loginBtn.tagName === 'A') {
+    e.preventDefault();
+  }
+
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    // Reference to Firestore document
     const userRef = doc(db, 'users', user.uid);
     const userSnap = await getDoc(userRef);
 
-    // Create profile if first login
     if (!userSnap.exists()) {
       await setDoc(userRef, {
         username: user.displayName || 'Beast Player',
@@ -45,7 +55,6 @@ loginBtn?.addEventListener('click', async () => {
         lastLogin: serverTimestamp()
       });
     } else {
-      // Update last login
       await updateDoc(userRef, {
         lastLogin: serverTimestamp()
       });
@@ -58,78 +67,53 @@ loginBtn?.addEventListener('click', async () => {
   }
 });
 
-// Logout
+// Logout Handler
 logoutBtn?.addEventListener('click', async () => {
   try {
     await signOut(auth);
+    console.log('Logged out successfully');
   } catch (error) {
     console.error('Logout Error:', error);
   }
 });
 
-// Auto Login State
+// Auth State Listener (Auto Update UI)
 onAuthStateChanged(auth, async (user) => {
-
   if (user) {
-
+    // User is Logged In
     loginBtn?.classList.add('hidden');
-    userInfo?.classList.remove('hidden');
-
-    // Get Firestore Profile
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
+    navProfileSection?.classList.remove('hidden');
 
     let profile = {};
-
-    if (userSnap.exists()) {
-      profile = userSnap.data();
+    try {
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        profile = userSnap.data();
+      }
+    } catch (err) {
+      console.error("Firestore Fetch Error:", err);
     }
 
-    // Avatar
-    const avatar =
-      profile.avatar ||
-      user.photoURL ||
-      `https://api.dicebear.com/7.x/bottts/svg?seed=${user.displayName}`;
+    const avatar = profile.avatar || user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.uid}`;
+    const username = profile.username || user.displayName || "Beast Player";
+    const email = profile.email || user.email;
 
-    // Username
-    const username =
-      profile.username ||
-      user.displayName ||
-      "Beast Player";
+    // Update Navbar UI
+    if (navUserAvatar) navUserAvatar.src = avatar;
+    if (navUserName) navUserName.textContent = username;
 
-    // Email
-    const email =
-      profile.email ||
-      user.email;
-
-    // Existing UI
+    // Update Main Profile Page (if user is on profile page)
     if (userAvatar) userAvatar.src = avatar;
     if (userName) userName.textContent = username;
     if (userEmail) userEmail.textContent = email;
 
-    // Navbar UI
-    if (navUserAvatar) navUserAvatar.src = avatar;
-    if (navUserName) navUserName.textContent = `${username} 👋`;
-
   } else {
+    // User is Logged Out / Guest
+    loginBtn?.classList.remove('hidden');
+    navProfileSection?.classList.add('hidden');
 
-
-    if(user){
-
-    loginBtn.classList.add("hidden");
-
-    navUserName.textContent = user.displayName || "Beast Player";
-
-    navUserAvatar.src =
-        user.photoURL ||
-        "https://api.dicebear.com/7.x/bottts/svg?seed=Beast";
-
-}else{
-
-    loginBtn.classList.remove("hidden");
-
-    navUserName.textContent = "Guest";
-
-    navUserAvatar.src =
-        "https://api.dicebear.com/7.x/bottts/svg?seed=Guest";
-}
+    if (navUserName) navUserName.textContent = "Guest";
+    if (navUserAvatar) navUserAvatar.src = "https://api.dicebear.com/7.x/bottts/svg?seed=Guest";
+  }
+});
