@@ -1,4 +1,4 @@
-import { auth, provider, db } from './fire.js'; // Verify karein agar file ka naam fire.js hai
+import { auth, provider, db } from './firebase.js'; // Corrected file name
 import {
   signInWithPopup,
   signOut,
@@ -28,7 +28,6 @@ const userAvatar = document.getElementById("userAvatar");
 
 // Google Login Handler
 loginBtn?.addEventListener('click', async (e) => {
-  // Prevent page navigation if it's a link click
   if (loginBtn.tagName === 'A') {
     e.preventDefault();
   }
@@ -80,11 +79,11 @@ logoutBtn?.addEventListener('click', async () => {
 // Auth State Listener (Auto Update UI)
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    // 1. Logged In: Hide Login Button, Show Profile
+    // 1. Logged In: Hide Login Button, Show Profile Section
     if (loginBtn) loginBtn.style.display = 'none';
     if (navProfileSection) {
       navProfileSection.classList.remove('hidden');
-      navProfileSection.style.display = 'flex'; // Fixes inline style issue
+      navProfileSection.style.display = 'flex';
     }
 
     let profile = {};
@@ -106,13 +105,13 @@ onAuthStateChanged(auth, async (user) => {
     if (navUserAvatar) navUserAvatar.src = avatar;
     if (navUserName) navUserName.textContent = username;
 
-    // Update Main Profile Page (if user is on profile page)
+    // Update Main Profile Page (if present)
     if (userAvatar) userAvatar.src = avatar;
     if (userName) userName.textContent = username;
     if (userEmail) userEmail.textContent = email;
 
   } else {
-    // 2. Logged Out / Guest: Show Login Button, Hide Profile
+    // 2. Logged Out / Guest: Show Login Button, Hide Profile Section
     if (loginBtn) loginBtn.style.display = 'inline-block';
     if (navProfileSection) {
       navProfileSection.classList.add('hidden');
@@ -122,4 +121,4 @@ onAuthStateChanged(auth, async (user) => {
     if (navUserName) navUserName.textContent = "Guest";
     if (navUserAvatar) navUserAvatar.src = "https://api.dicebear.com/7.x/bottts/svg?seed=Guest";
   }
-}); 
+});
