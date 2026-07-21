@@ -419,8 +419,19 @@ async function loadUserProfile(authUser) {
         if (docSnap.exists()) {
             currentDbUser = docSnap.data();
             
-            // Daily Login Reward & Streak Logic
-            const lastLoginDate = currentDbUser.lastLogin ? currentDbUser.lastLogin.split('T')[0] : null;
+            // Safe lastLogin conversion (Crash Fix)
+            let lastLoginStr = null;
+            if (currentDbUser.lastLogin) {
+                if (typeof currentDbUser.lastLogin === 'string') {
+                    lastLoginStr = currentDbUser.lastLogin;
+                } else if (typeof currentDbUser.lastLogin.toDate === 'function') {
+                    lastLoginStr = currentDbUser.lastLogin.toDate().toISOString();
+                } else {
+                    lastLoginStr = new Date(currentDbUser.lastLogin).toISOString();
+                }
+            }
+
+            const lastLoginDate = lastLoginStr ? lastLoginStr.split('T')[0] : null;
 
             if (lastLoginDate !== todayStr) {
                 let newStreak = currentDbUser.streak || 0;
@@ -490,6 +501,21 @@ async function loadUserProfile(authUser) {
             await setDoc(userRef, currentDbUser);
         }
 
+        // Sync Level & XP Calculations with UI
+        const levelInfo = calculateLevelData(currentDbUser.xp || 0);
+        currentDbUser.level = levelInfo.level;
+        currentDbUser.xpMax = levelInfo.xpMax;
+
+        updateProfileUI(currentDbUser);
+        
+        uiElements.loader.style.display = 'none';
+        uiElements.content.classList.remove('hidden');
+
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("Failed to sync matrix data. Check console.");
+    }
+}
         // Sync Level & XP Calculations with UI
         const levelInfo = calculateLevelData(currentDbUser.xp || 0);
         currentDbUser.level = levelInfo.level;
