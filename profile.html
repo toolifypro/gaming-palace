@@ -35,7 +35,7 @@
     <style>
         body {
             background-color: #050816;
-            color: #ffffff
+            color: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
         }
@@ -349,265 +349,264 @@
 
     <!-- FIREBASE MODULAR SDK LOGIC -->
     <script type="module">
-       
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyA34p9etp_BjR1O8MisCs0--C6ZSUr3JWY",
-        authDomain: "gaming-beast-f73e3.firebaseapp.com",
-        projectId: "gaming-beast-f73e3",
-        storageBucket: "gaming-beast-f73e3.firebasestorage.app",
-        messagingSenderId: "944830655424",
-        appId: "1:944830655424:web:98a2c02fe975175ca8b625"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let currentDbUser = null;
-    let currentUserUid = null;
-
-    const uiElements = {
-        loader: document.getElementById('pageLoader'),
-        content: document.getElementById('profileContent'),
-        banner: document.getElementById('uiBanner'),
-        avatar: document.getElementById('uiAvatar'),
-        username: document.getElementById('uiUsername'),
-        email: document.getElementById('uiEmail'),
-        bio: document.getElementById('uiBio'),
-        level: document.getElementById('uiLevel'),
-        xp: document.getElementById('uiXp'),
-        xpMax: document.getElementById('uiXpMax'),
-        xpBar: document.getElementById('uiXpBar'),
-        coins: document.getElementById('uiCoins'),
-        streak: document.getElementById('uiStreak'),
-        joined: document.getElementById('uiJoined')
-    };
-
-    // Level Calculate karne ka Formula Function
-    function calculateLevelData(xp) {
-        if (xp < 100) return { level: 1, xpMax: 100 };
-        if (xp < 300) return { level: 2, xpMax: 300 };
-        if (xp < 600) return { level: 3, xpMax: 600 };
-        if (xp < 1000) return { level: 4, xpMax: 1000 };
-        
-        const level = Math.floor((xp - 1000) / 500) + 5;
-        const xpMax = 1000 + (level - 4) * 500;
-        return { level, xpMax };
-    }
-
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            currentUserUid = user.uid;
-            await loadUserProfile(user);
-        } else {
-            window.location.href = 'index.html';
-        }
-    });
-
-    async function loadUserProfile(authUser) {
-        const userRef = doc(db, "users", authUser.uid);
-        
-        try {
-            const docSnap = await getDoc(userRef);
-            const now = new Date();
-            const todayStr = now.toISOString().split('T')[0];
-
-            if (docSnap.exists()) {
-                currentDbUser = docSnap.data();
-                
-                // Safe lastLogin conversion
-                let lastLoginStr = null;
-                if (currentDbUser.lastLogin) {
-                    if (typeof currentDbUser.lastLogin === 'string') {
-                        lastLoginStr = currentDbUser.lastLogin;
-                    } else if (typeof currentDbUser.lastLogin.toDate === 'function') {
-                        lastLoginStr = currentDbUser.lastLogin.toDate().toISOString();
-                    } else {
-                        lastLoginStr = new Date(currentDbUser.lastLogin).toISOString();
-                    }
-                }
-
-                const lastLoginDate = lastLoginStr ? lastLoginStr.split('T')[0] : null;
-
-                if (lastLoginDate !== todayStr) {
-                    let newStreak = currentDbUser.streak || 0;
-
-                    if (lastLoginDate) {
-                        const lastDateObj = new Date(lastLoginDate);
-                        const diffDays = Math.floor((now - lastDateObj) / (1000 * 60 * 60 * 24));
-
-                        if (diffDays === 1) {
-                            newStreak += 1;
-                        } else if (diffDays > 1) {
-                            newStreak = 1;
-                        }
-                    } else {
-                        newStreak = 1;
-                    }
-
-                    const addedCoins = 50;
-                    const addedXp = 20;
-
-                    currentDbUser.coins = (currentDbUser.coins || 0) + addedCoins;
-                    currentDbUser.xp = (currentDbUser.xp || 0) + addedXp;
-                    currentDbUser.streak = newStreak;
-                    currentDbUser.lastLogin = now.toISOString();
-
-                    const levelData = calculateLevelData(currentDbUser.xp);
-                    currentDbUser.level = levelData.level;
-                    currentDbUser.xpMax = levelData.xpMax;
-
-                    await updateDoc(userRef, {
-                        coins: currentDbUser.coins,
-                        xp: currentDbUser.xp,
-                        streak: currentDbUser.streak,
-                        lastLogin: currentDbUser.lastLogin,
-                        level: currentDbUser.level,
-                        xpMax: currentDbUser.xpMax
-                    });
-
-                    console.log(`🎉 Daily Reward Claimed! +${addedCoins} Coins, +${addedXp} XP`);
-                }
-
-            } else {
-                const defaultAvatar = authUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${authUser.displayName || 'Gamer'}`;
-                const defaultBanner = 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';
-                
-                const levelData = calculateLevelData(150);
-
-                currentDbUser = {
-                    username: authUser.displayName || "Unknown Gamer",
-                    email: authUser.email,
-                    bio: "Just a passionate gamer exploring the digital realms.",
-                    avatar: defaultAvatar,
-                    banner: defaultBanner,
-                    level: levelData.level,
-                    xp: 150,
-                    xpMax: levelData.xpMax,
-                    coins: 500,
-                    streak: 1,
-                    joinedAt: now.toISOString(),
-                    lastLogin: now.toISOString()
-                };
-                
-                await setDoc(userRef, currentDbUser);
-            }
-
-            // Sync Level & XP Calculations with UI
-            const levelInfo = calculateLevelData(currentDbUser.xp || 0);
-            currentDbUser.level = levelInfo.level;
-            currentDbUser.xpMax = levelInfo.xpMax;
-
-            updateProfileUI(currentDbUser);
-            
-            uiElements.loader.style.display = 'none';
-            uiElements.content.classList.remove('hidden');
-
-        } catch (error) {
-            console.error("Error fetching user data:", error);
-            alert("Failed to sync matrix data. Check console.");
-        }
-    }
-
-    function updateProfileUI(data) {
-        uiElements.username.innerText = data.username || 'Gamer';
-        uiElements.email.innerText = data.email || '';
-        uiElements.bio.innerText = data.bio || '';
-        uiElements.avatar.src = data.avatar;
-        uiElements.banner.style.backgroundImage = `url('${data.banner}')`;
-        
-        uiElements.level.innerText = data.level || 1;
-        uiElements.xp.innerText = data.xp || 0;
-        uiElements.xpMax.innerText = data.xpMax || 1000;
-        uiElements.coins.innerText = data.coins || 0;
-        uiElements.streak.innerText = data.streak || 0;
-
-        const joinDate = data.joinedAt ? new Date(data.joinedAt) : new Date();
-        uiElements.joined.innerText = joinDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-
-        const xpPercent = Math.min((data.xp / data.xpMax) * 100, 100);
-        setTimeout(() => {
-            uiElements.xpBar.style.width = `${xpPercent}%`;
-        }, 500);
-    }
-
-    // Modal Functions
-    const modal = document.getElementById('editModal');
-    const modalBox = document.getElementById('modalBox');
-    const editForm = document.getElementById('editForm');
-    const logoutBtn = document.getElementById('logoutBtn');
-    
-    window.openEditModal = () => {
-        if(!currentDbUser) return;
-        
-        document.getElementById('editUsername').value = currentDbUser.username || '';
-        document.getElementById('editBio').value = currentDbUser.bio || '';
-        document.getElementById('editAvatar').value = currentDbUser.avatar || '';
-        document.getElementById('editBanner').value = currentDbUser.banner || '';
-
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            modal.classList.remove('opacity-0');
-            modalBox.classList.remove('scale-95');
-        }, 10);
-    };
-
-    window.closeEditModal = () => {
-        modal.classList.add('opacity-0');
-        modalBox.classList.add('scale-95');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-        }, 300);
-    };
-
-    // Edit Profile Submit Handler
-    editForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const btn = document.getElementById('saveBtn');
-        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
-        btn.disabled = true;
-
-        const updatedData = {
-            username: document.getElementById('editUsername').value,
-            bio: document.getElementById('editBio').value,
-            avatar: document.getElementById('editAvatar').value,
-            banner: document.getElementById('editBanner').value
+        const firebaseConfig = {
+            apiKey: "AIzaSyA34p9etp_BjR1O8MisCs0--C6ZSUr3JWY",
+            authDomain: "gaming-beast-f73e3.firebaseapp.com",
+            projectId: "gaming-beast-f73e3",
+            storageBucket: "gaming-beast-f73e3.firebasestorage.app",
+            messagingSenderId: "944830655424",
+            appId: "1:944830655424:web:98a2c02fe975175ca8b625"
         };
 
-        try {
-            const userRef = doc(db, "users", currentUserUid);
-            await updateDoc(userRef, updatedData);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-            currentDbUser = { ...currentDbUser, ...updatedData };
-            updateProfileUI(currentDbUser);
+        let currentDbUser = null;
+        let currentUserUid = null;
+
+        const uiElements = {
+            loader: document.getElementById('pageLoader'),
+            content: document.getElementById('profileContent'),
+            banner: document.getElementById('uiBanner'),
+            avatar: document.getElementById('uiAvatar'),
+            username: document.getElementById('uiUsername'),
+            email: document.getElementById('uiEmail'),
+            bio: document.getElementById('uiBio'),
+            level: document.getElementById('uiLevel'),
+            xp: document.getElementById('uiXp'),
+            xpMax: document.getElementById('uiXpMax'),
+            xpBar: document.getElementById('uiXpBar'),
+            coins: document.getElementById('uiCoins'),
+            streak: document.getElementById('uiStreak'),
+            joined: document.getElementById('uiJoined')
+        };
+
+        // Level Calculate karne ka Formula Function
+        function calculateLevelData(xp) {
+            if (xp < 100) return { level: 1, xpMax: 100 };
+            if (xp < 300) return { level: 2, xpMax: 300 };
+            if (xp < 600) return { level: 3, xpMax: 600 };
+            if (xp < 1000) return { level: 4, xpMax: 1000 };
             
-            closeEditModal();
-        } catch (error) {
-            console.error("Error updating profile:", error);
-            alert("Failed to update profile.");
-        } finally {
-            btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Save Matrix`;
-            btn.disabled = false;
+            const level = Math.floor((xp - 1000) / 500) + 5;
+            const xpMax = 1000 + (level - 4) * 500;
+            return { level, xpMax };
         }
-    });
 
-    // Logout Handler
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                await loadUserProfile(user);
+            } else {
                 window.location.href = 'index.html';
-            } catch (error) {
-                console.error("Logout Error:", error);
-                alert("Failed to log out.");
             }
         });
-    }
-</script>
+
+        async function loadUserProfile(authUser) {
+            const userRef = doc(db, "users", authUser.uid);
+            
+            try {
+                const docSnap = await getDoc(userRef);
+                const now = new Date();
+                const todayStr = now.toISOString().split('T')[0];
+
+                if (docSnap.exists()) {
+                    currentDbUser = docSnap.data();
+                    
+                    // Safe lastLogin conversion
+                    let lastLoginStr = null;
+                    if (currentDbUser.lastLogin) {
+                        if (typeof currentDbUser.lastLogin === 'string') {
+                            lastLoginStr = currentDbUser.lastLogin;
+                        } else if (typeof currentDbUser.lastLogin.toDate === 'function') {
+                            lastLoginStr = currentDbUser.lastLogin.toDate().toISOString();
+                        } else {
+                            lastLoginStr = new Date(currentDbUser.lastLogin).toISOString();
+                        }
+                    }
+
+                    const lastLoginDate = lastLoginStr ? lastLoginStr.split('T')[0] : null;
+
+                    if (lastLoginDate !== todayStr) {
+                        let newStreak = currentDbUser.streak || 0;
+
+                        if (lastLoginDate) {
+                            const lastDateObj = new Date(lastLoginDate);
+                            const diffDays = Math.floor((now - lastDateObj) / (1000 * 60 * 60 * 24));
+
+                            if (diffDays === 1) {
+                                newStreak += 1;
+                            } else if (diffDays > 1) {
+                                newStreak = 1;
+                            }
+                        } else {
+                            newStreak = 1;
+                        }
+
+                        const addedCoins = 50;
+                        const addedXp = 20;
+
+                        currentDbUser.coins = (currentDbUser.coins || 0) + addedCoins;
+                        currentDbUser.xp = (currentDbUser.xp || 0) + addedXp;
+                        currentDbUser.streak = newStreak;
+                        currentDbUser.lastLogin = now.toISOString();
+
+                        const levelData = calculateLevelData(currentDbUser.xp);
+                        currentDbUser.level = levelData.level;
+                        currentDbUser.xpMax = levelData.xpMax;
+
+                        await updateDoc(userRef, {
+                            coins: currentDbUser.coins,
+                            xp: currentDbUser.xp,
+                            streak: currentDbUser.streak,
+                            lastLogin: currentDbUser.lastLogin,
+                            level: currentDbUser.level,
+                            xpMax: currentDbUser.xpMax
+                        });
+
+                        console.log(`🎉 Daily Reward Claimed! +${addedCoins} Coins, +${addedXp} XP`);
+                    }
+
+                } else {
+                    const defaultAvatar = authUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${authUser.displayName || 'Gamer'}`;
+                    const defaultBanner = 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';
+                    
+                    const levelData = calculateLevelData(150);
+
+                    currentDbUser = {
+                        username: authUser.displayName || "Unknown Gamer",
+                        email: authUser.email,
+                        bio: "Just a passionate gamer exploring the digital realms.",
+                        avatar: defaultAvatar,
+                        banner: defaultBanner,
+                        level: levelData.level,
+                        xp: 150,
+                        xpMax: levelData.xpMax,
+                        coins: 500,
+                        streak: 1,
+                        joinedAt: now.toISOString(),
+                        lastLogin: now.toISOString()
+                    };
+                    
+                    await setDoc(userRef, currentDbUser);
+                }
+
+                // Sync Level & XP Calculations with UI
+                const levelInfo = calculateLevelData(currentDbUser.xp || 0);
+                currentDbUser.level = levelInfo.level;
+                currentDbUser.xpMax = levelInfo.xpMax;
+
+                updateProfileUI(currentDbUser);
+                
+                uiElements.loader.style.display = 'none';
+                uiElements.content.classList.remove('hidden');
+
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+                alert("Failed to sync matrix data. Check console.");
+            }
+        }
+
+        function updateProfileUI(data) {
+            uiElements.username.innerText = data.username || 'Gamer';
+            uiElements.email.innerText = data.email || '';
+            uiElements.bio.innerText = data.bio || '';
+            uiElements.avatar.src = data.avatar;
+            uiElements.banner.style.backgroundImage = `url('${data.banner}')`;
+            
+            uiElements.level.innerText = data.level || 1;
+            uiElements.xp.innerText = data.xp || 0;
+            uiElements.xpMax.innerText = data.xpMax || 1000;
+            uiElements.coins.innerText = data.coins || 0;
+            uiElements.streak.innerText = data.streak || 0;
+
+            const joinDate = data.joinedAt ? new Date(data.joinedAt) : new Date();
+            uiElements.joined.innerText = joinDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+            const xpPercent = Math.min((data.xp / data.xpMax) * 100, 100);
+            setTimeout(() => {
+                uiElements.xpBar.style.width = `${xpPercent}%`;
+            }, 500);
+        }
+
+        // Modal Functions (Global scope me set kiye hain taaki HTML onclick se chale)
+        const modal = document.getElementById('editModal');
+        const modalBox = document.getElementById('modalBox');
+        const editForm = document.getElementById('editForm');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        window.openEditModal = () => {
+            if(!currentDbUser) return;
+            
+            document.getElementById('editUsername').value = currentDbUser.username || '';
+            document.getElementById('editBio').value = currentDbUser.bio || '';
+            document.getElementById('editAvatar').value = currentDbUser.avatar || '';
+            document.getElementById('editBanner').value = currentDbUser.banner || '';
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalBox.classList.remove('scale-95');
+            }, 10);
+        };
+
+        window.closeEditModal = () => {
+            modal.classList.add('opacity-0');
+            modalBox.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        };
+
+        // Edit Profile Submit Handler
+        editForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('saveBtn');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+            btn.disabled = true;
+
+            const updatedData = {
+                username: document.getElementById('editUsername').value,
+                bio: document.getElementById('editBio').value,
+                avatar: document.getElementById('editAvatar').value,
+                banner: document.getElementById('editBanner').value
+            };
+
+            try {
+                const userRef = doc(db, "users", currentUserUid);
+                await updateDoc(userRef, updatedData);
+
+                currentDbUser = { ...currentDbUser, ...updatedData };
+                updateProfileUI(currentDbUser);
+                
+                closeEditModal();
+            } catch (error) {
+                console.error("Error updating profile:", error);
+                alert("Failed to update profile.");
+            } finally {
+                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Save Matrix`;
+                btn.disabled = false;
+            }
+        });
+
+        // Logout Handler
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+                try {
+                    await signOut(auth);
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    console.error("Logout Error:", error);
+                    alert("Failed to log out.");
+                }
+            });
+        }
+    </script>
 </body>
 </html>
