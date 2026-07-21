@@ -140,44 +140,43 @@
             <a href="#" class="hover:text-primary transition-colors">Arena</a>
             <a href="profile.html">Profile</a>
             <a href="login.html" id="navLoginBtn">
-    Login
-</a>
-   id="loginBtn"
-   class="px-4 py-2 rounded-lg bg-primary hover:bg-purple-700 text-white font-semibold transition">
-    Login
-</a>
-        </div>
-
-        <!-- User Profile Action -->
+  <!-- User / Auth Section -->
 <div class="flex items-center gap-4">
 
-    <button class="relative text-gray-400 hover:text-white transition-colors p-2 rounded-full bg-white/5">
-        <i class="fa-solid fa-bell"></i>
-        <span class="absolute top-1 right-1 w-2 h-2 bg-gpink rounded-full"></span>
-    </button>
+  <!-- Login Button (Guest Only) -->
+  <a 
+    href="login.html" 
+    id="loginBtn" 
+    class="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold transition inline-block">
+    Login
+  </a>
 
-    <a href="profile.html"
-id="navProfileSection"
-style="display:none;"
-    class="flex items-center gap-3 border-l border-white/10 pl-4 hover:bg-white/5 rounded-xl px-2 py-1 transition">
+  <!-- Notification Bell Icon -->
+  <button class="relative text-gray-400 hover:text-white transition-colors p-2 rounded-full bg-white/5">
+    <i class="fa-solid fa-bell"></i>
+    <span class="absolute top-1 right-1 w-2 h-2 bg-pink-500 rounded-full"></span>
+  </button>
 
-        <div class="text-right hidden sm:block">
-            <p class="text-xs text-gray-400">Welcome Back</p>
-            <p id="navUserName" class="text-sm font-semibold text-white">
-                
-            </p>
-        </div>
+  <!-- User Profile Link (Logged In Only - Hidden by default) -->
+  <a 
+    href="profile.html"
+    id="navProfileSection"
+    class="hidden flex items-center gap-3 border-l border-white/10 pl-4 hover:bg-white/5 rounded-xl px-2 py-1 transition">
 
-        <img
-            id="navUserAvatar"
-            src="https://api.dicebear.com/7.x/bottts/svg?seed=Player"
-            class="w-10 h-10 rounded-xl border border-primary/50 bg-white/10"
-        >
+    <div class="text-right hidden sm:block">
+      <p class="text-xs text-gray-400">Welcome Back</p>
+      <p id="navUserName" class="text-sm font-semibold text-white">Player</p>
+    </div>
 
-    </a>
+    <img
+      id="navUserAvatar"
+      src="https://api.dicebear.com/7.x/bottts/svg?seed=Player"
+      alt="User Avatar"
+      class="w-10 h-10 rounded-xl border border-purple-500/50 bg-white/10 object-cover"
+    />
+  </a>
 
 </div>
-        </nav>   <!-- YE LINE ADD KAR -->
 
     <!-- MAIN CONTENT CONTAINER -->
     <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 pb-24">
