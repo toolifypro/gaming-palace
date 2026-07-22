@@ -108,6 +108,7 @@
 
     <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 mt-6 space-y-6 hidden" id="profileContent">
         
+        
         <!-- BANNER & AVATAR SECTION -->
         <section class="w-full relative rounded-3xl overflow-hidden glass-panel border-white/10">
             <div id="uiBanner" class="w-full h-48 md:h-72 bg-cover bg-center bg-no-repeat transition-all duration-500" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
@@ -229,6 +230,53 @@
                 </div>
                 <button onclick="closeStoreModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
+            <!-- DAILY QUESTS MODAL -->
+<div id="questModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeQuestModal()"></div>
+    <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-purple-500/30 rounded-2xl p-6 md:p-8 m-4 shadow-2xl">
+        
+        <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+            <div>
+                <h2 class="font-orbitron font-bold text-2xl text-purple-400 flex items-center gap-2">
+                    <i class="fa-solid fa-scroll"></i> Daily Quests
+                </h2>
+                <p class="text-xs text-gray-400">Complete tasks to earn extra EXP & G-Coins!</p>
+            </div>
+            <button onclick="closeQuestModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+
+        <!-- QUEST LIST -->
+        <div class="space-y-3" id="questListContainer">
+            <!-- Quest Item 1 -->
+            <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                <div>
+                    <h4 class="font-bold text-sm text-white">Daily Shop Visit</h4>
+                    <p class="text-xs text-gray-400">+20 XP • +30 Coins</p>
+                </div>
+                <button id="questBtn_shop" onclick="claimQuestReward('shop', 20, 30)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
+            </div>
+
+            <!-- Quest Item 2 -->
+            <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                <div>
+                    <h4 class="font-bold text-sm text-white">Profile Stylist</h4>
+                    <p class="text-xs text-gray-400">+30 XP • +50 Coins</p>
+                </div>
+                <button id="questBtn_profile" onclick="claimQuestReward('profile', 30, 50)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
+            </div>
+
+            <!-- Quest Item 3 (Match Task) -->
+            <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                <div>
+                    <h4 class="font-bold text-sm text-white">Play Arena Match</h4>
+                    <p class="text-xs text-gray-400">+50 XP • +100 Coins</p>
+                </div>
+                <button id="questBtn_match" onclick="claimQuestReward('match', 50, 100)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
             <!-- SHOP ITEMS GRID -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
