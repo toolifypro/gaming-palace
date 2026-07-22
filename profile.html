@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gamer Profile - Gaming Beast</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
@@ -40,11 +37,9 @@
             overflow-x: hidden;
         }
 
-        /* Glassmorphism */
         .glass-panel {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.07);
         }
         
@@ -59,10 +54,8 @@
             background: rgba(255, 255, 255, 0.08);
             border-color: #7C3AED;
             transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
         }
 
-        /* Text Gradients & Glows */
         .neon-text-purple { text-shadow: 0 0 15px rgba(124, 58, 237, 0.6); }
         .text-gradient {
             background: linear-gradient(to right, #7C3AED, #06B6D4);
@@ -70,16 +63,10 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Avatar & Banner */
         .avatar-glow { box-shadow: 0 0 25px rgba(124, 58, 237, 0.5); }
         .banner-overlay { background: linear-gradient(to top, #050816 0%, transparent 100%); }
+        .xp-bar-fill { transition: width 1.5s ease; }
 
-        /* Progress Bar Animation */
-        .xp-bar-fill {
-            transition: width 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Loader */
         .loader {
             border: 3px solid rgba(255,255,255,0.1);
             border-top: 3px solid #06B6D4;
@@ -93,60 +80,56 @@
 </head>
 <body class="min-h-screen flex flex-col pb-20">
 
-    <!-- Loading Screen -->
+    <!-- Loader -->
     <div id="pageLoader" class="fixed inset-0 z-50 bg-darkbg flex flex-col items-center justify-center">
         <div class="loader mb-4"></div>
         <p class="font-orbitron font-bold text-gcyan tracking-widest animate-pulse">SYNCING DATA...</p>
     </div>   
     
-    <!-- Top Navbar -->
+    <!-- Navbar -->
     <nav class="w-full glass-panel border-b border-white/10 px-6 py-4 flex items-center justify-between sticky top-0 z-40">
         <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
             <i class="fa-solid fa-arrow-left"></i>
-            <span class="font-semibold text-sm">Back to Dashboard</span>
+            <span class="font-semibold text-sm">Dashboard</span>
         </a>
         <div class="font-orbitron font-black text-xl tracking-wider text-gradient neon-text-purple">
             GAMING<span class="text-white">BEAST</span>
         </div>
+        <!-- STORE BUTTON -->
+        <button onclick="openStoreModal()" class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 rounded-xl font-bold text-sm text-black flex items-center gap-2 shadow-lg shadow-yellow-500/20 transition-all">
+            <i class="fa-solid fa-store"></i>
+            <span>G-Shop</span>
+        </button>
     </nav>
 
     <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 mt-6 space-y-6 hidden" id="profileContent">
         
-        <!-- HEADER / BANNER SECTION -->
+        <!-- BANNER & AVATAR SECTION -->
         <section class="w-full relative rounded-3xl overflow-hidden glass-panel border-white/10">
-            <!-- Banner Image -->
             <div id="uiBanner" class="w-full h-48 md:h-72 bg-cover bg-center bg-no-repeat transition-all duration-500" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
                 <div class="absolute inset-0 banner-overlay"></div>
             </div>
 
-            <!-- Profile Info Overlay -->
             <div class="px-6 md:px-10 pb-8 flex flex-col md:flex-row items-center md:items-end gap-6 -mt-16 md:-mt-20 relative z-10">
-                <!-- Avatar -->
                 <div class="relative">
                     <img id="uiAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Gamer" alt="Avatar" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-darkbg bg-gray-900 object-cover avatar-glow z-20 relative">
-                    <div class="absolute bottom-2 right-2 w-5 h-5 bg-green-500 rounded-full border-2 border-darkbg z-30" title="Online"></div>
                 </div>
 
-                <!-- Text Info -->
                 <div class="flex-1 text-center md:text-left space-y-1 mt-4 md:mt-0">
-                    <h1 id="uiUsername" class="font-orbitron font-black text-3xl md:text-4xl text-white">Loading...</h1>
+                    <div class="flex items-center justify-center md:justify-start gap-3 flex-wrap">
+                        <h1 id="uiUsername" class="font-orbitron font-black text-3xl md:text-4xl text-white">Loading...</h1>
+                        <span id="uiTitleBadge" class="bg-primary/30 border border-primary text-primary px-3 py-1 rounded-full text-xs font-bold font-orbitron">NO TITLE</span>
+                    </div>
                     <p id="uiEmail" class="text-gcyan text-sm font-medium tracking-wide"></p>
                     <p id="uiBio" class="text-gray-400 text-sm max-w-2xl mt-2 line-clamp-2">Just a passionate gamer exploring the digital realms.</p>
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="flex gap-3">
                     <button onclick="openEditModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl font-semibold text-sm transition-all flex items-center gap-2">
                         <i class="fa-solid fa-pen"></i> Edit Profile
                     </button>
-                    <button class="px-4 py-2.5 bg-primary hover:bg-primary/80 rounded-xl transition-all shadow-lg shadow-primary/30">
-                        <i class="fa-solid fa-share-nodes"></i>
-                    </button>
-                    <button 
-                      id="logoutBtn" 
-                      class="px-5 py-2.5 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 rounded-xl font-semibold transition-all duration-200 flex items-center gap-2 cursor-pointer">
-                      <i class="fa-solid fa-right-from-bracket"></i>
-                      <span>Logout Account</span>
+                    <button id="logoutBtn" class="px-5 py-2.5 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 rounded-xl font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
             </div>
@@ -154,7 +137,6 @@
 
         <!-- STATS BAR -->
         <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <!-- Level & XP -->
             <div class="glass-panel p-5 rounded-2xl col-span-2 flex flex-col justify-center border-l-4 border-l-primary">
                 <div class="flex justify-between items-end mb-2">
                     <div>
@@ -166,11 +148,10 @@
                     <p class="text-xs text-gray-400 font-semibold"><span id="uiXp">0</span> / <span id="uiXpMax">1000</span> XP</p>
                 </div>
                 <div class="w-full bg-white/5 rounded-full h-2.5 overflow-hidden">
-                    <div id="uiXpBar" class="bg-gradient-to-r from-primary to-gcyan h-2.5 rounded-full xp-bar-fill shadow-[0_0_10px_#06B6D4]" style="width: 0%"></div>
+                    <div id="uiXpBar" class="bg-gradient-to-r from-primary to-gcyan h-2.5 rounded-full xp-bar-fill" style="width: 0%"></div>
                 </div>
             </div>
 
-            <!-- Coins -->
             <div class="glass-panel p-5 rounded-2xl flex items-center gap-4 border-l-4 border-l-yellow-500">
                 <div class="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-500 text-xl">
                     <i class="fa-solid fa-coins"></i>
@@ -181,7 +162,6 @@
                 </div>
             </div>
 
-            <!-- Streak -->
             <div class="glass-panel p-5 rounded-2xl flex items-center gap-4 border-l-4 border-l-gpink">
                 <div class="w-12 h-12 rounded-xl bg-gpink/10 flex items-center justify-center text-gpink text-xl">
                     <i class="fa-solid fa-fire"></i>
@@ -192,162 +172,119 @@
                 </div>
             </div>
         </section>
-
-        <!-- MAIN CONTENT GRID -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            <!-- Left Column: Badges & Details -->
-            <div class="space-y-6">
-                <!-- Badges -->
-                <div class="glass-panel rounded-2xl p-6">
-                    <h3 class="font-orbitron font-bold text-lg border-b border-white/10 pb-3 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-medal text-primary"></i> Achievement Badges
-                    </h3>
-                    <div class="grid grid-cols-3 gap-3">
-                        <div class="glass-card p-3 rounded-xl flex flex-col items-center gap-2 text-center group cursor-pointer" title="Beta Tester">
-                            <i class="fa-solid fa-bug text-2xl text-gcyan group-hover:scale-110 transition-transform"></i>
-                            <span class="text-[10px] font-bold text-gray-400">Beta Tester</span>
-                        </div>
-                        <div class="glass-card p-3 rounded-xl flex flex-col items-center gap-2 text-center group cursor-pointer" title="7-Day Streak">
-                            <i class="fa-solid fa-fire-flame-curved text-2xl text-gpink group-hover:scale-110 transition-transform"></i>
-                            <span class="text-[10px] font-bold text-gray-400">On Fire</span>
-                        </div>
-                        <div class="glass-card p-3 rounded-xl flex flex-col items-center gap-2 text-center group cursor-pointer opacity-40 grayscale" title="Win 10 Tournaments (Locked)">
-                            <i class="fa-solid fa-trophy text-2xl text-yellow-500"></i>
-                            <span class="text-[10px] font-bold text-gray-400">Champion</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Info -->
-                <div class="glass-panel rounded-2xl p-6">
-                    <h3 class="font-orbitron font-bold text-lg border-b border-white/10 pb-3 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-info text-gblue"></i> Player Info
-                    </h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-400">Member Since</span>
-                            <span id="uiJoined" class="font-bold text-white">...</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-400">Region</span>
-                            <span class="font-bold text-white">Global Grid</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-400">Status</span>
-                            <span class="font-bold text-green-400">Online</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Column: Games & Activity -->
-            <div class="lg:col-span-2 space-y-6">
-                <!-- Favorite Games -->
-                <div class="glass-panel rounded-2xl p-6">
-                    <h3 class="font-orbitron font-bold text-lg border-b border-white/10 pb-3 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-heart text-red-500"></i> Favorite Titles
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="glass-card rounded-xl overflow-hidden flex items-center gap-4 p-3 cursor-pointer">
-                            <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-lg object-cover">
-                            <div>
-                                <h4 class="font-bold text-sm">Valorant</h4>
-                                <p class="text-xs text-primary font-semibold">Ascendant 2</p>
-                            </div>
-                        </div>
-                        <div class="glass-card rounded-xl overflow-hidden flex items-center gap-4 p-3 cursor-pointer">
-                            <img src="https://images.unsplash.com/photo-1623934199716-dc28818a6ec7?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-lg object-cover">
-                            <div>
-                                <h4 class="font-bold text-sm">Minecraft</h4>
-                                <p class="text-xs text-gcyan font-semibold">1,240 Hours</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Activity Logs -->
-                <div class="glass-panel rounded-2xl p-6">
-                    <h3 class="font-orbitron font-bold text-lg border-b border-white/10 pb-3 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-clock-rotate-left text-gray-400"></i> Recent Matrix Activity
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="flex gap-4 items-start">
-                            <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-1">
-                                <i class="fa-solid fa-gamepad text-primary text-sm"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm"><span class="font-bold text-white">Played a match</span> in <span class="text-gcyan cursor-pointer hover:underline">CS2 Competitive</span></p>
-                                <p class="text-xs text-gray-500 mt-0.5">2 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start">
-                            <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0 mt-1">
-                                <i class="fa-solid fa-coins text-yellow-500 text-sm"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm"><span class="font-bold text-white">Earned 50 G-Coins</span> for daily login streak</p>
-                                <p class="text-xs text-gray-500 mt-0.5">10 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start">
-                            <div class="w-10 h-10 rounded-full bg-gpink/20 flex items-center justify-center shrink-0 mt-1">
-                                <i class="fa-solid fa-user-plus text-gpink text-sm"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm"><span class="font-bold text-white">Joined community</span> <span class="text-primary cursor-pointer hover:underline">Minecraft India Node</span></p>
-                                <p class="text-xs text-gray-500 mt-0.5">1 day ago</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 
-    <!-- EDIT PROFILE MODAL -->
+    <!-- EDIT PROFILE MODAL (WITH FILE UPLOAD) -->
     <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <!-- Backdrop -->
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeEditModal()"></div>
-        
-        <!-- Modal Content -->
-        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-white/20 rounded-2xl p-6 md:p-8 m-4 shadow-2xl transform scale-95 transition-transform duration-300" id="modalBox">
-            <h2 class="font-orbitron font-bold text-2xl text-white mb-6 border-b border-white/10 pb-4">
-                Configure Protocol
-            </h2>
+        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-white/20 rounded-2xl p-6 md:p-8 m-4 shadow-2xl">
+            <h2 class="font-orbitron font-bold text-2xl text-white mb-6 border-b border-white/10 pb-4">Edit Profile</h2>
             
             <form id="editForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Display Name</label>
-                    <input type="text" id="editUsername" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" required>
+                    <input type="text" id="editUsername" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary">
                 </div>
                 
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Bio / Status</label>
-                    <textarea id="editBio" rows="3" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"></textarea>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Bio</label>
+                    <textarea id="editBio" rows="2" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary"></textarea>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Avatar URL (Image Link)</label>
-                    <input type="url" id="editAvatar" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gcyan focus:ring-1 focus:ring-gcyan transition-all">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Banner URL (Image Link)</label>
-                    <input type="url" id="editBanner" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gcyan focus:ring-1 focus:ring-gcyan transition-all">
+                <!-- FILE UPLOAD INPUTS -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Upload Avatar</label>
+                        <input type="file" id="inputAvatarFile" accept="image/*" class="text-xs text-gray-400 file:mr-2 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Upload Banner</label>
+                        <input type="file" id="inputBannerFile" accept="image/*" class="text-xs text-gray-400 file:mr-2 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gcyan/20 file:text-gcyan hover:file:bg-gcyan/30 cursor-pointer">
+                    </div>
                 </div>
 
                 <div class="flex justify-end gap-3 pt-4 border-t border-white/10 mt-6">
-                    <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-white/5 hover:bg-white/10 text-white transition-all">Cancel</button>
-                    <button type="submit" id="saveBtn" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-primary hover:bg-primary/80 text-white flex items-center gap-2 transition-all shadow-lg shadow-primary/20">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Save Matrix
-                    </button>
+                    <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-white/5 hover:bg-white/10 text-white">Cancel</button>
+                    <button type="submit" id="saveBtn" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-primary hover:bg-primary/80 text-white">Save Changes</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- FIREBASE MODULAR SDK LOGIC -->
+    <!-- IN-GAME G-COIN STORE MODAL -->
+    <div id="storeModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeStoreModal()"></div>
+        <div class="relative w-full max-w-2xl glass-panel bg-[#0a0f25] border border-yellow-500/30 rounded-2xl p-6 md:p-8 m-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+            
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+                <div>
+                    <h2 class="font-orbitron font-bold text-2xl text-yellow-400 flex items-center gap-2">
+                        <i class="fa-solid fa-store"></i> G-Coin Store
+                    </h2>
+                    <p class="text-xs text-gray-400">Unlock Titles & Cyber Items</p>
+                </div>
+                <button onclick="closeStoreModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <!-- SHOP ITEMS GRID -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Item 1: Title -->
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gcyan font-bold tracking-widest uppercase">Title</span>
+                        <h4 class="font-orbitron font-bold text-lg text-white">CYBER LEGEND</h4>
+                        <p class="text-xs text-gray-400 mt-1">Special status title badge on profile.</p>
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 200</span>
+                        <button onclick="buyItem('CYBER LEGEND', 'title', 200)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Title</button>
+                    </div>
+                </div>
+
+                <!-- Item 2: Title -->
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gpink font-bold tracking-widest uppercase">Title</span>
+                        <h4 class="font-orbitron font-bold text-lg text-white">SHADOW NINJA</h4>
+                        <p class="text-xs text-gray-400 mt-1">Exclusive title for stealth masters.</p>
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 350</span>
+                        <button onclick="buyItem('SHADOW NINJA', 'title', 350)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Title</button>
+                    </div>
+                </div>
+
+                <!-- Item 3: Preset Neon Banner -->
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                    <div>
+                        <span class="text-[10px] text-primary font-bold tracking-widest uppercase">Neon Banner</span>
+                        <h4 class="font-orbitron font-bold text-lg text-white">Cyberpunk City</h4>
+                        <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=300&auto=format&fit=crop" class="w-full h-16 rounded-lg object-cover mt-2">
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 500</span>
+                        <button onclick="buyItem('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=2070&auto=format&fit=crop', 'banner', 500)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Banner</button>
+                    </div>
+                </div>
+
+                <!-- Item 4: Preset Mech Avatar -->
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                    <div>
+                        <span class="text-[10px] text-green-400 font-bold tracking-widest uppercase">Mech Avatar</span>
+                        <h4 class="font-orbitron font-bold text-lg text-white">Neon Mecha</h4>
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=NeonMecha" class="w-12 h-12 rounded-full bg-gray-900 border border-primary mt-2">
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 300</span>
+                        <button onclick="buyItem('https://api.dicebear.com/7.x/bottts/svg?seed=NeonMecha', 'avatar', 300)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Avatar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FIREBASE & LOGIC SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -375,6 +312,7 @@
             banner: document.getElementById('uiBanner'),
             avatar: document.getElementById('uiAvatar'),
             username: document.getElementById('uiUsername'),
+            titleBadge: document.getElementById('uiTitleBadge'),
             email: document.getElementById('uiEmail'),
             bio: document.getElementById('uiBio'),
             level: document.getElementById('uiLevel'),
@@ -382,20 +320,52 @@
             xpMax: document.getElementById('uiXpMax'),
             xpBar: document.getElementById('uiXpBar'),
             coins: document.getElementById('uiCoins'),
-            streak: document.getElementById('uiStreak'),
-            joined: document.getElementById('uiJoined')
+            streak: document.getElementById('uiStreak')
         };
 
-        // Level Calculate karne ka Formula Function
+        // IMAGE COMPRESSION UTILITY (Zero Storage Expense)
+        function compressAndConvertFile(file, maxWidth, maxHeight) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+                        if (height > maxHeight) {
+                            width = Math.round((width * maxHeight) / height);
+                            height = maxHeight;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Compress to WebP or JPEG string
+                        const base64Url = canvas.toDataURL('image/jpeg', 0.7);
+                        resolve(base64Url);
+                    };
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
         function calculateLevelData(xp) {
             if (xp < 100) return { level: 1, xpMax: 100 };
             if (xp < 300) return { level: 2, xpMax: 300 };
             if (xp < 600) return { level: 3, xpMax: 600 };
             if (xp < 1000) return { level: 4, xpMax: 1000 };
-            
             const level = Math.floor((xp - 1000) / 500) + 5;
-            const xpMax = 1000 + (level - 4) * 500;
-            return { level, xpMax };
+            return { level, xpMax: 1000 + (level - 4) * 500 };
         }
 
         onAuthStateChanged(auth, async (user) => {
@@ -409,107 +379,30 @@
 
         async function loadUserProfile(authUser) {
             const userRef = doc(db, "users", authUser.uid);
+            const docSnap = await getDoc(userRef);
             
-            try {
-                const docSnap = await getDoc(userRef);
-                const now = new Date();
-                const todayStr = now.toISOString().split('T')[0];
-
-                if (docSnap.exists()) {
-                    currentDbUser = docSnap.data();
-                    
-                    // Safe lastLogin conversion
-                    let lastLoginStr = null;
-                    if (currentDbUser.lastLogin) {
-                        if (typeof currentDbUser.lastLogin === 'string') {
-                            lastLoginStr = currentDbUser.lastLogin;
-                        } else if (typeof currentDbUser.lastLogin.toDate === 'function') {
-                            lastLoginStr = currentDbUser.lastLogin.toDate().toISOString();
-                        } else {
-                            lastLoginStr = new Date(currentDbUser.lastLogin).toISOString();
-                        }
-                    }
-
-                    const lastLoginDate = lastLoginStr ? lastLoginStr.split('T')[0] : null;
-
-                    if (lastLoginDate !== todayStr) {
-                        let newStreak = currentDbUser.streak || 0;
-
-                        if (lastLoginDate) {
-                            const lastDateObj = new Date(lastLoginDate);
-                            const diffDays = Math.floor((now - lastDateObj) / (1000 * 60 * 60 * 24));
-
-                            if (diffDays === 1) {
-                                newStreak += 1;
-                            } else if (diffDays > 1) {
-                                newStreak = 1;
-                            }
-                        } else {
-                            newStreak = 1;
-                        }
-
-                        const addedCoins = 50;
-                        const addedXp = 20;
-
-                        currentDbUser.coins = (currentDbUser.coins || 0) + addedCoins;
-                        currentDbUser.xp = (currentDbUser.xp || 0) + addedXp;
-                        currentDbUser.streak = newStreak;
-                        currentDbUser.lastLogin = now.toISOString();
-
-                        const levelData = calculateLevelData(currentDbUser.xp);
-                        currentDbUser.level = levelData.level;
-                        currentDbUser.xpMax = levelData.xpMax;
-
-                        await updateDoc(userRef, {
-                            coins: currentDbUser.coins,
-                            xp: currentDbUser.xp,
-                            streak: currentDbUser.streak,
-                            lastLogin: currentDbUser.lastLogin,
-                            level: currentDbUser.level,
-                            xpMax: currentDbUser.xpMax
-                        });
-
-                        console.log(`🎉 Daily Reward Claimed! +${addedCoins} Coins, +${addedXp} XP`);
-                    }
-
-                } else {
-                    const defaultAvatar = authUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${authUser.displayName || 'Gamer'}`;
-                    const defaultBanner = 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';
-                    
-                    const levelData = calculateLevelData(150);
-
-                    currentDbUser = {
-                        username: authUser.displayName || "Unknown Gamer",
-                        email: authUser.email,
-                        bio: "Just a passionate gamer exploring the digital realms.",
-                        avatar: defaultAvatar,
-                        banner: defaultBanner,
-                        level: levelData.level,
-                        xp: 150,
-                        xpMax: levelData.xpMax,
-                        coins: 500,
-                        streak: 1,
-                        joinedAt: now.toISOString(),
-                        lastLogin: now.toISOString()
-                    };
-                    
-                    await setDoc(userRef, currentDbUser);
-                }
-
-                // Sync Level & XP Calculations with UI
-                const levelInfo = calculateLevelData(currentDbUser.xp || 0);
-                currentDbUser.level = levelInfo.level;
-                currentDbUser.xpMax = levelInfo.xpMax;
-
-                updateProfileUI(currentDbUser);
-                
-                uiElements.loader.style.display = 'none';
-                uiElements.content.classList.remove('hidden');
-
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-                alert("Failed to sync matrix data. Check console.");
+            if (docSnap.exists()) {
+                currentDbUser = docSnap.data();
+            } else {
+                currentDbUser = {
+                    username: authUser.displayName || "Unknown Gamer",
+                    email: authUser.email,
+                    bio: "Just a passionate gamer exploring the digital realms.",
+                    avatar: authUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${authUser.displayName || 'Gamer'}`,
+                    banner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop',
+                    title: 'NOVICE',
+                    level: 1,
+                    xp: 150,
+                    xpMax: 300,
+                    coins: 500,
+                    streak: 1
+                };
+                await setDoc(userRef, currentDbUser);
             }
+
+            updateProfileUI(currentDbUser);
+            uiElements.loader.style.display = 'none';
+            uiElements.content.classList.remove('hidden');
         }
 
         function updateProfileUI(data) {
@@ -518,6 +411,7 @@
             uiElements.bio.innerText = data.bio || '';
             uiElements.avatar.src = data.avatar;
             uiElements.banner.style.backgroundImage = `url('${data.banner}')`;
+            uiElements.titleBadge.innerText = data.title || 'NO TITLE';
             
             uiElements.level.innerText = data.level || 1;
             uiElements.xp.innerText = data.xp || 0;
@@ -525,88 +419,105 @@
             uiElements.coins.innerText = data.coins || 0;
             uiElements.streak.innerText = data.streak || 0;
 
-            const joinDate = data.joinedAt ? new Date(data.joinedAt) : new Date();
-            uiElements.joined.innerText = joinDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-
             const xpPercent = Math.min((data.xp / data.xpMax) * 100, 100);
-            setTimeout(() => {
-                uiElements.xpBar.style.width = `${xpPercent}%`;
-            }, 500);
+            setTimeout(() => { uiElements.xpBar.style.width = `${xpPercent}%`; }, 500);
         }
 
-        // Modal Functions (Global scope me set kiye hain taaki HTML onclick se chale)
-        const modal = document.getElementById('editModal');
-        const modalBox = document.getElementById('modalBox');
-        const editForm = document.getElementById('editForm');
-        const logoutBtn = document.getElementById('logoutBtn');
-        
-        window.openEditModal = () => {
-            if(!currentDbUser) return;
-            
-            document.getElementById('editUsername').value = currentDbUser.username || '';
-            document.getElementById('editBio').value = currentDbUser.bio || '';
-            document.getElementById('editAvatar').value = currentDbUser.avatar || '';
-            document.getElementById('editBanner').value = currentDbUser.banner || '';
-
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modalBox.classList.remove('scale-95');
-            }, 10);
-        };
-
-        window.closeEditModal = () => {
-            modal.classList.add('opacity-0');
-            modalBox.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        };
-
-        // Edit Profile Submit Handler
-        editForm.addEventListener('submit', async (e) => {
+        // EDIT PROFILE SUBMIT WITH FILE UPLOAD
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const btn = document.getElementById('saveBtn');
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
             btn.disabled = true;
 
-            const updatedData = {
-                username: document.getElementById('editUsername').value,
-                bio: document.getElementById('editBio').value,
-                avatar: document.getElementById('editAvatar').value,
-                banner: document.getElementById('editBanner').value
-            };
-
             try {
+                let updatedData = {
+                    username: document.getElementById('editUsername').value,
+                    bio: document.getElementById('editBio').value
+                };
+
+                const avatarFile = document.getElementById('inputAvatarFile').files[0];
+                const bannerFile = document.getElementById('inputBannerFile').files[0];
+
+                if (avatarFile) {
+                    updatedData.avatar = await compressAndConvertFile(avatarFile, 300, 300);
+                }
+                if (bannerFile) {
+                    updatedData.banner = await compressAndConvertFile(bannerFile, 1000, 400);
+                }
+
                 const userRef = doc(db, "users", currentUserUid);
                 await updateDoc(userRef, updatedData);
 
                 currentDbUser = { ...currentDbUser, ...updatedData };
                 updateProfileUI(currentDbUser);
-                
                 closeEditModal();
             } catch (error) {
-                console.error("Error updating profile:", error);
+                console.error("Upload error:", error);
                 alert("Failed to update profile.");
             } finally {
-                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Save Matrix`;
+                btn.innerHTML = "Save Changes";
                 btn.disabled = false;
             }
         });
 
-        // Logout Handler
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', async () => {
-                try {
-                    await signOut(auth);
-                    window.location.href = 'index.html';
-                } catch (error) {
-                    console.error("Logout Error:", error);
-                    alert("Failed to log out.");
-                }
-            });
-        }
+        // IN-GAME STORE PURCHASE SYSTEM
+        window.buyItem = async (value, type, cost) => {
+            if ((currentDbUser.coins || 0) < cost) {
+                alert("Not enough G-Coins! Earn coins by logging in daily.");
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to buy this for ${cost} G-Coins?`)) return;
+
+            const userRef = doc(db, "users", currentUserUid);
+            const newCoins = currentDbUser.coins - cost;
+            
+            let updateObj = { coins: newCoins };
+            if (type === 'title') updateObj.title = value;
+            if (type === 'banner') updateObj.banner = value;
+            if (type === 'avatar') updateObj.avatar = value;
+
+            try {
+                await updateDoc(userRef, updateObj);
+                currentDbUser = { ...currentDbUser, ...updateObj };
+                updateProfileUI(currentDbUser);
+                alert("🎉 Item Purchased & Equipped Successfully!");
+                closeStoreModal();
+            } catch (error) {
+                console.error("Purchase error:", error);
+                alert("Failed to complete purchase.");
+            }
+        };
+
+        // MODAL TOGGLES
+        const editModal = document.getElementById('editModal');
+        const storeModal = document.getElementById('storeModal');
+
+        window.openEditModal = () => {
+            document.getElementById('editUsername').value = currentDbUser.username || '';
+            document.getElementById('editBio').value = currentDbUser.bio || '';
+            editModal.classList.remove('hidden');
+            setTimeout(() => editModal.classList.remove('opacity-0'), 10);
+        };
+        window.closeEditModal = () => {
+            editModal.classList.add('opacity-0');
+            setTimeout(() => editModal.classList.add('hidden'), 300);
+        };
+
+        window.openStoreModal = () => {
+            storeModal.classList.remove('hidden');
+            setTimeout(() => storeModal.classList.remove('opacity-0'), 10);
+        };
+        window.closeStoreModal = () => {
+            storeModal.classList.add('opacity-0');
+            setTimeout(() => storeModal.classList.add('hidden'), 300);
+        };
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        });
     </script>
 </body>
 </html>
