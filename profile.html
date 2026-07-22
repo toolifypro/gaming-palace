@@ -541,6 +541,69 @@
                 alert("Failed to complete purchase.");
             }
         };
+        // QUEST MODAL CONTROLS
+const questModal = document.getElementById('questModal');
+
+window.openQuestModal = () => {
+    questModal.classList.remove('hidden');
+    setTimeout(() => questModal.classList.remove('opacity-0'), 10);
+    renderQuestStatus();
+};
+
+window.closeQuestModal = () => {
+    questModal.classList.add('opacity-0');
+    setTimeout(() => questModal.classList.add('hidden'), 300);
+};
+
+// CHECK CLAIMED STATUS
+function renderQuestStatus() {
+    const claimedList = currentDbUser.claimedQuests || [];
+    ['shop', 'profile', 'match'].forEach(questId => {
+        const btn = document.getElementById(`questBtn_${questId}`);
+        if (btn) {
+            if (claimedList.includes(questId)) {
+                btn.innerText = "Claimed ✔";
+                btn.disabled = true;
+                btn.className = "px-4 py-1.5 bg-gray-700 text-gray-400 font-bold text-xs rounded-lg cursor-not-allowed";
+            }
+        }
+    });
+}
+
+// CLAIM QUEST REWARD
+window.claimQuestReward = async (questId, xpReward, coinReward) => {
+    const claimedList = currentDbUser.claimedQuests || [];
+    if (claimedList.includes(questId)) return;
+
+    // Calculate New Stats
+    const newXp = (currentDbUser.xp || 0) + xpReward;
+    const newCoins = (currentDbUser.coins || 0) + coinReward;
+    const { level, xpMax } = calculateLevelData(newXp);
+    
+    claimedList.push(questId);
+
+    const updateObj = {
+        xp: newXp,
+        coins: newCoins,
+        level: level,
+        xpMax: xpMax,
+        claimedQuests: claimedList
+    };
+
+    try {
+        const userRef = doc(db, "users", currentUserUid);
+        await updateDoc(userRef, updateObj);
+        
+        currentDbUser = { ...currentDbUser, ...updateObj };
+        updateProfileUI(currentDbUser);
+        renderQuestStatus();
+        
+        alert(`🎉 Quest Completed! Rewards: +${xpReward} XP & +${coinReward} G-Coins!`);
+    } catch (err) {
+        console.error("Quest claim error:", err);
+        alert("Failed to claim reward.");
+    }
+};
 
         // MODAL TOGGLES
         const editModal = document.getElementById('editModal');
@@ -569,6 +632,8 @@
         document.getElementById('logoutBtn').addEventListener('click', async () => {
             await signOut(auth);
             window.location.href = 'index.html';
+            
+            
         });
     </script>
 </body>
