@@ -14,8 +14,8 @@
         /* ================= VARIABLES ================= */
         :root {
             --bg-color: #07070b;
-            --surface: rgba(20, 20, 30, 0.4);
-            --surface-hover: rgba(40, 40, 60, 0.6);
+            --surface: rgba(20, 20, 30, 0.5);
+            --surface-hover: rgba(40, 40, 60, 0.7);
             --border: rgba(0, 243, 255, 0.15);
             --neon-cyan: #00f3ff;
             --neon-purple: #b026ff;
@@ -27,7 +27,7 @@
         /* ================= BASE & OPTIMIZATIONS ================= */
         * {
             margin: 0; padding: 0; box-sizing: border-box;
-            cursor: none; /* Custom cursor */
+            cursor: none;
         }
         body {
             background-color: var(--bg-color);
@@ -58,8 +58,7 @@
         /* ================= ANIMATED BACKGROUND ================= */
         .aurora-bg {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; overflow: hidden;
-            background: #07070b;
+            z-index: -1; overflow: hidden; background: #07070b;
         }
         .orb {
             position: absolute; border-radius: 50%; filter: blur(90px);
@@ -89,28 +88,23 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ================= NAVBAR (Scroll Effects) ================= */
+        /* ================= NAVBAR ================= */
         .navbar {
             position: fixed; top: 0; width: 100%; z-index: 100;
             padding: 25px 50px; display: flex; justify-content: space-between; align-items: center;
-            transition: all 0.4s ease;
-            background: transparent;
+            transition: all 0.4s ease; background: transparent;
         }
         .navbar.scrolled {
             padding: 12px 50px;
-            background: rgba(10, 10, 15, 0.7);
+            background: rgba(10, 10, 15, 0.8);
             backdrop-filter: blur(var(--blur));
             border-bottom: 1px solid var(--border);
             box-shadow: 0 4px 30px rgba(0, 243, 255, 0.1);
         }
         .logo { font-size: 24px; color: var(--neon-cyan); font-weight: 900; text-transform: uppercase; text-shadow: 0 0 10px rgba(0,243,255,0.5); }
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a, .nav-icon {
-            color: var(--text-main); text-decoration: none; font-size: 16px;
-            transition: 0.3s; position: relative;
-        }
-        .nav-links a:hover { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
-        .nav-icon { font-size: 20px; cursor: pointer; position: relative; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-icon { font-size: 20px; cursor: pointer; position: relative; color: var(--text-main); transition: 0.3s; }
+        .nav-icon:hover { color: var(--neon-cyan); }
         .badge {
             position: absolute; top: -5px; right: -8px;
             background: #ff2a2a; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold;
@@ -121,14 +115,14 @@
             position: absolute; top: 40px; right: 0; width: 300px;
             background: var(--surface); backdrop-filter: blur(20px); border: 1px solid var(--border);
             border-radius: 12px; padding: 15px; display: none; flex-direction: column; gap: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 102;
         }
         .notif-dropdown.active { display: flex; animation: slideDown 0.3s forwards; }
         .notif-item { display: flex; gap: 15px; align-items: center; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; transition: 0.2s; }
         .notif-item:hover { background: rgba(0,243,255,0.1); border-left: 3px solid var(--neon-cyan); }
         .notif-icon { width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: var(--neon-purple); }
 
-        /* ================= MAIN CONTAINER & PROFILE HERO ================= */
+        /* ================= CONTAINER & PROFILE HERO ================= */
         .container { max-width: 1200px; margin: 100px auto 50px; padding: 0 20px; }
         
         .hero-card {
@@ -154,7 +148,7 @@
         .user-details { flex-grow: 1; margin-left: 20px; padding-bottom: 10px; }
         .user-details h1 { font-size: 32px; margin-bottom: 5px; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
         .user-details span { color: var(--neon-purple); font-weight: 600; }
-        .user-meta { color: var(--text-muted); font-size: 14px; margin-top: 5px; display: flex; gap: 15px; }
+        .user-meta { color: var(--text-muted); font-size: 14px; margin-top: 5px; display: flex; gap: 15px; flex-wrap: wrap; }
         .user-meta i { color: var(--neon-cyan); }
         
         .hero-actions { display: flex; gap: 15px; padding-bottom: 10px; }
@@ -163,7 +157,7 @@
         .btn-ui {
             background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border);
             color: #fff; padding: 10px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif;
-            transition: 0.3s; position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px;
+            transition: 0.3s; position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px; font-size: 14px;
         }
         .btn-ui::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
@@ -188,7 +182,7 @@
         .progress-bar-wrap { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 15px; overflow: hidden; position: relative;}
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)); width: 0%; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--neon-purple);}
 
-        /* ================= EXPANDED SHOP & ACHIEVEMENTS ================= */
+        /* ================= SHOP & ACHIEVEMENTS ================= */
         .section-title { font-size: 24px; margin: 40px 0 20px; color: #fff; border-left: 4px solid var(--neon-cyan); padding-left: 15px;}
         
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
@@ -210,7 +204,7 @@
         .ach-info h4 { margin-bottom: 5px; font-family: 'Orbitron'; }
         .ach-info p { font-size: 12px; color: var(--text-muted); }
 
-        /* ================= MODALS ================= */
+        /* ================= MODALS SYSTEM ================= */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 1000;
@@ -219,15 +213,23 @@
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content {
             background: var(--bg-color); border: 1px solid var(--neon-purple); border-radius: 20px;
-            padding: 40px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 0 50px rgba(176,38,255,0.3);
-            transform: scale(0.8); transition: 0.3s; position: relative;
+            padding: 30px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 0 50px rgba(176,38,255,0.3);
+            transform: scale(0.8); transition: 0.3s; position: relative; max-height: 80vh; overflow-y: auto;
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 20px; color: var(--text-muted); cursor: pointer; transition: 0.3s;}
         .close-modal:hover { color: #fff; }
-        .reward-icon { font-size: 60px; color: #f1c40f; text-shadow: 0 0 30px #f1c40f; margin-bottom: 20px; animation: bounce 2s infinite; }
         
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        /* Modal Internal Components */
+        .quest-item, .friend-item {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--border);
+            text-align: left;
+        }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; font-family: 'Orbitron'; }
+        .input-group input { width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-family: 'Inter'; }
+
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -253,14 +255,14 @@
     <nav class="navbar" id="navbar">
         <div class="logo">GAMING<span style="color: var(--neon-purple);">BEAST</span></div>
         <div class="nav-links">
-            <a href="#" class="btn-ui"><i class="fas fa-home"></i> Dashboard</a>
-            <a href="#" class="btn-ui"><i class="fas fa-users"></i> Clan</a>
+            <button class="btn-ui" onclick="openModal('questModal')"><i class="fas fa-scroll" style="color: var(--neon-cyan);"></i> Quests</button>
+            <button class="btn-ui" onclick="openModal('friendsModal')"><i class="fas fa-users" style="color: var(--neon-purple);"></i> Friends</button>
+            <button class="btn-ui" onclick="openModal('shopModal')"><i class="fas fa-store" style="color: gold;"></i> Shop</button>
             
             <!-- Notification Bell -->
             <div class="nav-icon" id="notifBtn">
                 <i class="fas fa-bell"></i>
                 <span class="badge">3</span>
-                
                 <div class="notif-dropdown" id="notifDropdown">
                     <h4 class="font-orbitron" style="padding-bottom: 10px; border-bottom: 1px solid var(--border);">Notifications</h4>
                     <div class="notif-item">
@@ -271,31 +273,27 @@
                         <div class="notif-icon" style="background: var(--neon-cyan);"><i class="fas fa-user-friends" style="color: #000;"></i></div>
                         <div><p style="font-size: 14px;">ShadowNinja is online</p><small style="color: var(--text-muted);">2 mins ago</small></div>
                     </div>
-                    <div class="notif-item">
-                        <div class="notif-icon" style="background: #ff2a2a;"><i class="fas fa-crosshairs" style="color: #fff;"></i></div>
-                        <div><p style="font-size: 14px;">Quest "Headhunter" Complete</p><small style="color: var(--text-muted);">XP +500</small></div>
-                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN CONTAINER -->
     <div class="container">
         
         <!-- PROFILE HERO -->
         <section class="hero-card">
-            <div class="banner"></div>
+            <div class="banner" id="userBanner"></div>
             <div class="profile-info-wrap">
                 <div style="display: flex; align-items: flex-end; flex-wrap: wrap;">
                     <div class="pfp-container">
-                        <img src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?auto=format&fit=crop&w=150&q=80" alt="Avatar">
+                        <img id="userAvatar" src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?auto=format&fit=crop&w=150&q=80" alt="Avatar">
                         <div class="status-dot"></div>
                         <div class="level-badge font-orbitron">LVL 42</div>
                     </div>
                     <div class="user-details">
-                        <h1 class="font-orbitron">ZeroCool <span>#8921</span></h1>
-                        <p style="color: #d1d1d1;">"Conquering realms, one server at a time."</p>
+                        <h1 class="font-orbitron"><span id="displayUsername">ZeroCool</span> <span id="displayTag">#8921</span></h1>
+                        <p style="color: #d1d1d1;" id="displayBio">"Conquering realms, one server at a time."</p>
                         <div class="user-meta">
                             <span><i class="fas fa-calendar-alt"></i> Joined 2022</span>
                             <span><i class="fas fa-map-marker-alt"></i> India</span>
@@ -304,23 +302,21 @@
                     </div>
                 </div>
                 <div class="hero-actions">
-                    <button class="btn-ui" onclick="editProfile()"><i class="fas fa-pen"></i> Edit Profile</button>
+                    <button class="btn-ui" onclick="openModal('profileModal')"><i class="fas fa-pen"></i> Edit Profile</button>
                     <button class="btn-ui btn-primary" onclick="shareProfile()"><i class="fas fa-share-alt"></i> Share</button>
                 </div>
             </div>
         </section>
 
-        <!-- STATS WITH MINI CHARTS (Animated Counters) -->
+        <!-- STATS WITH MINI CHARTS -->
         <section class="stats-grid">
             <div class="stat-card">
                 <div class="stat-header">
                     <span class="font-orbitron">TOTAL XP</span>
                     <i class="fas fa-star" style="color: var(--neon-purple);"></i>
                 </div>
-                <!-- Animated Counter -->
                 <div class="stat-value font-orbitron counter" data-target="24500">0</div>
                 <div class="progress-bar-wrap">
-                    <!-- Fills to 75% -->
                     <div class="progress-fill" style="width: 0%;" data-fill="75%"></div>
                 </div>
                 <small style="color: var(--text-muted); margin-top: 10px;">Next Level: 25,000 XP</small>
@@ -328,14 +324,15 @@
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="font-orbitron">COINS</span>
+                    <span class="font-orbitron">G-COINS</span>
                     <i class="fas fa-coins" style="color: #f1c40f;"></i>
                 </div>
-                <div class="stat-value font-orbitron counter" data-target="1520" style="color: #f1c40f; text-shadow: 0 0 10px rgba(241,196,15,0.4);">0</div>
+                <!-- Global Coin Counter -->
+                <div class="stat-value font-orbitron" id="coinBalance" style="color: #f1c40f; text-shadow: 0 0 10px rgba(241,196,15,0.4);">1520</div>
                 <div class="progress-bar-wrap">
                     <div class="progress-fill" style="width: 0%; background: #f1c40f;" data-fill="40%"></div>
                 </div>
-                <small style="color: var(--text-muted); margin-top: 10px;">+250 from yesterday</small>
+                <small style="color: var(--text-muted); margin-top: 10px;">Spendable currency</small>
             </div>
 
             <div class="stat-card">
@@ -368,17 +365,10 @@
                     <p>Reach Level 40</p>
                 </div>
             </div>
-            <div class="achievement-card">
-                <div class="ach-icon" style="color: var(--neon-purple);"><i class="fas fa-dragon"></i></div>
-                <div class="ach-info">
-                    <h4>Dragon Slayer</h4>
-                    <p>Complete the Abyss Raid</p>
-                </div>
-            </div>
         </section>
 
-        <!-- EXPANDED SHOP -->
-        <h2 class="section-title font-orbitron">EXCLUSIVE SHOP</h2>
+        <!-- EXPANDED SHOP PREVIEW -->
+        <h2 class="section-title font-orbitron">FEATURED SHOP</h2>
         <section class="shop-grid">
             <div class="item-card">
                 <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=300&q=80" alt="Skin" class="item-img">
@@ -395,62 +385,144 @@
                 <div class="item-price"><i class="fas fa-coins"></i> 500</div>
                 <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="buyItem('Cyber Theme', 500)">Purchase</button>
             </div>
-
-            <div class="item-card">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=300&q=80" alt="Avatar" class="item-img">
-                <h3 class="font-orbitron">Glitch Avatar</h3>
-                <p style="color: var(--text-muted); font-size: 12px;">Epic Profile Picture</p>
-                <div class="item-price"><i class="fas fa-coins"></i> 300</div>
-                <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="buyItem('Glitch Avatar', 300)">Purchase</button>
-            </div>
-            
-            <div class="item-card">
-                <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=300&q=80" alt="Title" class="item-img">
-                <h3 class="font-orbitron">"The Shadow"</h3>
-                <p style="color: var(--text-muted); font-size: 12px;">Name Title</p>
-                <div class="item-price"><i class="fas fa-coins"></i> 150</div>
-                <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="buyItem('The Shadow Title', 150)">Purchase</button>
-            </div>
         </section>
 
     </div>
+
+    <!-- ================= MODALS ================= -->
 
     <!-- DAILY REWARD MODAL -->
     <div class="modal-overlay" id="dailyModal">
         <div class="modal-content">
             <i class="fas fa-times close-modal" onclick="closeModal('dailyModal')"></i>
-            <div class="reward-icon"><i class="fas fa-treasure-chest"></i></div>
+            <div style="font-size: 60px; color: #f1c40f; text-shadow: 0 0 30px #f1c40f; margin-bottom: 20px;"><i class="fas fa-gift"></i></div>
             <h2 class="font-orbitron" style="margin-bottom: 10px; color: var(--neon-cyan);">DAILY REWARD</h2>
             <p style="color: var(--text-muted); margin-bottom: 20px;">You've logged in for 5 consecutive days!</p>
             <h1 class="font-orbitron" style="color: #f1c40f; margin-bottom: 20px;">+250 COINS</h1>
-            <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="claimReward()">CLAIM NOW</button>
+            <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="claimDailyReward()">CLAIM NOW</button>
         </div>
     </div>
 
-    <!-- SOUND EFFECTS (Base64 or Dummy URLs - Browser policy requires user interaction first) -->
-    <!-- Note: Free sound links are used. They might need a user click on page first to allow audio -->
+    <!-- QUESTS MODAL -->
+    <div class="modal-overlay" id="questModal">
+        <div class="modal-content">
+            <i class="fas fa-times close-modal" onclick="closeModal('questModal')"></i>
+            <h2 class="font-orbitron" style="margin-bottom: 20px; color: var(--neon-cyan);">ACTIVE QUESTS</h2>
+            
+            <div class="quest-item">
+                <div>
+                    <h4 class="font-orbitron" style="font-size: 14px;">Headhunter Pro</h4>
+                    <p style="font-size: 12px; color: var(--text-muted);">Win 5 matches in Ranked mode</p>
+                </div>
+                <button class="btn-ui btn-primary" onclick="completeQuest(this, 100)">Claim</button>
+            </div>
+            <div class="quest-item">
+                <div>
+                    <h4 class="font-orbitron" style="font-size: 14px;">Clan Supporter</h4>
+                    <p style="font-size: 12px; color: var(--text-muted);">Send a message in Clan Chat</p>
+                </div>
+                <button class="btn-ui btn-primary" onclick="completeQuest(this, 50)">Claim</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FRIENDS MODAL -->
+    <div class="modal-overlay" id="friendsModal">
+        <div class="modal-content">
+            <i class="fas fa-times close-modal" onclick="closeModal('friendsModal')"></i>
+            <h2 class="font-orbitron" style="margin-bottom: 20px; color: var(--neon-purple);">CLAN & FRIENDS</h2>
+            
+            <div class="friend-item">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 10px; height: 10px; background: #00ff00; border-radius: 50%;"></div>
+                    <div>
+                        <h4 style="font-size: 14px;">ShadowNinja</h4>
+                        <small style="color: var(--text-muted);">Playing Cyber Arena</small>
+                    </div>
+                </div>
+                <button class="btn-ui" style="padding: 5px 10px; font-size: 12px;">Invite</button>
+            </div>
+            
+            <div class="friend-item">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 10px; height: 10px; background: #ff2a2a; border-radius: 50%;"></div>
+                    <div>
+                        <h4 style="font-size: 14px;">Vortex_99</h4>
+                        <small style="color: var(--text-muted);">Offline 2h ago</small>
+                    </div>
+                </div>
+                <button class="btn-ui" style="padding: 5px 10px; font-size: 12px;" disabled>Offline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULL SHOP MODAL -->
+    <div class="modal-overlay" id="shopModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <i class="fas fa-times close-modal" onclick="closeModal('shopModal')"></i>
+            <h2 class="font-orbitron" style="margin-bottom: 20px; color: gold;">G-STORE</h2>
+            <div class="shop-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
+                <div class="item-card">
+                    <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=300&q=80" alt="Skin" class="item-img">
+                    <h3 class="font-orbitron" style="font-size: 14px;">Neon Katana</h3>
+                    <div class="item-price" style="font-size: 14px;"><i class="fas fa-coins"></i> 1,200</div>
+                    <button class="btn-ui btn-primary" style="width: 100%; justify-content: center; font-size: 12px;" onclick="buyItem('Neon Katana', 1200)">Buy</button>
+                </div>
+                <div class="item-card">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=300&q=80" alt="Theme" class="item-img">
+                    <h3 class="font-orbitron" style="font-size: 14px;">Cyber Theme</h3>
+                    <div class="item-price" style="font-size: 14px;"><i class="fas fa-coins"></i> 500</div>
+                    <button class="btn-ui btn-primary" style="width: 100%; justify-content: center; font-size: 12px;" onclick="buyItem('Cyber Theme', 500)">Buy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-content">
+            <i class="fas fa-times close-modal" onclick="closeModal('profileModal')"></i>
+            <h2 class="font-orbitron" style="margin-bottom: 20px; color: var(--neon-cyan);">EDIT PROFILE</h2>
+            
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="inputUsername" value="ZeroCool">
+            </div>
+            <div class="input-group">
+                <label>Avatar URL</label>
+                <input type="text" id="inputAvatar" value="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?auto=format&fit=crop&w=150&q=80">
+            </div>
+            <div class="input-group">
+                <label>Bio</label>
+                <input type="text" id="inputBio" value="Conquering realms, one server at a time.">
+            </div>
+            <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="saveProfile()">SAVE CHANGES</button>
+        </div>
+    </div>
+
+    <!-- AUDIO -->
     <audio id="hoverSound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
     <audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
     <audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-04.mp3" preload="auto"></audio>
 
     <script>
-        // --- 1. LOADER & INITIALIZATION ---
+        // Global state for coins
+        let userCoins = 1520;
+
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
             setTimeout(() => {
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
-                    // Trigger animations
                     startCounters();
                     fillProgressBars();
-                    // Show Daily Reward after 1 sec
                     setTimeout(() => { openModal('dailyModal'); }, 1000);
                 }, 500);
             }, 1000);
         });
 
-        // --- 2. CUSTOM CURSOR ---
+        // Custom Cursor
         const cursor = document.getElementById('cursor');
         const cursorBlur = document.getElementById('cursor-blur');
         document.addEventListener('mousemove', (e) => {
@@ -464,14 +536,14 @@
             el.addEventListener('mouseleave', () => cursorBlur.classList.remove('hovered-cursor'));
         });
 
-        // --- 3. NAVBAR SCROLL EFFECT ---
+        // Navbar Scroll
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) navbar.classList.add('scrolled');
             else navbar.classList.remove('scrolled');
         });
 
-        // --- 4. NOTIFICATION DROPDOWN ---
+        // Notifications Dropdown
         const notifBtn = document.getElementById('notifBtn');
         const notifDropdown = document.getElementById('notifDropdown');
         notifBtn.addEventListener('click', (e) => {
@@ -480,7 +552,7 @@
         });
         document.addEventListener('click', () => notifDropdown.classList.remove('active'));
 
-        // --- 5. ANIMATED COUNTERS & PROGRESS BARS ---
+        // Counters & Progress
         function animateValue(obj, start, end, duration) {
             let startTimestamp = null;
             const step = (timestamp) => {
@@ -503,46 +575,65 @@
             });
         }
 
-        // --- 6. SOUND EFFECTS ---
+        // SFX Setup
         const hoverSound = document.getElementById('hoverSound');
         const clickSound = document.getElementById('clickSound');
         const successSound = document.getElementById('successSound');
         hoverSound.volume = 0.2; clickSound.volume = 0.4;
         
         document.querySelectorAll('.btn-ui').forEach(btn => {
-            btn.addEventListener('mouseenter', () => {
-                hoverSound.currentTime = 0; 
-                hoverSound.play().catch(e => {}); // Catch needed for auto-play policy
-            });
-            btn.addEventListener('click', () => {
-                clickSound.currentTime = 0;
-                clickSound.play().catch(e => {});
-            });
+            btn.addEventListener('mouseenter', () => { hoverSound.currentTime = 0; hoverSound.play().catch(e => {}); });
+            btn.addEventListener('click', () => { clickSound.currentTime = 0; clickSound.play().catch(e => {}); });
         });
 
-        // --- 7. MODAL FUNCTIONS & ACTIONS ---
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
+        // Modal Management
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // Feature Actions Logic
+        function updateCoins(amount) {
+            userCoins += amount;
+            document.getElementById('coinBalance').innerText = userCoins.toLocaleString();
         }
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-        }
-        function claimReward() {
+
+        function claimDailyReward() {
             successSound.play().catch(e=>{});
+            updateCoins(250);
             const btn = document.querySelector('#dailyModal button');
             btn.innerHTML = '<i class="fas fa-check"></i> CLAIMED';
             btn.style.background = '#00ff00';
             btn.style.color = '#000';
             setTimeout(() => { closeModal('dailyModal'); }, 1000);
         }
-        
-        // --- 8. PLACEHOLDER FUNCTIONS FOR MISSING LOGIC ---
+
         function buyItem(itemName, price) {
-            alert(`Initiating purchase for ${itemName} at ${price} coins.\n(Backend connection required)`);
+            if (userCoins >= price) {
+                successSound.play().catch(e=>{});
+                updateCoins(-price);
+                alert(`Successfully purchased ${itemName}!`);
+            } else {
+                alert(`Not enough G-Coins! You need ${price - userCoins} more coins.`);
+            }
         }
-        function editProfile() {
-            alert("Opening Profile Editor...");
+
+        function completeQuest(btn, reward) {
+            successSound.play().catch(e=>{});
+            updateCoins(reward);
+            btn.innerHTML = '<i class="fas fa-check"></i> Done';
+            btn.style.background = '#00ff00';
+            btn.style.color = '#000';
+            btn.disabled = true;
         }
+
+        function saveProfile() {
+            successSound.play().catch(e=>{});
+            document.getElementById('displayUsername').innerText = document.getElementById('inputUsername').value;
+            document.getElementById('userAvatar').src = document.getElementById('inputAvatar').value;
+            document.getElementById('displayBio').innerText = `"${document.getElementById('inputBio').value}"`;
+            closeModal('profileModal');
+            alert("Profile updated successfully!");
+        }
+
         function shareProfile() {
             navigator.clipboard.writeText(window.location.href);
             alert("Profile Link Copied to Clipboard!");
