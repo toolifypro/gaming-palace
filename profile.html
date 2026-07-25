@@ -1443,6 +1443,279 @@ transform:scale(1);
 }
 
 }
+        /*==========================
+PREMIUM EFFECTS
+==========================*/
+
+*{
+
+transition:
+background-color .25s,
+border-color .25s,
+box-shadow .25s,
+transform .25s;
+
+}
+
+.glass-card,
+.glass-panel{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+/* animated border */
+
+.glass-card::after,
+.glass-panel::after{
+
+content:"";
+
+position:absolute;
+
+inset:-1px;
+
+border-radius:inherit;
+
+padding:1px;
+
+background:
+
+linear-gradient(
+
+135deg,
+
+transparent,
+
+rgba(124,58,237,.35),
+
+transparent,
+
+rgba(6,182,212,.35),
+
+transparent
+
+);
+
+-webkit-mask:
+
+linear-gradient(#000 0 0) content-box,
+
+linear-gradient(#000 0 0);
+
+-webkit-mask-composite:xor;
+
+mask-composite:exclude;
+
+opacity:0;
+
+transition:.4s;
+
+pointer-events:none;
+
+}
+
+.glass-card:hover::after,
+.glass-panel:hover::after{
+
+opacity:1;
+
+}
+
+/* soft glow */
+
+.glass-card:hover{
+
+box-shadow:
+
+0 20px 60px rgba(124,58,237,.22),
+
+0 0 35px rgba(6,182,212,.12);
+
+}
+        button{
+
+overflow:hidden;
+
+position:relative;
+
+}
+
+button::after{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:-120%;
+
+width:50%;
+
+height:100%;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.35),
+
+transparent
+
+);
+
+transition:.7s;
+
+}
+
+button:hover::after{
+
+left:160%;
+
+}
+
+button:hover{
+
+transform:
+
+translateY(-3px);
+
+}
+        img{
+
+transition:.45s;
+
+}
+
+.glass-card:hover img{
+
+transform:scale(1.05);
+
+}
+        .orb{
+
+position:absolute;
+
+border-radius:999px;
+
+filter:blur(90px);
+
+opacity:.22;
+
+animation:orbMove 18s ease-in-out infinite;
+
+}
+
+.orb1{
+
+width:260px;
+
+height:260px;
+
+background:#7c3aed;
+
+top:5%;
+
+left:8%;
+
+}
+
+.orb2{
+
+width:340px;
+
+height:340px;
+
+background:#06b6d4;
+
+right:5%;
+
+top:35%;
+
+animation-delay:4s;
+
+}
+
+.orb3{
+
+width:300px;
+
+height:300px;
+
+background:#ec4899;
+
+bottom:0;
+
+left:35%;
+
+animation-delay:8s;
+
+}
+
+@keyframes orbMove{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-60px);
+
+}
+
+}
+        h1,
+h2,
+.font-orbitron{
+
+text-shadow:
+
+0 0 15px rgba(124,58,237,.15);
+
+}
+        .glass-card{
+
+animation:cardFloat 8s ease-in-out infinite;
+
+}
+
+.glass-card:nth-child(2){
+
+animation-delay:1s;
+
+}
+
+.glass-card:nth-child(3){
+
+animation-delay:2s;
+
+}
+
+@keyframes cardFloat{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-4px);
+
+}
+
+}
     </style>
 </head>
 <body class="min-h-screen flex flex-col pb-20">
@@ -2614,5 +2887,14 @@ class="chatBox flex-1 overflow-y-auto my-4 space-y-3 p-5 text-sm">
             window.location.href = 'index.html';
         });
     </script>
+        <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+
+<div class="orb orb1"></div>
+
+<div class="orb orb2"></div>
+
+<div class="orb orb3"></div>
+
+</div>
 </body>
 </html>
