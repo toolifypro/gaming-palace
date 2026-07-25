@@ -1716,6 +1716,163 @@ transform:translateY(-4px);
 }
 
 }
+        /*=========================
+FINAL ENTRY
+=========================*/
+
+body{
+
+animation:pageEnter .8s ease;
+
+}
+
+@keyframes pageEnter{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+main{
+
+animation:contentFade 1s ease;
+
+}
+
+@keyframes contentFade{
+
+from{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+        .glass-card:hover{
+
+transform:
+
+translateY(-10px)
+
+scale(1.02);
+
+filter:brightness(1.08);
+
+}
+        img{
+
+image-rendering:auto;
+
+will-change:transform;
+
+}
+        html{
+
+scroll-behavior:smooth;
+
+}
+
+body{
+
+overflow-x:hidden;
+
+}
+        @media(max-width:768px){
+
+.glass-card{
+
+padding:18px;
+
+}
+
+nav{
+
+width:95%;
+
+}
+
+.heroBtn{
+
+width:100%;
+
+justify-content:center;
+
+}
+
+}
+        .glass-card,
+.glass-panel,
+button,
+img{
+
+will-change:
+
+transform;
+
+}
+        #cursorGlow{
+
+position:fixed;
+
+width:260px;
+
+height:260px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(124,58,237,.15),
+
+transparent 70%
+
+);
+
+pointer-events:none;
+
+transform:
+
+translate(-50%,-50%);
+
+z-index:9999;
+
+filter:blur(35px);
+
+transition:
+
+left .08s linear,
+
+top .08s linear;
+
+}
+        
     </style>
 </head>
 <body class="min-h-screen flex flex-col pb-20">
@@ -2886,6 +3043,46 @@ class="chatBox flex-1 overflow-y-auto my-4 space-y-3 p-5 text-sm">
             await signOut(auth);
             window.location.href = 'index.html';
         });
+        /*=========================
+Premium UI
+=========================*/
+
+document.querySelectorAll(".glass-card").forEach(card=>{
+
+card.addEventListener("mousemove",e=>{
+
+const rect=card.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+
+const y=e.clientY-rect.top;
+
+card.style.background=
+
+`radial-gradient(circle at ${x}px ${y}px,
+
+rgba(124,58,237,.12),
+
+rgba(255,255,255,.03) 45%,
+
+rgba(255,255,255,.02))`;
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.background="";
+
+});
+    const glow=document.getElementById("cursorGlow");
+
+document.addEventListener("mousemove",e=>{
+
+glow.style.left=e.clientX+"px";
+
+glow.style.top=e.clientY+"px";
+
+});
     </script>
         <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
 
@@ -2894,7 +3091,9 @@ class="chatBox flex-1 overflow-y-auto my-4 space-y-3 p-5 text-sm">
 <div class="orb orb2"></div>
 
 <div class="orb orb3"></div>
+            <div id="cursorGlow"></div>
 
 </div>
+        
 </body>
 </html>
