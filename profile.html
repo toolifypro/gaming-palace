@@ -25,8 +25,7 @@
                         orbitron: ['Orbitron', 'sans-serif'],
                     }
                 }
-            }
-        }
+
     </script>
 
     <style>
@@ -681,36 +680,168 @@ G-Shop
 
     <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 mt-6 space-y-6 hidden" id="profileContent">
         
-        <!-- BANNER & AVATAR SECTION -->
-        <section class="w-full relative rounded-3xl overflow-hidden glass-panel border-white/10">
-            <div id="uiBanner" class="w-full h-48 md:h-72 bg-cover bg-center bg-no-repeat transition-all duration-500" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
-                <div class="absolute inset-0 banner-overlay"></div>
-            </div>
+      <!-- ===============================
+     PREMIUM HERO PROFILE
+================================ -->
 
-            <div class="px-6 md:px-10 pb-8 flex flex-col md:flex-row items-center md:items-end gap-6 -mt-16 md:-mt-20 relative z-10">
-                <div class="relative">
-                    <img id="uiAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Gamer" alt="Avatar" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-darkbg bg-gray-900 object-cover avatar-glow z-20 relative">
-                </div>
+<section
+class="relative overflow-hidden rounded-[32px] glass-panel border border-white/10">
 
-                <div class="flex-1 text-center md:text-left space-y-1 mt-4 md:mt-0">
-                    <div class="flex items-center justify-center md:justify-start gap-3 flex-wrap">
-                        <h1 id="uiUsername" class="font-orbitron font-black text-3xl md:text-4xl text-white">Loading...</h1>
-                        <span id="uiTitleBadge" class="bg-primary/30 border border-primary text-primary px-3 py-1 rounded-full text-xs font-bold font-orbitron">NO TITLE</span>
-                    </div>
-                    <p id="uiEmail" class="text-gcyan text-sm font-medium tracking-wide"></p>
-                    <p id="uiBio" class="text-gray-400 text-sm max-w-2xl mt-2 line-clamp-2">Just a passionate gamer exploring the digital realms.</p>
-                </div>
+<!-- Animated Background -->
 
-                <div class="flex gap-3">
-                    <button onclick="openEditModal()" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl font-semibold text-sm transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-pen"></i> Edit Profile
-                    </button>
-                    <button id="logoutBtn" class="px-4 py-2.5 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 rounded-xl font-semibold transition-all duration-200">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </button>
-                </div>
-            </div>
-        </section>
+<div
+id="uiBanner"
+class="relative h-[260px] md:h-[360px] bg-cover bg-center transition-all duration-700"
+
+style="background-image:url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
+
+<div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/20 to-[#050816]"></div>
+
+<div class="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-cyan-500/20"></div>
+
+<div class="absolute inset-0 heroScan"></div>
+
+</div>
+
+<!-- Floating Glow -->
+
+<div class="absolute top-10 left-10 w-40 h-40 rounded-full bg-purple-600/20 blur-[90px]"></div>
+
+<div class="absolute right-10 top-20 w-52 h-52 rounded-full bg-cyan-500/20 blur-[120px]"></div>
+
+<!-- Content -->
+
+<div class="relative px-8 md:px-12 pb-10 -mt-24 flex flex-col lg:flex-row items-center lg:items-end gap-8">
+
+<!-- Avatar -->
+
+<div class="relative">
+
+<div class="avatarRing">
+
+<img
+
+id="uiAvatar"
+
+src="https://api.dicebear.com/7.x/bottts/svg?seed=Gamer"
+
+class="relative w-40 h-40 md:w-48 md:h-48 rounded-full border-[6px] border-[#050816] object-cover bg-black">
+
+</div>
+
+<div class="onlineDot"></div>
+
+</div>
+
+<!-- Profile -->
+
+<div class="flex-1 text-center lg:text-left">
+
+<div class="flex flex-wrap justify-center lg:justify-start items-center gap-4">
+
+<h1
+
+id="uiUsername"
+
+class="font-orbitron text-4xl md:text-5xl font-black text-white">
+
+Loading...
+
+</h1>
+
+<span
+
+id="uiTitleBadge"
+
+class="px-4 py-2 rounded-full bg-gradient-to-r from-purple-600/30 to-cyan-600/30 border border-purple-500/40 text-cyan-300 font-bold text-xs tracking-widest">
+
+NOVICE
+
+</span>
+
+</div>
+
+<p
+
+id="uiEmail"
+
+class="text-cyan-300 mt-2 font-semibold">
+
+</p>
+
+<p
+
+id="uiBio"
+
+class="text-gray-400 mt-3 max-w-3xl leading-7">
+
+Just a passionate gamer...
+
+</p>
+
+<!-- Social Stats -->
+
+<div class="flex flex-wrap justify-center lg:justify-start gap-4 mt-6">
+
+<div class="miniCard">
+
+<i class="fa-solid fa-gamepad"></i>
+
+<span>Professional Gamer</span>
+
+</div>
+
+<div class="miniCard">
+
+<i class="fa-solid fa-bolt"></i>
+
+<span>Competitive</span>
+
+</div>
+
+<div class="miniCard">
+
+<i class="fa-solid fa-fire"></i>
+
+<span>Gaming Beast</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Buttons -->
+
+<div class="flex gap-3">
+
+<button
+
+onclick="openEditModal()"
+
+class="heroBtn">
+
+<i class="fa-solid fa-pen"></i>
+
+Edit Profile
+
+</button>
+
+<button
+
+id="logoutBtn"
+
+class="logoutHero">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+</button>
+
+</div>
+
+</div>
+
+</section>
 
         <!-- STATS BAR -->
         <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
