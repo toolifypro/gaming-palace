@@ -3,641 +3,1237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gaming Beast | AAA Dashboard</title>
+    <title>Gamer Profile - Gaming Beast</title>
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#050816',
+                        primary: '#7C3AED',
+                        gblue: '#3B82F6',
+                        gcyan: '#06B6D4',
+                        gpink: '#EC4899',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                    }
+                }
+            }
+        }
+        /* ==========================================
+   PREMIUM GAMING BEAST UI V2
+========================================== */
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+background:
+radial-gradient(circle at 20% 20%,rgba(124,58,237,.22),transparent 35%),
+radial-gradient(circle at 80% 30%,rgba(6,182,212,.18),transparent 35%),
+radial-gradient(circle at 50% 90%,rgba(236,72,153,.18),transparent 35%),
+linear-gradient(135deg,#030712,#050816,#091326,#04070d);
+
+background-size:300% 300%;
+animation:auroraMove 18s ease infinite;
+position:relative;
+
+}
+
+/* animated background */
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+
+background-image:
+
+linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+
+background-size:60px 60px;
+
+mask-image:radial-gradient(circle at center,black 30%,transparent 95%);
+pointer-events:none;
+
+z-index:-2;
+
+animation:gridMove 25s linear infinite;
+
+}
+
+body::after{
+
+content:"";
+
+position:fixed;
+
+inset:-40%;
+
+background:
+
+radial-gradient(circle,#7c3aed33 0%,transparent 25%),
+radial-gradient(circle,#06b6d433 0%,transparent 30%),
+radial-gradient(circle,#ec489933 0%,transparent 22%);
+
+background-size:35% 35%;
+
+filter:blur(90px);
+
+animation:floatingGlow 18s linear infinite;
+
+pointer-events:none;
+
+z-index:-3;
+
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#040816;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:linear-gradient(#7c3aed,#06b6d4);
+
+border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:linear-gradient(#8b5cf6,#22d3ee);
+
+}
+
+/* Better Glass */
+
+.glass-panel{
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(22px);
+
+box-shadow:
+
+0 10px 40px rgba(0,0,0,.45),
+
+0 0 0 1px rgba(255,255,255,.03) inset;
+
+transition:.35s;
+
+}
+
+.glass-card{
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+overflow:hidden;
+
+position:relative;
+
+transition:.35s;
+
+}
+
+/* holographic shine */
+
+.glass-card::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:-120%;
+
+width:60%;
+
+height:100%;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.18),
+
+transparent
+
+);
+
+transition:.8s;
+
+}
+
+.glass-card:hover::before{
+
+left:160%;
+
+}
+
+.glass-card:hover{
+
+transform:
+
+translateY(-8px)
+
+scale(1.02);
+
+border-color:#7c3aed;
+
+box-shadow:
+
+0 20px 50px rgba(124,58,237,.28),
+
+0 0 30px rgba(6,182,212,.15);
+
+}
+
+/* buttons */
+
+button{
+
+transition:.28s;
+
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+
+0 0 20px rgba(124,58,237,.35);
+
+}
+
+/* inputs */
+
+input,
+textarea{
+
+transition:.3s;
+
+}
+
+input:focus,
+textarea:focus{
+
+box-shadow:
+
+0 0 0 3px rgba(124,58,237,.25);
+
+}
+
+/* image hover */
+
+img{
+
+transition:.4s;
+
+}
+
+img:hover{
+
+transform:scale(1.03);
+
+}
+
+/* text glow */
+
+.text-gradient{
+
+background:linear-gradient(90deg,#8b5cf6,#22d3ee,#ec4899);
+
+background-size:250%;
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+animation:textMove 5s linear infinite;
+
+}
+
+.neon-text-purple{
+
+text-shadow:
+
+0 0 12px #7c3aed,
+
+0 0 35px #7c3aed;
+
+}
+
+/* animations */
+
+@keyframes auroraMove{
+
+0%{background-position:0% 50%;}
+
+50%{background-position:100% 50%;}
+
+100%{background-position:0% 50%;}
+
+}
+
+@keyframes gridMove{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+100%{
+
+transform:translateY(60px);
+
+}
+
+}
+
+@keyframes floatingGlow{
+
+0%{
+
+transform:rotate(0deg);
+
+}
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+@keyframes textMove{
+
+0%{
+
+background-position:0%;
+
+}
+
+100%{
+
+background-position:200%;
+
+}
+
+}
+    </script>
+
     <style>
-        /* ================= VARIABLES ================= */
-        :root {
-            --bg-color: #07070b;
-            --surface: rgba(20, 20, 30, 0.5);
-            --surface-hover: rgba(40, 40, 60, 0.7);
-            --border: rgba(0, 243, 255, 0.15);
-            --neon-cyan: #00f3ff;
-            --neon-purple: #b026ff;
-            --text-main: #ffffff;
-            --text-muted: #a0a0b5;
-            --blur: 15px;
-        }
-
-        /* ================= BASE & OPTIMIZATIONS ================= */
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            cursor: none;
-        }
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
+            background-color: #050816;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-        .font-orbitron { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
-
-        @media (prefers-reduced-motion: reduce) {
-            * { animation: none !important; transition: none !important; }
         }
 
-        /* ================= CUSTOM CURSOR ================= */
-        #cursor, #cursor-blur {
-            position: fixed;
-            pointer-events: none;
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #7C3AED;
+            transform: translateY(-2px);
+        }
+
+        .neon-text-purple { text-shadow: 0 0 15px rgba(124, 58, 237, 0.6); }
+        .text-gradient {
+            background: linear-gradient(to right, #7C3AED, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .avatar-glow { box-shadow: 0 0 25px rgba(124, 58, 237, 0.5); }
+        .banner-overlay { background: linear-gradient(to top, #050816 0%, transparent 100%); }
+        .xp-bar-fill { transition: width 1.5s ease; }
+
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid #06B6D4;
             border-radius: 50%;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
-        }
-        #cursor { width: 10px; height: 10px; background: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan); }
-        #cursor-blur { width: 40px; height: 40px; border: 1px solid var(--neon-cyan); opacity: 0.5; transition: 0.1s ease-out; }
-        .hovered-cursor { width: 60px !important; height: 60px !important; background: rgba(0, 243, 255, 0.1); border-color: var(--neon-purple) !important; }
-
-        /* ================= ANIMATED BACKGROUND ================= */
-        .aurora-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; overflow: hidden; background: #07070b;
-        }
-        .orb {
-            position: absolute; border-radius: 50%; filter: blur(90px);
-            opacity: 0.5; animation: float 15s infinite alternate ease-in-out;
-            will-change: transform, opacity;
-        }
-        .orb-1 { width: 400px; height: 400px; background: var(--neon-purple); top: -10%; left: -10%; }
-        .orb-2 { width: 300px; height: 300px; background: var(--neon-cyan); bottom: 10%; right: -5%; animation-duration: 20s; }
-        @keyframes float {
-            0% { transform: translate3d(0, 0, 0) scale(1); }
-            100% { transform: translate3d(50px, 50px, 0) scale(1.2); }
-        }
-
-        /* ================= LOADER ================= */
-        .loader-wrapper {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color); z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease;
-        }
-        .spinner {
-            width: 60px; height: 60px;
-            border: 5px solid rgba(0, 243, 255, 0.1);
-            border-top-color: var(--neon-cyan);
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* ================= NAVBAR ================= */
-        .navbar {
-            position: fixed; top: 0; width: 100%; z-index: 100;
-            padding: 25px 50px; display: flex; justify-content: space-between; align-items: center;
-            transition: all 0.4s ease; background: transparent;
-        }
-        .navbar.scrolled {
-            padding: 12px 50px;
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(var(--blur));
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 4px 30px rgba(0, 243, 255, 0.1);
-        }
-        .logo { font-size: 24px; color: var(--neon-cyan); font-weight: 900; text-transform: uppercase; text-shadow: 0 0 10px rgba(0,243,255,0.5); }
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-icon { font-size: 20px; cursor: pointer; position: relative; color: var(--text-main); transition: 0.3s; }
-        .nav-icon:hover { color: var(--neon-cyan); }
-        .badge {
-            position: absolute; top: -5px; right: -8px;
-            background: #ff2a2a; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold;
-        }
-
-        /* ================= NOTIFICATION DROPDOWN ================= */
-        .notif-dropdown {
-            position: absolute; top: 40px; right: 0; width: 300px;
-            background: var(--surface); backdrop-filter: blur(20px); border: 1px solid var(--border);
-            border-radius: 12px; padding: 15px; display: none; flex-direction: column; gap: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 102;
-        }
-        .notif-dropdown.active { display: flex; animation: slideDown 0.3s forwards; }
-        .notif-item { display: flex; gap: 15px; align-items: center; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; transition: 0.2s; }
-        .notif-item:hover { background: rgba(0,243,255,0.1); border-left: 3px solid var(--neon-cyan); }
-        .notif-icon { width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: var(--neon-purple); }
-
-        /* ================= CONTAINER & PROFILE HERO ================= */
-        .container { max-width: 1200px; margin: 100px auto 50px; padding: 0 20px; }
-        
-        .hero-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 20px; overflow: hidden; backdrop-filter: blur(var(--blur));
-            margin-bottom: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-        }
-        .banner {
-            width: 100%; height: 250px;
-            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80') center/cover;
-            position: relative;
-        }
-        .banner::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(transparent, #0a0a0f);
-        }
-        .profile-info-wrap { display: flex; padding: 0 30px 30px; position: relative; margin-top: -60px; z-index: 2; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px;}
-        .pfp-container { position: relative; width: 130px; height: 130px; border-radius: 50%; border: 4px solid #0a0a0f; box-shadow: 0 0 20px var(--neon-purple); }
-        .pfp-container img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-        .status-dot { position: absolute; bottom: 10px; right: 10px; width: 18px; height: 18px; background: #00ff00; border: 3px solid #0a0a0f; border-radius: 50%; box-shadow: 0 0 10px #00ff00; }
-        .level-badge { position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); background: var(--neon-cyan); color: #000; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; white-space: nowrap;}
-        
-        .user-details { flex-grow: 1; margin-left: 20px; padding-bottom: 10px; }
-        .user-details h1 { font-size: 32px; margin-bottom: 5px; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
-        .user-details span { color: var(--neon-purple); font-weight: 600; }
-        .user-meta { color: var(--text-muted); font-size: 14px; margin-top: 5px; display: flex; gap: 15px; flex-wrap: wrap; }
-        .user-meta i { color: var(--neon-cyan); }
-        
-        .hero-actions { display: flex; gap: 15px; padding-bottom: 10px; }
-        
-        /* ================= BUTTONS ================= */
-        .btn-ui {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border);
-            color: #fff; padding: 10px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif;
-            transition: 0.3s; position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px; font-size: 14px;
-        }
-        .btn-ui::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: 0.5s;
-        }
-        .btn-ui:hover::before { left: 100%; }
-        .btn-ui:hover { background: var(--surface-hover); border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(0,243,255,0.3); transform: translateY(-2px); }
-        .btn-primary { background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan)); border: none; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5); font-weight: bold;}
-        .btn-primary:hover { box-shadow: 0 0 20px var(--neon-purple); }
-
-        /* ================= STATS & MINI CHARTS ================= */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card {
-            background: var(--surface); padding: 25px; border-radius: 16px; border: 1px solid var(--border);
-            backdrop-filter: blur(var(--blur)); display: flex; flex-direction: column; justify-content: center;
-            transition: 0.3s;
-        }
-        .stat-card:hover { transform: translateY(-5px); border-color: var(--neon-purple); box-shadow: 0 10px 20px rgba(176, 38, 255, 0.1); }
-        .stat-header { display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); margin-bottom: 15px; font-size: 14px;}
-        .stat-value { font-size: 32px; color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,243,255,0.4); }
-        
-        .progress-bar-wrap { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 15px; overflow: hidden; position: relative;}
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)); width: 0%; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--neon-purple);}
-
-        /* ================= SHOP & ACHIEVEMENTS ================= */
-        .section-title { font-size: 24px; margin: 40px 0 20px; color: #fff; border-left: 4px solid var(--neon-cyan); padding-left: 15px;}
-        
-        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .item-card {
-            background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 15px;
-            text-align: center; transition: 0.3s; backdrop-filter: blur(var(--blur));
-        }
-        .item-card:hover { transform: scale(1.03); border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
-        .item-img { width: 100%; height: 150px; border-radius: 8px; object-fit: cover; margin-bottom: 15px; }
-        .item-price { color: #f1c40f; font-weight: bold; margin: 10px 0; font-size: 18px; }
-        
-        .achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .achievement-card {
-            display: flex; gap: 20px; align-items: center; background: var(--surface); padding: 15px;
-            border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
-        }
-        .achievement-card:hover { background: rgba(176, 38, 255, 0.1); border-color: var(--neon-purple); }
-        .ach-icon { font-size: 30px; color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
-        .ach-info h4 { margin-bottom: 5px; font-family: 'Orbitron'; }
-        .ach-info p { font-size: 12px; color: var(--text-muted); }
-
-        /* ================= MODALS SYSTEM ================= */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 1000;
-            display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s;
-        }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content {
-            background: var(--bg-color); border: 1px solid var(--neon-purple); border-radius: 20px;
-            padding: 30px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 0 50px rgba(176,38,255,0.3);
-            transform: scale(0.8); transition: 0.3s; position: relative; max-height: 80vh; overflow-y: auto;
-        }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 20px; color: var(--text-muted); cursor: pointer; transition: 0.3s;}
-        .close-modal:hover { color: #fff; }
-        
-        /* Modal Internal Components */
-        .quest-item, .friend-item {
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--border);
-            text-align: left;
-        }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        .input-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; font-family: 'Orbitron'; }
-        .input-group input { width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-family: 'Inter'; }
-
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col pb-20">
+    <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
 
-    <!-- CUSTOM CURSOR -->
-    <div id="cursor"></div>
-    <div id="cursor-blur"></div>
+<div class="absolute top-20 left-10 w-72 h-72 bg-purple-600/20 blur-[140px] rounded-full animate-pulse"></div>
 
-    <!-- BACKGROUND -->
-    <div class="aurora-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-    </div>
+<div class="absolute bottom-10 right-10 w-96 h-96 bg-cyan-500/20 blur-[160px] rounded-full animate-pulse"></div>
 
-    <!-- LOADING SCREEN -->
-    <div id="loader" class="loader-wrapper">
-        <div class="spinner"></div>
-        <h2 class="font-orbitron" style="margin-top: 20px; color: var(--neon-cyan); letter-spacing: 3px;">SYSTEM BOOT...</h2>
-    </div>
+<div class="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-pink-500/10 blur-[180px] rounded-full -translate-x-1/2 -translate-y-1/2"></div>
 
-    <!-- NAVBAR -->
-    <nav class="navbar" id="navbar">
-        <div class="logo">GAMING<span style="color: var(--neon-purple);">BEAST</span></div>
-        <div class="nav-links">
-            <button class="btn-ui" onclick="openModal('questModal')"><i class="fas fa-scroll" style="color: var(--neon-cyan);"></i> Quests</button>
-            <button class="btn-ui" onclick="openModal('friendsModal')"><i class="fas fa-users" style="color: var(--neon-purple);"></i> Friends</button>
-            <button class="btn-ui" onclick="openModal('shopModal')"><i class="fas fa-store" style="color: gold;"></i> Shop</button>
-            
-            <!-- Notification Bell -->
-            <div class="nav-icon" id="notifBtn">
-                <i class="fas fa-bell"></i>
-                <span class="badge">3</span>
-                <div class="notif-dropdown" id="notifDropdown">
-                    <h4 class="font-orbitron" style="padding-bottom: 10px; border-bottom: 1px solid var(--border);">Notifications</h4>
-                    <div class="notif-item">
-                        <div class="notif-icon"><i class="fas fa-coins" style="color: gold;"></i></div>
-                        <div><p style="font-size: 14px;">Daily Reward Claimed!</p><small style="color: var(--text-muted);">+250 Coins</small></div>
-                    </div>
-                    <div class="notif-item">
-                        <div class="notif-icon" style="background: var(--neon-cyan);"><i class="fas fa-user-friends" style="color: #000;"></i></div>
-                        <div><p style="font-size: 14px;">ShadowNinja is online</p><small style="color: var(--text-muted);">2 mins ago</small></div>
-                    </div>
-                </div>
-            </div>
+</div>
+
+    <!-- Loader -->
+    <div id="pageLoader" class="fixed inset-0 z-50 bg-darkbg flex flex-col items-center justify-center">
+        <div class="loader mb-4"></div>
+        <p class="font-orbitron font-bold text-gcyan tracking-widest animate-pulse">SYNCING GAMER DATA...</p>
+    </div>   
+    
+    <!-- Navbar -->
+    <nav class="w-full glass-panel border-b border-white/10 px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-40">
+        <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span class="font-semibold text-sm">Dashboard</span>
+        </a>
+        <div class="font-orbitron font-black text-xl tracking-wider text-gradient neon-text-purple">
+            GAMING<span class="text-white">BEAST</span>
+        </div>
+        
+        <!-- ACTION BUTTONS -->
+        <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+            <!-- QUESTS BUTTON -->
+            <button onclick="openQuestModal()" class="px-3.5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center gap-2 shadow-lg shadow-purple-500/20 transition-all">
+                <i class="fa-solid fa-scroll"></i>
+                <span>Quests</span>
+            </button>
+
+            <!-- FRIENDS & CHAT BUTTON -->
+            <button onclick="openFriendsModal()" class="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition-all">
+                <i class="fa-solid fa-user-group"></i>
+                <span>Friends</span>
+            </button>
+
+            <!-- STORE BUTTON -->
+            <button onclick="openStoreModal()" class="px-3.5 py-2 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 rounded-xl font-bold text-xs sm:text-sm text-black flex items-center gap-2 shadow-lg shadow-yellow-500/20 transition-all">
+                <i class="fa-solid fa-store"></i>
+                <span>G-Shop</span>
+            </button>
         </div>
     </nav>
 
-    <!-- MAIN CONTAINER -->
-    <div class="container">
+    <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 mt-6 space-y-6 hidden" id="profileContent">
         
-        <!-- PROFILE HERO -->
-        <section class="hero-card">
-            <div class="banner" id="userBanner"></div>
-            <div class="profile-info-wrap">
-                <div style="display: flex; align-items: flex-end; flex-wrap: wrap;">
-                    <div class="pfp-container">
-                        <img id="userAvatar" src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?auto=format&fit=crop&w=150&q=80" alt="Avatar">
-                        <div class="status-dot"></div>
-                        <div class="level-badge font-orbitron">LVL 42</div>
+        <!-- BANNER & AVATAR SECTION -->
+        <section class="w-full relative rounded-3xl overflow-hidden glass-panel border-white/10">
+            <div id="uiBanner" class="w-full h-48 md:h-72 bg-cover bg-center bg-no-repeat transition-all duration-500" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
+                <div class="absolute inset-0 banner-overlay"></div>
+            </div>
+
+            <div class="px-6 md:px-10 pb-8 flex flex-col md:flex-row items-center md:items-end gap-6 -mt-16 md:-mt-20 relative z-10">
+                <div class="relative">
+                    <img id="uiAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Gamer" alt="Avatar" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-darkbg bg-gray-900 object-cover avatar-glow z-20 relative">
+                </div>
+
+                <div class="flex-1 text-center md:text-left space-y-1 mt-4 md:mt-0">
+                    <div class="flex items-center justify-center md:justify-start gap-3 flex-wrap">
+                        <h1 id="uiUsername" class="font-orbitron font-black text-3xl md:text-4xl text-white">Loading...</h1>
+                        <span id="uiTitleBadge" class="bg-primary/30 border border-primary text-primary px-3 py-1 rounded-full text-xs font-bold font-orbitron">NO TITLE</span>
                     </div>
-                    <div class="user-details">
-                        <h1 class="font-orbitron"><span id="displayUsername">ZeroCool</span> <span id="displayTag">#8921</span></h1>
-                        <p style="color: #d1d1d1;" id="displayBio">"Conquering realms, one server at a time."</p>
-                        <div class="user-meta">
-                            <span><i class="fas fa-calendar-alt"></i> Joined 2022</span>
-                            <span><i class="fas fa-map-marker-alt"></i> India</span>
-                            <span><i class="fab fa-discord"></i> ZeroCool#1234</span>
-                        </div>
-                    </div>
+                    <p id="uiEmail" class="text-gcyan text-sm font-medium tracking-wide"></p>
+                    <p id="uiBio" class="text-gray-400 text-sm max-w-2xl mt-2 line-clamp-2">Just a passionate gamer exploring the digital realms.</p>
                 </div>
-                <div class="hero-actions">
-                    <button class="btn-ui" onclick="openModal('profileModal')"><i class="fas fa-pen"></i> Edit Profile</button>
-                    <button class="btn-ui btn-primary" onclick="shareProfile()"><i class="fas fa-share-alt"></i> Share</button>
+
+                <div class="flex gap-3">
+                    <button onclick="openEditModal()" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl font-semibold text-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-pen"></i> Edit Profile
+                    </button>
+                    <button id="logoutBtn" class="px-4 py-2.5 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 rounded-xl font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- STATS WITH MINI CHARTS -->
-        <section class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-header">
-                    <span class="font-orbitron">TOTAL XP</span>
-                    <i class="fas fa-star" style="color: var(--neon-purple);"></i>
-                </div>
-                <div class="stat-value font-orbitron counter" data-target="24500">0</div>
-                <div class="progress-bar-wrap">
-                    <div class="progress-fill" style="width: 0%;" data-fill="75%"></div>
-                </div>
-                <small style="color: var(--text-muted); margin-top: 10px;">Next Level: 25,000 XP</small>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-header">
-                    <span class="font-orbitron">G-COINS</span>
-                    <i class="fas fa-coins" style="color: #f1c40f;"></i>
-                </div>
-                <!-- Global Coin Counter -->
-                <div class="stat-value font-orbitron" id="coinBalance" style="color: #f1c40f; text-shadow: 0 0 10px rgba(241,196,15,0.4);">1520</div>
-                <div class="progress-bar-wrap">
-                    <div class="progress-fill" style="width: 0%; background: #f1c40f;" data-fill="40%"></div>
-                </div>
-                <small style="color: var(--text-muted); margin-top: 10px;">Spendable currency</small>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-header">
-                    <span class="font-orbitron">WIN RATE</span>
-                    <i class="fas fa-trophy" style="color: #00ff00;"></i>
-                </div>
-                <div class="stat-value font-orbitron"><span class="counter" data-target="68">0</span>%</div>
-                <div class="progress-bar-wrap">
-                    <div class="progress-fill" style="width: 0%; background: #00ff00;" data-fill="68%"></div>
-                </div>
-                <small style="color: var(--text-muted); margin-top: 10px;">Top 5% in server</small>
-            </div>
-        </section>
-
-        <!-- ACHIEVEMENTS -->
-        <h2 class="section-title font-orbitron">RECENT ACHIEVEMENTS</h2>
-        <section class="achievements-grid">
-            <div class="achievement-card">
-                <div class="ach-icon"><i class="fas fa-skull"></i></div>
-                <div class="ach-info">
-                    <h4>First Blood</h4>
-                    <p>Get 100 Headshots in Ranked</p>
-                </div>
-            </div>
-            <div class="achievement-card">
-                <div class="ach-icon" style="color: #f1c40f;"><i class="fas fa-crown"></i></div>
-                <div class="ach-info">
-                    <h4>Elite Member</h4>
-                    <p>Reach Level 40</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- EXPANDED SHOP PREVIEW -->
-        <h2 class="section-title font-orbitron">FEATURED SHOP</h2>
-        <section class="shop-grid">
-            <div class="item-card">
-                <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=300&q=80" alt="Skin" class="item-img">
-                <h3 class="font-orbitron">Neon Katana</h3>
-                <p style="color: var(--text-muted); font-size: 12px;">Legendary Weapon Skin</p>
-                <div class="item-price"><i class="fas fa-coins"></i> 1,200</div>
-                <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="buyItem('Neon Katana', 1200)">Purchase</button>
-            </div>
-            
-            <div class="item-card">
-                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=300&q=80" alt="Theme" class="item-img">
-                <h3 class="font-orbitron">Cyber Theme</h3>
-                <p style="color: var(--text-muted); font-size: 12px;">Profile Background</p>
-                <div class="item-price"><i class="fas fa-coins"></i> 500</div>
-                <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="buyItem('Cyber Theme', 500)">Purchase</button>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- ================= MODALS ================= -->
-
-    <!-- DAILY REWARD MODAL -->
-    <div class="modal-overlay" id="dailyModal">
-        <div class="modal-content">
-            <i class="fas fa-times close-modal" onclick="closeModal('dailyModal')"></i>
-            <div style="font-size: 60px; color: #f1c40f; text-shadow: 0 0 30px #f1c40f; margin-bottom: 20px;"><i class="fas fa-gift"></i></div>
-            <h2 class="font-orbitron" style="margin-bottom: 10px; color: var(--neon-cyan);">DAILY REWARD</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">You've logged in for 5 consecutive days!</p>
-            <h1 class="font-orbitron" style="color: #f1c40f; margin-bottom: 20px;">+250 COINS</h1>
-            <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="claimDailyReward()">CLAIM NOW</button>
-        </div>
-    </div>
-
-    <!-- QUESTS MODAL -->
-    <div class="modal-overlay" id="questModal">
-        <div class="modal-content">
-            <i class="fas fa-times close-modal" onclick="closeModal('questModal')"></i>
-            <h2 class="font-orbitron" style="margin-bottom: 20px; color: var(--neon-cyan);">ACTIVE QUESTS</h2>
-            
-            <div class="quest-item">
-                <div>
-                    <h4 class="font-orbitron" style="font-size: 14px;">Headhunter Pro</h4>
-                    <p style="font-size: 12px; color: var(--text-muted);">Win 5 matches in Ranked mode</p>
-                </div>
-                <button class="btn-ui btn-primary" onclick="completeQuest(this, 100)">Claim</button>
-            </div>
-            <div class="quest-item">
-                <div>
-                    <h4 class="font-orbitron" style="font-size: 14px;">Clan Supporter</h4>
-                    <p style="font-size: 12px; color: var(--text-muted);">Send a message in Clan Chat</p>
-                </div>
-                <button class="btn-ui btn-primary" onclick="completeQuest(this, 50)">Claim</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- FRIENDS MODAL -->
-    <div class="modal-overlay" id="friendsModal">
-        <div class="modal-content">
-            <i class="fas fa-times close-modal" onclick="closeModal('friendsModal')"></i>
-            <h2 class="font-orbitron" style="margin-bottom: 20px; color: var(--neon-purple);">CLAN & FRIENDS</h2>
-            
-            <div class="friend-item">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 10px; height: 10px; background: #00ff00; border-radius: 50%;"></div>
+        <!-- STATS BAR -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-panel p-5 rounded-2xl col-span-2 flex flex-col justify-center border-l-4 border-l-primary">
+                <div class="flex justify-between items-end mb-2">
                     <div>
-                        <h4 style="font-size: 14px;">ShadowNinja</h4>
-                        <small style="color: var(--text-muted);">Playing Cyber Arena</small>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">Current Rank</p>
+                        <h3 class="font-orbitron font-bold text-2xl text-white flex items-center gap-2">
+                            Level <span id="uiLevel" class="text-gradient">1</span>
+                        </h3>
                     </div>
+                    <p class="text-xs text-gray-400 font-semibold"><span id="uiXp">0</span> / <span id="uiXpMax">1000</span> XP</p>
                 </div>
-                <button class="btn-ui" style="padding: 5px 10px; font-size: 12px;">Invite</button>
+                <div class="w-full bg-white/5 rounded-full h-2.5 overflow-hidden">
+                    <div id="uiXpBar" class="bg-gradient-to-r from-primary to-gcyan h-2.5 rounded-full xp-bar-fill" style="width: 0%"></div>
+                </div>
             </div>
+
+            <div class="glass-panel p-5 rounded-2xl flex items-center gap-4 border-l-4 border-l-yellow-500">
+                <div class="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-500 text-xl">
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">G-Coins</p>
+                    <h3 id="uiCoins" class="font-orbitron font-bold text-2xl text-white">0</h3>
+                </div>
+            </div>
+
+            <div class="glass-panel p-5 rounded-2xl flex items-center gap-4 border-l-4 border-l-gpink">
+                <div class="w-12 h-12 rounded-xl bg-gpink/10 flex items-center justify-center text-gpink text-xl">
+                    <i class="fa-solid fa-fire"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">Login Streak</p>
+                    <h3 class="font-orbitron font-bold text-2xl text-white"><span id="uiStreak">0</span><span class="text-sm text-gray-400 ml-1">Days</span></h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 1. EDIT PROFILE MODAL (WITH FILE UPLOAD) -->
+    <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeEditModal()"></div>
+        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-white/20 rounded-2xl p-6 md:p-8 m-4 shadow-2xl">
+            <h2 class="font-orbitron font-bold text-2xl text-white mb-6 border-b border-white/10 pb-4">Edit Profile</h2>
             
-            <div class="friend-item">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 10px; height: 10px; background: #ff2a2a; border-radius: 50%;"></div>
+            <form id="editForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Display Name</label>
+                    <input type="text" id="editUsername" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Bio</label>
+                    <textarea id="editBio" rows="2" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary"></textarea>
+                </div>
+
+                <!-- FILE UPLOAD INPUTS -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <h4 style="font-size: 14px;">Vortex_99</h4>
-                        <small style="color: var(--text-muted);">Offline 2h ago</small>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Upload Avatar</label>
+                        <input type="file" id="inputAvatarFile" accept="image/*" class="text-xs text-gray-400 file:mr-2 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Upload Banner</label>
+                        <input type="file" id="inputBannerFile" accept="image/*" class="text-xs text-gray-400 file:mr-2 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gcyan/20 file:text-gcyan hover:file:bg-gcyan/30 cursor-pointer">
                     </div>
                 </div>
-                <button class="btn-ui" style="padding: 5px 10px; font-size: 12px;" disabled>Offline</button>
-            </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-white/10 mt-6">
+                    <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-white/5 hover:bg-white/10 text-white">Cancel</button>
+                    <button type="submit" id="saveBtn" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-primary hover:bg-primary/80 text-white">Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- FULL SHOP MODAL -->
-    <div class="modal-overlay" id="shopModal">
-        <div class="modal-content" style="max-width: 600px;">
-            <i class="fas fa-times close-modal" onclick="closeModal('shopModal')"></i>
-            <h2 class="font-orbitron" style="margin-bottom: 20px; color: gold;">G-STORE</h2>
-            <div class="shop-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
-                <div class="item-card">
-                    <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=300&q=80" alt="Skin" class="item-img">
-                    <h3 class="font-orbitron" style="font-size: 14px;">Neon Katana</h3>
-                    <div class="item-price" style="font-size: 14px;"><i class="fas fa-coins"></i> 1,200</div>
-                    <button class="btn-ui btn-primary" style="width: 100%; justify-content: center; font-size: 12px;" onclick="buyItem('Neon Katana', 1200)">Buy</button>
-                </div>
-                <div class="item-card">
-                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=300&q=80" alt="Theme" class="item-img">
-                    <h3 class="font-orbitron" style="font-size: 14px;">Cyber Theme</h3>
-                    <div class="item-price" style="font-size: 14px;"><i class="fas fa-coins"></i> 500</div>
-                    <button class="btn-ui btn-primary" style="width: 100%; justify-content: center; font-size: 12px;" onclick="buyItem('Cyber Theme', 500)">Buy</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- EDIT PROFILE MODAL -->
-    <div class="modal-overlay" id="profileModal">
-        <div class="modal-content">
-            <i class="fas fa-times close-modal" onclick="closeModal('profileModal')"></i>
-            <h2 class="font-orbitron" style="margin-bottom: 20px; color: var(--neon-cyan);">EDIT PROFILE</h2>
+    <!-- 2. IN-GAME G-COIN STORE MODAL -->
+    <div id="storeModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeStoreModal()"></div>
+        <div class="relative w-full max-w-2xl glass-panel bg-[#0a0f25] border border-yellow-500/30 rounded-2xl p-6 md:p-8 m-4 shadow-2xl max-h-[90vh] overflow-y-auto">
             
-            <div class="input-group">
-                <label>Username</label>
-                <input type="text" id="inputUsername" value="ZeroCool">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+                <div>
+                    <h2 class="font-orbitron font-bold text-2xl text-yellow-400 flex items-center gap-2">
+                        <i class="fa-solid fa-store"></i> G-Coin Store
+                    </h2>
+                    <p class="text-xs text-gray-400">Unlock Titles & Cyber Items</p>
+                </div>
+                <button onclick="closeStoreModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            <div class="input-group">
-                <label>Avatar URL</label>
-                <input type="text" id="inputAvatar" value="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?auto=format&fit=crop&w=150&q=80">
+
+            <!-- SHOP ITEMS GRID -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gcyan font-bold tracking-widest uppercase">Title</span>
+                        <h4 class="font-orbitron font-bold text-lg text-white">CYBER LEGEND</h4>
+                        <p class="text-xs text-gray-400 mt-1">Special status title badge on profile.</p>
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 200</span>
+                        <button onclick="buyItem('CYBER LEGEND', 'title', 200)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Title</button>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gpink font-bold tracking-widest uppercase">Title</span>
+                        <h4 class="font-orbitron font-bold text-lg text-white">SHADOW NINJA</h4>
+                        <p class="text-xs text-gray-400 mt-1">Exclusive title for stealth masters.</p>
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 350</span>
+                        <button onclick="buyItem('SHADOW NINJA', 'title', 350)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Title</button>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                    <div>
+                        <span class="text-[10px] text-primary font-bold tracking-widest uppercase">Neon Banner</span>
+                        <h4 class="font-orbitron font-bold text-lg text-white">Cyberpunk City</h4>
+                        <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=300&auto=format&fit=crop" class="w-full h-16 rounded-lg object-cover mt-2">
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 500</span>
+                        <button onclick="buyItem('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=2070&auto=format&fit=crop', 'banner', 500)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Banner</button>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                    <div>
+                        <span class="text-[10px] text-green-400 font-bold tracking-widest uppercase">Mech Avatar</span>
+                        <h4 class="font-orbitron font-bold text-lg text-white">Neon Mecha</h4>
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=NeonMecha" class="w-12 h-12 rounded-full bg-gray-900 border border-primary mt-2">
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 300</span>
+                        <button onclick="buyItem('https://api.dicebear.com/7.x/bottts/svg?seed=NeonMecha', 'avatar', 300)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Avatar</button>
+                    </div>
+                </div>
             </div>
-            <div class="input-group">
-                <label>Bio</label>
-                <input type="text" id="inputBio" value="Conquering realms, one server at a time.">
-            </div>
-            <button class="btn-ui btn-primary" style="width: 100%; justify-content: center;" onclick="saveProfile()">SAVE CHANGES</button>
+
         </div>
     </div>
 
-    <!-- AUDIO -->
-    <audio id="hoverSound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
-    <audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
-    <audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-04.mp3" preload="auto"></audio>
+    <!-- 3. DAILY QUESTS MODAL -->
+    <div id="questModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeQuestModal()"></div>
+        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-purple-500/30 rounded-2xl p-6 md:p-8 m-4 shadow-2xl">
+            
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+                <div>
+                    <h2 class="font-orbitron font-bold text-2xl text-purple-400 flex items-center gap-2">
+                        <i class="fa-solid fa-scroll"></i> Daily Quests
+                    </h2>
+                    <p class="text-xs text-gray-400">Complete tasks to earn extra EXP & G-Coins!</p>
+                </div>
+                <button onclick="closeQuestModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
 
-    <script>
-        // Global state for coins
-        let userCoins = 1520;
+            <div class="space-y-3" id="questListContainer">
+                <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Daily Shop Visit</h4>
+                        <p class="text-xs text-gray-400">+20 XP • +30 Coins</p>
+                    </div>
+                    <button id="questBtn_shop" onclick="claimQuestReward('shop', 20, 30)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
+                </div>
 
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    startCounters();
-                    fillProgressBars();
-                    setTimeout(() => { openModal('dailyModal'); }, 1000);
-                }, 500);
-            }, 1000);
-        });
+                <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Profile Stylist</h4>
+                        <p class="text-xs text-gray-400">+30 XP • +50 Coins</p>
+                    </div>
+                    <button id="questBtn_profile" onclick="claimQuestReward('profile', 30, 50)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
+                </div>
 
-        // Custom Cursor
-        const cursor = document.getElementById('cursor');
-        const cursorBlur = document.getElementById('cursor-blur');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursorBlur.style.left = e.clientX + 'px';
-            cursorBlur.style.top = e.clientY + 'px';
-        });
-        document.querySelectorAll('a, button, .item-card, .nav-icon').forEach(el => {
-            el.addEventListener('mouseenter', () => cursorBlur.classList.add('hovered-cursor'));
-            el.addEventListener('mouseleave', () => cursorBlur.classList.remove('hovered-cursor'));
-        });
+                <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Play Arena Match</h4>
+                        <p class="text-xs text-gray-400">+50 XP • +100 Coins</p>
+                    </div>
+                    <button id="questBtn_match" onclick="claimQuestReward('match', 50, 100)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
+                </div>
+            </div>
 
-        // Navbar Scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) navbar.classList.add('scrolled');
-            else navbar.classList.remove('scrolled');
-        });
+        </div>
+    </div>
 
-        // Notifications Dropdown
-        const notifBtn = document.getElementById('notifBtn');
-        const notifDropdown = document.getElementById('notifDropdown');
-        notifBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            notifDropdown.classList.toggle('active');
-        });
-        document.addEventListener('click', () => notifDropdown.classList.remove('active'));
+    <!-- 4. FRIENDS & REQUESTS MODAL -->
+    <div id="friendsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeFriendsModal()"></div>
+        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-cyan-500/30 rounded-2xl p-6 m-4 shadow-2xl max-h-[85vh] flex flex-col">
+            
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-4">
+                <h2 class="font-orbitron font-bold text-xl text-gcyan flex items-center gap-2">
+                    <i class="fa-solid fa-user-group"></i> Friends Hub
+                </h2>
+                <button onclick="closeFriendsModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
 
-        // Counters & Progress
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
-                if (progress < 1) window.requestAnimationFrame(step);
-            };
-            window.requestAnimationFrame(step);
-        }
-        function startCounters() {
-            document.querySelectorAll('.counter').forEach(el => {
-                const target = parseInt(el.getAttribute('data-target'));
-                animateValue(el, 0, target, 2000);
+            <!-- SEARCH BAR -->
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="searchUserInput" placeholder="Enter exact Username..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-gcyan">
+                <button onclick="searchUser()" class="px-4 py-2 bg-gcyan text-black font-bold text-xs rounded-xl hover:bg-cyan-400 transition-all">Search</button>
+            </div>
+
+            <!-- SEARCH RESULT DISPLAY -->
+            <div id="searchResultArea" class="mb-4 hidden"></div>
+
+            <!-- TABS: MY FRIENDS & REQUESTS -->
+            <div class="flex-1 overflow-y-auto space-y-4">
+                <div>
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Pending Requests</h4>
+                    <div id="requestsListContainer" class="space-y-2 text-xs text-gray-400">No pending requests</div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">My Friends</h4>
+                    <div id="friendsListContainer" class="space-y-2 text-xs text-gray-400">No friends added yet</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. REALTIME DM CHAT MODAL -->
+    <div id="chatModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeChatModal()"></div>
+        <div class="relative w-full max-w-md glass-panel bg-[#0a0f25] border border-primary/30 rounded-2xl p-4 m-4 shadow-2xl h-[550px] flex flex-col">
+            
+            <!-- CHAT HEADER -->
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <img id="chatFriendAvatar" src="" class="w-10 h-10 rounded-full border border-primary object-cover">
+                    <div>
+                        <h3 id="chatFriendName" class="font-orbitron font-bold text-sm text-white">Friend</h3>
+                        <p class="text-[10px] text-gcyan">Online Chat</p>
+                    </div>
+                </div>
+                <button onclick="closeChatModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- CHAT MESSAGES BOX -->
+            <div id="chatMessagesBox" class="flex-1 overflow-y-auto my-3 space-y-2 p-2 bg-black/20 rounded-xl text-xs">
+                <!-- Messages dynamically load here -->
+            </div>
+
+            <!-- INPUT BOX -->
+            <form id="chatForm" class="flex gap-2 border-t border-white/10 pt-3">
+                <input type="text" id="chatMessageInput" placeholder="Type a message..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-primary" required>
+                <button type="submit" class="px-4 py-2 bg-primary text-white font-bold text-xs rounded-xl hover:bg-primary/80 transition-all"><i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FIREBASE & CORE LOGIC SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            getFirestore, doc, getDoc, setDoc, updateDoc, 
+            collection, query, where, getDocs, arrayUnion, onSnapshot 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA34p9etp_BjR1O8MisCs0--C6ZSUr3JWY",
+            authDomain: "gaming-beast-f73e3.firebaseapp.com",
+            projectId: "gaming-beast-f73e3",
+            storageBucket: "gaming-beast-f73e3.firebasestorage.app",
+            messagingSenderId: "944830655424",
+            appId: "1:944830655424:web:98a2c02fe975175ca8b625"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentDbUser = null;
+        let currentUserUid = null;
+
+        const uiElements = {
+            loader: document.getElementById('pageLoader'),
+            content: document.getElementById('profileContent'),
+            banner: document.getElementById('uiBanner'),
+            avatar: document.getElementById('uiAvatar'),
+            username: document.getElementById('uiUsername'),
+            titleBadge: document.getElementById('uiTitleBadge'),
+            email: document.getElementById('uiEmail'),
+            bio: document.getElementById('uiBio'),
+            level: document.getElementById('uiLevel'),
+            xp: document.getElementById('uiXp'),
+            xpMax: document.getElementById('uiXpMax'),
+            xpBar: document.getElementById('uiXpBar'),
+            coins: document.getElementById('uiCoins'),
+            streak: document.getElementById('uiStreak')
+        };
+
+        // IMAGE COMPRESSION UTILITY (Zero Storage Expense)
+        function compressAndConvertFile(file, maxWidth, maxHeight) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+                        if (height > maxHeight) {
+                            width = Math.round((width * maxHeight) / height);
+                            height = maxHeight;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        const base64Url = canvas.toDataURL('image/jpeg', 0.7);
+                        resolve(base64Url);
+                    };
+                };
+                reader.onerror = error => reject(error);
             });
         }
-        function fillProgressBars() {
-            document.querySelectorAll('.progress-fill').forEach(bar => {
-                bar.style.width = bar.getAttribute('data-fill');
-            });
+
+        function calculateLevelData(xp) {
+            if (xp < 100) return { level: 1, xpMax: 100 };
+            if (xp < 300) return { level: 2, xpMax: 300 };
+            if (xp < 600) return { level: 3, xpMax: 600 };
+            if (xp < 1000) return { level: 4, xpMax: 1000 };
+            const level = Math.floor((xp - 1000) / 500) + 5;
+            return { level, xpMax: 1000 + (level - 4) * 500 };
         }
 
-        // SFX Setup
-        const hoverSound = document.getElementById('hoverSound');
-        const clickSound = document.getElementById('clickSound');
-        const successSound = document.getElementById('successSound');
-        hoverSound.volume = 0.2; clickSound.volume = 0.4;
-        
-        document.querySelectorAll('.btn-ui').forEach(btn => {
-            btn.addEventListener('mouseenter', () => { hoverSound.currentTime = 0; hoverSound.play().catch(e => {}); });
-            btn.addEventListener('click', () => { clickSound.currentTime = 0; clickSound.play().catch(e => {}); });
-        });
-
-        // Modal Management
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-        // Feature Actions Logic
-        function updateCoins(amount) {
-            userCoins += amount;
-            document.getElementById('coinBalance').innerText = userCoins.toLocaleString();
-        }
-
-        function claimDailyReward() {
-            successSound.play().catch(e=>{});
-            updateCoins(250);
-            const btn = document.querySelector('#dailyModal button');
-            btn.innerHTML = '<i class="fas fa-check"></i> CLAIMED';
-            btn.style.background = '#00ff00';
-            btn.style.color = '#000';
-            setTimeout(() => { closeModal('dailyModal'); }, 1000);
-        }
-
-        function buyItem(itemName, price) {
-            if (userCoins >= price) {
-                successSound.play().catch(e=>{});
-                updateCoins(-price);
-                alert(`Successfully purchased ${itemName}!`);
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                await loadUserProfile(user);
             } else {
-                alert(`Not enough G-Coins! You need ${price - userCoins} more coins.`);
+                window.location.href = 'index.html';
+            }
+        });
+
+        async function loadUserProfile(authUser) {
+            const userRef = doc(db, "users", authUser.uid);
+            const docSnap = await getDoc(userRef);
+            
+            if (docSnap.exists()) {
+                currentDbUser = docSnap.data();
+            } else {
+                currentDbUser = {
+                    username: authUser.displayName || "Gamer_" + Math.floor(Math.random() * 1000),
+                    email: authUser.email,
+                    bio: "Just a passionate gamer exploring the digital realms.",
+                    avatar: authUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${authUser.displayName || 'Gamer'}`,
+                    banner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop',
+                    title: 'NOVICE',
+                    level: 1,
+                    xp: 150,
+                    xpMax: 300,
+                    coins: 500,
+                    streak: 1,
+                    claimedQuests: [],
+                    friendsList: [],
+                    incomingRequests: []
+                };
+                await setDoc(userRef, currentDbUser);
+            }
+
+            updateProfileUI(currentDbUser);
+            uiElements.loader.style.display = 'none';
+            uiElements.content.classList.remove('hidden');
+        }
+
+        function updateProfileUI(data) {
+            uiElements.username.innerText = data.username || 'Gamer';
+            uiElements.email.innerText = data.email || '';
+            uiElements.bio.innerText = data.bio || '';
+            uiElements.avatar.src = data.avatar;
+            uiElements.banner.style.backgroundImage = `url('${data.banner}')`;
+            uiElements.titleBadge.innerText = data.title || 'NO TITLE';
+            
+            uiElements.level.innerText = data.level || 1;
+            uiElements.xp.innerText = data.xp || 0;
+            uiElements.xpMax.innerText = data.xpMax || 1000;
+            uiElements.coins.innerText = data.coins || 0;
+            uiElements.streak.innerText = data.streak || 0;
+
+            const xpPercent = Math.min((data.xp / data.xpMax) * 100, 100);
+            setTimeout(() => { uiElements.xpBar.style.width = `${xpPercent}%`; }, 500);
+        }
+
+        // 1. EDIT PROFILE LOGIC
+        const editModal = document.getElementById('editModal');
+        window.openEditModal = () => {
+            document.getElementById('editUsername').value = currentDbUser.username || '';
+            document.getElementById('editBio').value = currentDbUser.bio || '';
+            editModal.classList.remove('hidden');
+            setTimeout(() => editModal.classList.remove('opacity-0'), 10);
+        };
+        window.closeEditModal = () => {
+            editModal.classList.add('opacity-0');
+            setTimeout(() => editModal.classList.add('hidden'), 300);
+        };
+
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('saveBtn');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
+            btn.disabled = true;
+
+            try {
+                let updatedData = {
+                    username: document.getElementById('editUsername').value,
+                    bio: document.getElementById('editBio').value
+                };
+
+                const avatarFile = document.getElementById('inputAvatarFile').files[0];
+                const bannerFile = document.getElementById('inputBannerFile').files[0];
+
+                if (avatarFile) updatedData.avatar = await compressAndConvertFile(avatarFile, 300, 300);
+                if (bannerFile) updatedData.banner = await compressAndConvertFile(bannerFile, 1000, 400);
+
+                const userRef = doc(db, "users", currentUserUid);
+                await updateDoc(userRef, updatedData);
+
+                currentDbUser = { ...currentDbUser, ...updatedData };
+                updateProfileUI(currentDbUser);
+                closeEditModal();
+            } catch (error) {
+                console.error("Upload error:", error);
+                alert("Failed to update profile.");
+            } finally {
+                btn.innerHTML = "Save Changes";
+                btn.disabled = false;
+            }
+        });
+
+        // 2. IN-GAME STORE LOGIC
+        const storeModal = document.getElementById('storeModal');
+        window.openStoreModal = () => {
+            storeModal.classList.remove('hidden');
+            setTimeout(() => storeModal.classList.remove('opacity-0'), 10);
+        };
+        window.closeStoreModal = () => {
+            storeModal.classList.add('opacity-0');
+            setTimeout(() => storeModal.classList.add('hidden'), 300);
+        };
+
+        window.buyItem = async (value, type, cost) => {
+            if ((currentDbUser.coins || 0) < cost) {
+                alert("Not enough G-Coins! Earn coins by completing daily quests.");
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to buy this for ${cost} G-Coins?`)) return;
+
+            const userRef = doc(db, "users", currentUserUid);
+            const newCoins = currentDbUser.coins - cost;
+            
+            let updateObj = { coins: newCoins };
+            if (type === 'title') updateObj.title = value;
+            if (type === 'banner') updateObj.banner = value;
+            if (type === 'avatar') updateObj.avatar = value;
+
+            try {
+                await updateDoc(userRef, updateObj);
+                currentDbUser = { ...currentDbUser, ...updateObj };
+                updateProfileUI(currentDbUser);
+                alert("🎉 Item Purchased & Equipped Successfully!");
+                closeStoreModal();
+            } catch (error) {
+                console.error("Purchase error:", error);
+                alert("Failed to complete purchase.");
+            }
+        };
+
+        // 3. DAILY QUESTS LOGIC
+        const questModal = document.getElementById('questModal');
+        window.openQuestModal = () => {
+            questModal.classList.remove('hidden');
+            setTimeout(() => questModal.classList.remove('opacity-0'), 10);
+            renderQuestStatus();
+        };
+
+        window.closeQuestModal = () => {
+            questModal.classList.add('opacity-0');
+            setTimeout(() => questModal.classList.add('hidden'), 300);
+        };
+
+        function renderQuestStatus() {
+            const claimedList = currentDbUser.claimedQuests || [];
+            ['shop', 'profile', 'match'].forEach(questId => {
+                const btn = document.getElementById(`questBtn_${questId}`);
+                if (btn && claimedList.includes(questId)) {
+                    btn.innerText = "Claimed ✔";
+                    btn.disabled = true;
+                    btn.className = "px-4 py-1.5 bg-gray-700 text-gray-400 font-bold text-xs rounded-lg cursor-not-allowed";
+                }
+            });
+        }
+
+        window.claimQuestReward = async (questId, xpReward, coinReward) => {
+            const claimedList = currentDbUser.claimedQuests || [];
+            if (claimedList.includes(questId)) return;
+
+            const newXp = (currentDbUser.xp || 0) + xpReward;
+            const newCoins = (currentDbUser.coins || 0) + coinReward;
+            const { level, xpMax } = calculateLevelData(newXp);
+            
+            claimedList.push(questId);
+
+            const updateObj = {
+                xp: newXp,
+                coins: newCoins,
+                level: level,
+                xpMax: xpMax,
+                claimedQuests: claimedList
+            };
+
+            try {
+                const userRef = doc(db, "users", currentUserUid);
+                await updateDoc(userRef, updateObj);
+                
+                currentDbUser = { ...currentDbUser, ...updateObj };
+                updateProfileUI(currentDbUser);
+                renderQuestStatus();
+                
+                alert(`🎉 Quest Completed! Rewards: +${xpReward} XP & +${coinReward} G-Coins!`);
+            } catch (err) {
+                console.error("Quest claim error:", err);
+                alert("Failed to claim reward.");
+            }
+        };
+
+        // 4. FRIENDS & CHAT HUB LOGIC
+        const friendsModal = document.getElementById('friendsModal');
+        const chatModal = document.getElementById('chatModal');
+        let activeChatFriendUid = null;
+        let chatUnsubscribe = null;
+
+        window.openFriendsModal = () => {
+            friendsModal.classList.remove('hidden');
+            setTimeout(() => friendsModal.classList.remove('opacity-0'), 10);
+            renderFriendsAndRequests();
+        };
+
+        window.closeFriendsModal = () => {
+            friendsModal.classList.add('opacity-0');
+            setTimeout(() => friendsModal.classList.add('hidden'), 300);
+        };
+
+        window.searchUser = async () => {
+            const usernameQuery = document.getElementById('searchUserInput').value.trim();
+            const resultArea = document.getElementById('searchResultArea');
+            if (!usernameQuery) return;
+
+            resultArea.classList.remove('hidden');
+            resultArea.innerHTML = `<p class="text-xs text-gray-400">Searching...</p>`;
+
+            const usersRef = collection(db, "users");
+            const q = query(usersRef, where("username", "==", usernameQuery));
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                resultArea.innerHTML = `<p class="text-xs text-red-400">User not found!</p>`;
+                return;
+            }
+
+            querySnapshot.forEach((userDoc) => {
+                const uData = userDoc.data();
+                const targetUid = userDoc.id;
+
+                if (targetUid === currentUserUid) {
+                    resultArea.innerHTML = `<p class="text-xs text-yellow-400">That's your username!</p>`;
+                    return;
+                }
+
+                resultArea.innerHTML = `
+                    <div class="glass-card p-3 rounded-xl flex items-center justify-between border-gcyan/30">
+                        <div class="flex items-center gap-2">
+                            <img src="${uData.avatar}" class="w-8 h-8 rounded-full">
+                            <div>
+                                <p class="font-bold text-xs text-white">${uData.username}</p>
+                                <p class="text-[10px] text-gray-400">Lvl ${uData.level || 1}</p>
+                            </div>
+                        </div>
+                        <button onclick="sendFriendRequest('${targetUid}')" class="px-3 py-1 bg-gcyan text-black font-bold text-xs rounded-lg">Add Friend</button>
+                    </div>
+                `;
+            });
+        };
+
+        window.sendFriendRequest = async (targetUid) => {
+            try {
+                const targetRef = doc(db, "users", targetUid);
+                await updateDoc(targetRef, {
+                    incomingRequests: arrayUnion({
+                        uid: currentUserUid,
+                        username: currentDbUser.username,
+                        avatar: currentDbUser.avatar
+                    })
+                });
+                alert("🎉 Friend Request Sent!");
+                document.getElementById('searchResultArea').classList.add('hidden');
+            } catch (e) {
+                console.error(e);
+                alert("Failed to send request.");
+            }
+        };
+
+        async function renderFriendsAndRequests() {
+            const reqBox = document.getElementById('requestsListContainer');
+            const friendsBox = document.getElementById('friendsListContainer');
+
+            const requests = currentDbUser.incomingRequests || [];
+            if (requests.length === 0) {
+                reqBox.innerHTML = `<p class="text-gray-500">No pending requests</p>`;
+            } else {
+                reqBox.innerHTML = requests.map(r => `
+                    <div class="glass-card p-2 rounded-xl flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <img src="${r.avatar}" class="w-7 h-7 rounded-full">
+                            <span class="font-semibold text-white">${r.username}</span>
+                        </div>
+                        <button onclick="acceptFriendRequest('${r.uid}', '${r.username}', '${r.avatar}')" class="px-3 py-1 bg-green-500 text-black font-bold text-[10px] rounded-lg">Accept</button>
+                    </div>
+                `).join('');
+            }
+
+            const friends = currentDbUser.friendsList || [];
+            if (friends.length === 0) {
+                friendsBox.innerHTML = `<p class="text-gray-500">No friends added yet</p>`;
+            } else {
+                friendsBox.innerHTML = friends.map(f => `
+                    <div class="glass-card p-2 rounded-xl flex items-center justify-between border-white/10">
+                        <div class="flex items-center gap-2">
+                            <img src="${f.avatar}" class="w-8 h-8 rounded-full">
+                            <span class="font-semibold text-white">${f.username}</span>
+                        </div>
+                        <button onclick="openChatModal('${f.uid}', '${f.username}', '${f.avatar}')" class="px-3 py-1 bg-primary text-white font-bold text-[10px] rounded-lg flex items-center gap-1">
+                            <i class="fa-solid fa-comment"></i> Chat
+                        </button>
+                    </div>
+                `).join('');
             }
         }
 
-        function completeQuest(btn, reward) {
-            successSound.play().catch(e=>{});
-            updateCoins(reward);
-            btn.innerHTML = '<i class="fas fa-check"></i> Done';
-            btn.style.background = '#00ff00';
-            btn.style.color = '#000';
-            btn.disabled = true;
-        }
+        window.acceptFriendRequest = async (fUid, fName, fAvatar) => {
+            try {
+                const myRef = doc(db, "users", currentUserUid);
+                const updatedRequests = (currentDbUser.incomingRequests || []).filter(r => r.uid !== fUid);
+                const updatedFriends = currentDbUser.friendsList || [];
+                updatedFriends.push({ uid: fUid, username: fName, avatar: fAvatar });
 
-        function saveProfile() {
-            successSound.play().catch(e=>{});
-            document.getElementById('displayUsername').innerText = document.getElementById('inputUsername').value;
-            document.getElementById('userAvatar').src = document.getElementById('inputAvatar').value;
-            document.getElementById('displayBio').innerText = `"${document.getElementById('inputBio').value}"`;
-            closeModal('profileModal');
-            alert("Profile updated successfully!");
-        }
+                await updateDoc(myRef, {
+                    incomingRequests: updatedRequests,
+                    friendsList: updatedFriends
+                });
 
-        function shareProfile() {
-            navigator.clipboard.writeText(window.location.href);
-            alert("Profile Link Copied to Clipboard!");
-        }
+                const friendRef = doc(db, "users", fUid);
+                await updateDoc(friendRef, {
+                    friendsList: arrayUnion({ uid: currentUserUid, username: currentDbUser.username, avatar: currentDbUser.avatar })
+                });
+
+                currentDbUser.incomingRequests = updatedRequests;
+                currentDbUser.friendsList = updatedFriends;
+                renderFriendsAndRequests();
+                alert("🤝 Friend Added!");
+            } catch (e) {
+                console.error(e);
+            }
+        };
+
+        // 5. REALTIME CHAT LOGIC
+        window.openChatModal = (fUid, fName, fAvatar) => {
+            activeChatFriendUid = fUid;
+            document.getElementById('chatFriendName').innerText = fName;
+            document.getElementById('chatFriendAvatar').src = fAvatar;
+
+            chatModal.classList.remove('hidden');
+            setTimeout(() => chatModal.classList.remove('opacity-0'), 10);
+
+            const chatId = [currentUserUid, fUid].sort().join('_');
+            const chatRef = doc(db, "chats", chatId);
+
+            chatUnsubscribe = onSnapshot(chatRef, (docSnap) => {
+                const box = document.getElementById('chatMessagesBox');
+                if (docSnap.exists()) {
+                    const msgs = docSnap.data().messages || [];
+                    box.innerHTML = msgs.map(m => `
+                        <div class="flex flex-col ${m.sender === currentUserUid ? 'items-end' : 'items-start'} my-1">
+                            <div class="px-3 py-1.5 rounded-xl max-w-[80%] ${m.sender === currentUserUid ? 'bg-primary text-white' : 'bg-white/10 text-gray-200'}">
+                                ${m.text}
+                            </div>
+                        </div>
+                    `).join('');
+                    box.scrollTop = box.scrollHeight;
+                } else {
+                    box.innerHTML = `<p class="text-center text-gray-500 my-4">No messages yet. Say Hi 👋</p>`;
+                }
+            });
+        };
+
+        window.closeChatModal = () => {
+            if (chatUnsubscribe) chatUnsubscribe();
+            chatModal.classList.add('opacity-0');
+            setTimeout(() => chatModal.classList.add('hidden'), 300);
+        };
+
+        document.getElementById('chatForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('chatMessageInput');
+            const text = input.value.trim();
+            if (!text || !activeChatFriendUid) return;
+
+            const chatId = [currentUserUid, activeChatFriendUid].sort().join('_');
+            const chatRef = doc(db, "chats", chatId);
+
+            input.value = '';
+            try {
+                await setDoc(chatRef, {
+                    messages: arrayUnion({
+                        sender: currentUserUid,
+                        text: text,
+                        time: Date.now()
+                    })
+                }, { merge: true });
+            } catch (err) {
+                console.error("Chat send error:", err);
+            }
+        });
+
+        // LOGOUT LOGIC
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        });
     </script>
 </body>
 </html>
