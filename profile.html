@@ -76,6 +76,335 @@
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* ==========================================
+   PREMIUM GAMING BEAST UI V2
+========================================== */
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+background:
+radial-gradient(circle at 20% 20%,rgba(124,58,237,.22),transparent 35%),
+radial-gradient(circle at 80% 30%,rgba(6,182,212,.18),transparent 35%),
+radial-gradient(circle at 50% 90%,rgba(236,72,153,.18),transparent 35%),
+linear-gradient(135deg,#030712,#050816,#091326,#04070d);
+
+background-size:300% 300%;
+animation:auroraMove 18s ease infinite;
+position:relative;
+
+}
+
+/* animated background */
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+
+background-image:
+
+linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+
+background-size:60px 60px;
+
+mask-image:radial-gradient(circle at center,black 30%,transparent 95%);
+pointer-events:none;
+
+z-index:-2;
+
+animation:gridMove 25s linear infinite;
+
+}
+
+body::after{
+
+content:"";
+
+position:fixed;
+
+inset:-40%;
+
+background:
+
+radial-gradient(circle,#7c3aed33 0%,transparent 25%),
+radial-gradient(circle,#06b6d433 0%,transparent 30%),
+radial-gradient(circle,#ec489933 0%,transparent 22%);
+
+background-size:35% 35%;
+
+filter:blur(90px);
+
+animation:floatingGlow 18s linear infinite;
+
+pointer-events:none;
+
+z-index:-3;
+
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#040816;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:linear-gradient(#7c3aed,#06b6d4);
+
+border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:linear-gradient(#8b5cf6,#22d3ee);
+
+}
+
+/* Better Glass */
+
+.glass-panel{
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(22px);
+
+box-shadow:
+
+0 10px 40px rgba(0,0,0,.45),
+
+0 0 0 1px rgba(255,255,255,.03) inset;
+
+transition:.35s;
+
+}
+
+.glass-card{
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+overflow:hidden;
+
+position:relative;
+
+transition:.35s;
+
+}
+
+/* holographic shine */
+
+.glass-card::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:-120%;
+
+width:60%;
+
+height:100%;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.18),
+
+transparent
+
+);
+
+transition:.8s;
+
+}
+
+.glass-card:hover::before{
+
+left:160%;
+
+}
+
+.glass-card:hover{
+
+transform:
+
+translateY(-8px)
+
+scale(1.02);
+
+border-color:#7c3aed;
+
+box-shadow:
+
+0 20px 50px rgba(124,58,237,.28),
+
+0 0 30px rgba(6,182,212,.15);
+
+}
+
+/* buttons */
+
+button{
+
+transition:.28s;
+
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+
+0 0 20px rgba(124,58,237,.35);
+
+}
+
+/* inputs */
+
+input,
+textarea{
+
+transition:.3s;
+
+}
+
+input:focus,
+textarea:focus{
+
+box-shadow:
+
+0 0 0 3px rgba(124,58,237,.25);
+
+}
+
+/* image hover */
+
+img{
+
+transition:.4s;
+
+}
+
+img:hover{
+
+transform:scale(1.03);
+
+}
+
+/* text glow */
+
+.text-gradient{
+
+background:linear-gradient(90deg,#8b5cf6,#22d3ee,#ec4899);
+
+background-size:250%;
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+animation:textMove 5s linear infinite;
+
+}
+
+.neon-text-purple{
+
+text-shadow:
+
+0 0 12px #7c3aed,
+
+0 0 35px #7c3aed;
+
+}
+
+/* animations */
+
+@keyframes auroraMove{
+
+0%{background-position:0% 50%;}
+
+50%{background-position:100% 50%;}
+
+100%{background-position:0% 50%;}
+
+}
+
+@keyframes gridMove{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+100%{
+
+transform:translateY(60px);
+
+}
+
+}
+
+@keyframes floatingGlow{
+
+0%{
+
+transform:rotate(0deg);
+
+}
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+@keyframes textMove{
+
+0%{
+
+background-position:0%;
+
+}
+
+100%{
+
+background-position:200%;
+
+}
+
+}
     </style>
 </head>
 <body class="min-h-screen flex flex-col pb-20">
