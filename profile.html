@@ -1227,6 +1227,222 @@ position:relative;
 z-index:2;
 
 }
+        /*=========================
+QUEST
+=========================*/
+
+.questCard{
+
+transition:.35s;
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.questCard:hover{
+
+transform:
+
+translateY(-8px);
+
+border-color:#7c3aed;
+
+box-shadow:
+
+0 15px 40px rgba(124,58,237,.22);
+
+}
+
+/*=========================
+FRIENDS
+=========================*/
+
+.friendCard,
+.requestCard{
+
+transition:.35s;
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.friendCard:hover,
+.requestCard:hover{
+
+transform:
+
+translateX(8px);
+
+border-color:#06b6d4;
+
+box-shadow:
+
+0 10px 35px rgba(6,182,212,.18);
+
+}
+
+/*=========================
+INPUTS
+=========================*/
+
+.premiumInput,
+.chatInput{
+
+background:
+
+rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+padding:14px 18px;
+
+border-radius:16px;
+
+color:white;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+.premiumInput:focus,
+.chatInput:focus{
+
+border-color:#7c3aed;
+
+box-shadow:
+
+0 0 25px rgba(124,58,237,.2);
+
+}
+
+/*=========================
+CHAT
+=========================*/
+
+.chatBox{
+
+background:
+
+linear-gradient(
+
+180deg,
+
+rgba(255,255,255,.04),
+
+rgba(255,255,255,.02)
+
+);
+
+border-radius:22px;
+
+border:1px solid rgba(255,255,255,.06);
+
+}
+
+.sendBtn{
+
+padding:14px 18px;
+
+border-radius:16px;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+#7c3aed,
+
+#06b6d4
+
+);
+
+font-weight:800;
+
+color:white;
+
+transition:.3s;
+
+}
+
+.sendBtn:hover{
+
+transform:
+
+translateY(-3px);
+
+box-shadow:
+
+0 12px 30px rgba(124,58,237,.35);
+
+}
+
+/*=========================
+MODAL
+=========================*/
+
+.closeModalBtn{
+
+width:42px;
+
+height:42px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border-radius:12px;
+
+background:rgba(255,255,255,.05);
+
+transition:.3s;
+
+}
+
+.closeModalBtn:hover{
+
+background:#ef4444;
+
+color:white;
+
+transform:rotate(90deg);
+
+}
+        #questModal,
+#friendsModal,
+#chatModal,
+#storeModal,
+#editModal{
+
+backdrop-filter:blur(8px);
+
+animation:fadeModal .3s ease;
+
+}
+
+@keyframes fadeModal{
+
+from{
+
+opacity:0;
+
+transform:scale(.95);
+
+}
+
+to{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+}
     </style>
 </head>
 <body class="min-h-screen flex flex-col pb-20">
@@ -1740,7 +1956,7 @@ Keep playing daily!
                     </h2>
                     <p class="text-xs text-gray-400">Unlock Titles & Cyber Items</p>
                 </div>
-                <button onclick="closeStoreModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="closeStoreModal()" class="closeModalBtn"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
             <!-- SHOP ITEMS GRID -->
@@ -1812,7 +2028,7 @@ Keep playing daily!
             </div>
 
             <div class="space-y-3" id="questListContainer">
-                <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                <div class="questCard glass-card p-5 rounded-[22px] flex items-center justify-between border-white/10">
                     <div>
                         <h4 class="font-bold text-sm text-white">Daily Shop Visit</h4>
                         <p class="text-xs text-gray-400">+20 XP • +30 Coins</p>
@@ -1820,7 +2036,7 @@ Keep playing daily!
                     <button id="questBtn_shop" onclick="claimQuestReward('shop', 20, 30)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
                 </div>
 
-                <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                <div class="questCard glass-card p-5 rounded-[22px] flex items-center justify-between border-white/10">
                     <div>
                         <h4 class="font-bold text-sm text-white">Profile Stylist</h4>
                         <p class="text-xs text-gray-400">+30 XP • +50 Coins</p>
@@ -1828,7 +2044,7 @@ Keep playing daily!
                     <button id="questBtn_profile" onclick="claimQuestReward('profile', 30, 50)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
                 </div>
 
-                <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                <div class="questCard glass-card p-5 rounded-[22px] flex items-center justify-between border-white/10">
                     <div>
                         <h4 class="font-bold text-sm text-white">Play Arena Match</h4>
                         <p class="text-xs text-gray-400">+50 XP • +100 Coins</p>
@@ -1854,7 +2070,7 @@ Keep playing daily!
 
             <!-- SEARCH BAR -->
             <div class="flex gap-2 mb-4">
-                <input type="text" id="searchUserInput" placeholder="Enter exact Username..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-gcyan">
+                <input type="text" id="searchUserInput" placeholder="Enter exact Username..." border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-gcyan">
                 <button onclick="searchUser()" class="px-4 py-2 bg-gcyan text-black font-bold text-xs rounded-xl hover:bg-cyan-400 transition-all">Search</button>
             </div>
 
@@ -1894,14 +2110,15 @@ Keep playing daily!
             </div>
 
             <!-- CHAT MESSAGES BOX -->
-            <div id="chatMessagesBox" class="flex-1 overflow-y-auto my-3 space-y-2 p-2 bg-black/20 rounded-xl text-xs">
+            <div id="chatMessagesBox"
+class="chatBox flex-1 overflow-y-auto my-4 space-y-3 p-5 text-sm">
                 <!-- Messages dynamically load here -->
             </div>
 
             <!-- INPUT BOX -->
             <form id="chatForm" class="flex gap-2 border-t border-white/10 pt-3">
-                <input type="text" id="chatMessageInput" placeholder="Type a message..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-primary" required>
-                <button type="submit" class="px-4 py-2 bg-primary text-white font-bold text-xs rounded-xl hover:bg-primary/80 transition-all"><i class="fa-solid fa-paper-plane"></i></button>
+                <input type="text" id="chatMessageInput" placeholder="Type a message..." class="premiumInput flex-1 border border-white/10 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-primary" required>
+                <button type="submit" class="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
             </form>
         </div>
     </div>
@@ -2278,7 +2495,7 @@ Keep playing daily!
                 reqBox.innerHTML = `<p class="text-gray-500">No pending requests</p>`;
             } else {
                 reqBox.innerHTML = requests.map(r => `
-                    <div class="glass-card p-2 rounded-xl flex items-center justify-between">
+                    <div class="friendCard glass-card p-3 rounded-[18px] flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <img src="${r.avatar}" class="w-7 h-7 rounded-full">
                             <span class="font-semibold text-white">${r.username}</span>
@@ -2293,7 +2510,7 @@ Keep playing daily!
                 friendsBox.innerHTML = `<p class="text-gray-500">No friends added yet</p>`;
             } else {
                 friendsBox.innerHTML = friends.map(f => `
-                    <div class="glass-card p-2 rounded-xl flex items-center justify-between border-white/10">
+                    <div class="friendCard glass-card p-3 rounded-[18px] flex items-center justify-between border-white/10">
                         <div class="flex items-center gap-2">
                             <img src="${f.avatar}" class="w-8 h-8 rounded-full">
                             <span class="font-semibold text-white">${f.username}</span>
