@@ -285,24 +285,36 @@
         
         <!-- PROFILE HERO -->
         <section class="hero-card">
-            <div class="banner"></div>
+           <div class="banner" id="uiBanner"></div>
             <div class="profile-info-wrap">
                 <div style="display: flex; align-items: flex-end; flex-wrap: wrap;">
                     <div class="pfp-container">
-                        <img src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?auto=format&fit=crop&w=150&q=80" alt="Avatar">
+                       <img id="uiAvatar" src="" alt="Avatar">
                         <div class="status-dot"></div>
-                        <div class="level-badge font-orbitron">LVL 42</div>
-                    </div>
+                        <div class="level-badge font-orbitron">
+                  LVL <span id="uiLevel">1</span></div>
                     <div class="user-details">
-                        <h1 class="font-orbitron">ZeroCool <span>#8921</span></h1>
-                        <p style="color: #d1d1d1;">"Conquering realms, one server at a time."</p>
-                        <div class="user-meta">
-                            <span><i class="fas fa-calendar-alt"></i> Joined 2022</span>
-                            <span><i class="fas fa-map-marker-alt"></i> India</span>
-                            <span><i class="fab fa-discord"></i> ZeroCool#1234</span>
-                        </div>
+                       <h1 class="font-orbitron">
+<span id="uiUsername">Loading...</span><h1>
+                        <p id="uiBio" style="color:#d1d1d1;">Loading...</p>
+                       <div class="user-meta">
+
+<span>
+<i class="fas fa-envelope"></i>
+<span id="uiEmail"></span>
+</span>
+
+<span>
+<i class="fas fa-fire"></i>
+Streak :
+<span id="uiStreak"></span>
+</span>
+
+<span>
+<i class="fas fa-crown"></i>
+<span id="uiTitleBadge"></span>
+</span>
                     </div>
-                </div>
                 <div class="hero-actions">
                     <button class="btn-ui" onclick="editProfile()"><i class="fas fa-pen"></i> Edit Profile</button>
                     <button class="btn-ui btn-primary" onclick="shareProfile()"><i class="fas fa-share-alt"></i> Share</button>
