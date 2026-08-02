@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gamer Profile - Gaming Beast</title>
+    <title>Gamer Profile - Gaming Beast (Premium)</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
@@ -14,15 +14,30 @@
             theme: {
                 extend: {
                     colors: {
-                        darkbg: '#050816',
-                        primary: '#7C3AED',
+                        darkbg: '#03050a', /* Darker premium bg */
+                        primary: '#8b5cf6', /* Brighter purple */
+                        primaryDark: '#5b21b6',
                         gblue: '#3B82F6',
-                        gcyan: '#06B6D4',
-                        gpink: '#EC4899',
+                        gcyan: '#00F0FF', /* Cyberpunk cyan */
+                        gpink: '#FF0055', /* Cyberpunk pink */
                     },
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                         orbitron: ['Orbitron', 'sans-serif'],
+                    },
+                    animation: {
+                        'glow-pulse': 'glow-pulse 3s ease-in-out infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'glow-pulse': {
+                            '0%': { boxShadow: '0 0 10px rgba(139, 92, 246, 0.3)' },
+                            '100%': { boxShadow: '0 0 30px rgba(139, 92, 246, 0.7)' }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
                     }
                 }
             }
@@ -30,121 +45,180 @@
     </script>
 
     <style>
+        /* Custom Scrollbar for Premium Feel */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #03050a; }
+        ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
+
         body {
-            background-color: #050816;
+            background-color: #03050a;
+            /* Premium gradient background with soft glowing orbs */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(255, 0, 85, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
             color: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
         }
 
+        /* Enhanced Glassmorphism */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.04);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0.2) 100%);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .glass-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: #7C3AED;
-            transform: translateY(-2px);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px -5px rgba(139, 92, 246, 0.3);
         }
 
-        .neon-text-purple { text-shadow: 0 0 15px rgba(124, 58, 237, 0.6); }
+        /* Premium Text Effects */
+        .neon-text-purple { 
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3); 
+        }
         .text-gradient {
-            background: linear-gradient(to right, #7C3AED, #06B6D4);
+            background: linear-gradient(to right, #8b5cf6, #00F0FF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradientMove 3s linear infinite;
         }
 
-        .avatar-glow { box-shadow: 0 0 25px rgba(124, 58, 237, 0.5); }
-        .banner-overlay { background: linear-gradient(to top, #050816 0%, transparent 100%); }
-        .xp-bar-fill { transition: width 1.5s ease; }
+        @keyframes gradientMove {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
 
+        /* Image & Banner Polish */
+        .avatar-glow { 
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.4), inset 0 0 20px rgba(0,0,0,0.5); 
+            border: 3px solid rgba(139, 92, 246, 0.8);
+        }
+        .banner-overlay { 
+            background: linear-gradient(to top, #03050a 0%, rgba(3,5,10,0.6) 50%, transparent 100%); 
+        }
+        
+        .xp-bar-fill { 
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Premium Loader */
         .loader {
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top: 3px solid #06B6D4;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top: 3px solid #00F0FF;
+            border-right: 3px solid #8b5cf6;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Button hover glares */
+        .btn-premium {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg);
+            transition: all 0.5s;
+        }
+        .btn-premium:hover::after {
+            left: 150%;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col pb-20">
 
     <!-- Loader -->
-    <div id="pageLoader" class="fixed inset-0 z-50 bg-darkbg flex flex-col items-center justify-center">
-        <div class="loader mb-4"></div>
-        <p class="font-orbitron font-bold text-gcyan tracking-widest animate-pulse">SYNCING GAMER DATA...</p>
+    <div id="pageLoader" class="fixed inset-0 z-50 bg-darkbg/95 backdrop-blur-xl flex flex-col items-center justify-center">
+        <div class="loader mb-6 shadow-[0_0_20px_#00F0FF]"></div>
+        <p class="font-orbitron font-bold text-gcyan tracking-widest animate-pulse drop-shadow-[0_0_8px_#00F0FF]">SYNCING GAMER DATA...</p>
     </div>   
     
     <!-- Navbar -->
-    <nav class="w-full glass-panel border-b border-white/10 px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-40">
-        <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-            <i class="fa-solid fa-arrow-left"></i>
+    <nav class="w-full glass-panel px-4 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-40 border-b border-white/5">
+        <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-white hover:drop-shadow-[0_0_5px_#fff] transition-all group">
+            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                <i class="fa-solid fa-arrow-left text-sm"></i>
+            </div>
             <span class="font-semibold text-sm">Dashboard</span>
         </a>
-        <div class="font-orbitron font-black text-xl tracking-wider text-gradient neon-text-purple">
+        <div class="font-orbitron font-black text-2xl tracking-wider text-gradient neon-text-purple cursor-pointer hover:scale-105 transition-transform">
             GAMING<span class="text-white">BEAST</span>
         </div>
         
         <!-- ACTION BUTTONS -->
-        <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+        <div class="flex items-center gap-2 sm:gap-4 flex-wrap">
             <!-- QUESTS BUTTON -->
-            <button onclick="openQuestModal()" class="px-3.5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center gap-2 shadow-lg shadow-purple-500/20 transition-all">
+            <button onclick="openQuestModal()" class="btn-premium px-4 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center gap-2 shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] transition-all active:scale-95">
                 <i class="fa-solid fa-scroll"></i>
                 <span>Quests</span>
             </button>
 
             <!-- FRIENDS & CHAT BUTTON -->
-            <button onclick="openFriendsModal()" class="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition-all">
+            <button onclick="openFriendsModal()" class="btn-premium px-4 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center gap-2 shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:shadow-[0_0_25px_rgba(0,240,255,0.5)] transition-all active:scale-95">
                 <i class="fa-solid fa-user-group"></i>
                 <span>Friends</span>
             </button>
 
             <!-- STORE BUTTON -->
-            <button onclick="openStoreModal()" class="px-3.5 py-2 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 rounded-xl font-bold text-xs sm:text-sm text-black flex items-center gap-2 shadow-lg shadow-yellow-500/20 transition-all">
+            <button onclick="openStoreModal()" class="btn-premium px-4 py-2.5 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 rounded-xl font-bold text-xs sm:text-sm text-black flex items-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.3)] hover:shadow-[0_0_25px_rgba(234,179,8,0.5)] transition-all active:scale-95">
                 <i class="fa-solid fa-store"></i>
                 <span>G-Shop</span>
             </button>
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 mt-6 space-y-6 hidden" id="profileContent">
+    <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 mt-8 space-y-8 hidden animate-[fadeIn_0.5s_ease-out]" id="profileContent">
         
         <!-- BANNER & AVATAR SECTION -->
-        <section class="w-full relative rounded-3xl overflow-hidden glass-panel border-white/10">
-            <div id="uiBanner" class="w-full h-48 md:h-72 bg-cover bg-center bg-no-repeat transition-all duration-500" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
+        <section class="w-full relative rounded-[2rem] overflow-hidden glass-panel border border-white/10 shadow-2xl">
+            <div id="uiBanner" class="w-full h-56 md:h-80 bg-cover bg-center bg-no-repeat transition-all duration-700 hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');">
                 <div class="absolute inset-0 banner-overlay"></div>
             </div>
 
-            <div class="px-6 md:px-10 pb-8 flex flex-col md:flex-row items-center md:items-end gap-6 -mt-16 md:-mt-20 relative z-10">
-                <div class="relative">
-                    <img id="uiAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Gamer" alt="Avatar" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-darkbg bg-gray-900 object-cover avatar-glow z-20 relative">
+            <div class="px-6 md:px-12 pb-10 flex flex-col md:flex-row items-center md:items-end gap-8 -mt-20 md:-mt-24 relative z-10">
+                <div class="relative group cursor-pointer">
+                    <img id="uiAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Gamer" alt="Avatar" class="w-36 h-36 md:w-44 md:h-44 rounded-full bg-[#0a0f25] object-cover avatar-glow z-20 relative transition-transform duration-500 group-hover:scale-105">
+                    <!-- Subtle ring animation -->
+                    <div class="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-20 group-hover:opacity-40"></div>
                 </div>
 
-                <div class="flex-1 text-center md:text-left space-y-1 mt-4 md:mt-0">
-                    <div class="flex items-center justify-center md:justify-start gap-3 flex-wrap">
-                        <h1 id="uiUsername" class="font-orbitron font-black text-3xl md:text-4xl text-white">Loading...</h1>
-                        <span id="uiTitleBadge" class="bg-primary/30 border border-primary text-primary px-3 py-1 rounded-full text-xs font-bold font-orbitron">NO TITLE</span>
+                <div class="flex-1 text-center md:text-left space-y-2 mt-4 md:mt-0">
+                    <div class="flex items-center justify-center md:justify-start gap-4 flex-wrap">
+                        <h1 id="uiUsername" class="font-orbitron font-black text-4xl md:text-5xl text-white drop-shadow-lg">Loading...</h1>
+                        <span id="uiTitleBadge" class="bg-primary/20 border border-primary/50 text-primary px-4 py-1.5 rounded-full text-xs font-bold font-orbitron shadow-[0_0_10px_rgba(139,92,246,0.3)] backdrop-blur-md">NO TITLE</span>
                     </div>
-                    <p id="uiEmail" class="text-gcyan text-sm font-medium tracking-wide"></p>
-                    <p id="uiBio" class="text-gray-400 text-sm max-w-2xl mt-2 line-clamp-2">Just a passionate gamer exploring the digital realms.</p>
+                    <p id="uiEmail" class="text-gcyan text-sm font-semibold tracking-wider uppercase opacity-80"></p>
+                    <p id="uiBio" class="text-gray-300 text-sm md:text-base max-w-2xl mt-3 line-clamp-2 leading-relaxed">Just a passionate gamer exploring the digital realms.</p>
                 </div>
 
-                <div class="flex gap-3">
-                    <button onclick="openEditModal()" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl font-semibold text-sm transition-all flex items-center gap-2">
+                <div class="flex gap-4 mt-6 md:mt-0">
+                    <button onclick="openEditModal()" class="btn-premium px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/30 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-pen"></i> Edit Profile
                     </button>
-                    <button id="logoutBtn" class="px-4 py-2.5 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 rounded-xl font-semibold transition-all duration-200">
+                    <button id="logoutBtn" class="px-5 py-3 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/20 hover:border-red-500 rounded-xl font-semibold transition-all duration-300 shadow-[0_0_0_rgba(239,68,68,0)] hover:shadow-[0_0_20px_rgba(239,68,68,0.5)]">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
@@ -152,261 +226,287 @@
         </section>
 
         <!-- STATS BAR -->
-        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="glass-panel p-5 rounded-2xl col-span-2 flex flex-col justify-center border-l-4 border-l-primary">
-                <div class="flex justify-between items-end mb-2">
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass-panel p-6 rounded-3xl col-span-2 flex flex-col justify-center relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary to-gcyan group-hover:w-2 transition-all duration-300"></div>
+                <div class="flex justify-between items-end mb-4 pl-4">
                     <div>
-                        <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">Current Rank</p>
-                        <h3 class="font-orbitron font-bold text-2xl text-white flex items-center gap-2">
+                        <p class="text-[11px] text-gray-400 uppercase tracking-widest font-bold mb-1">Current Rank</p>
+                        <h3 class="font-orbitron font-black text-3xl text-white flex items-center gap-3">
                             Level <span id="uiLevel" class="text-gradient">1</span>
                         </h3>
                     </div>
-                    <p class="text-xs text-gray-400 font-semibold"><span id="uiXp">0</span> / <span id="uiXpMax">1000</span> XP</p>
+                    <div class="text-right">
+                        <p class="text-xs text-primary font-bold bg-primary/10 px-3 py-1 rounded-full"><span id="uiXp">0</span> / <span id="uiXpMax">1000</span> XP</p>
+                    </div>
                 </div>
-                <div class="w-full bg-white/5 rounded-full h-2.5 overflow-hidden">
-                    <div id="uiXpBar" class="bg-gradient-to-r from-primary to-gcyan h-2.5 rounded-full xp-bar-fill" style="width: 0%"></div>
+                <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden border border-white/5 ml-2">
+                    <div id="uiXpBar" class="bg-gradient-to-r from-primary via-gblue to-gcyan h-full rounded-full xp-bar-fill relative">
+                        <div class="absolute inset-0 bg-white/20 w-full h-full animate-pulse"></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="glass-panel p-5 rounded-2xl flex items-center gap-4 border-l-4 border-l-yellow-500">
-                <div class="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-500 text-xl">
+            <div class="glass-panel p-6 rounded-3xl flex items-center gap-5 relative overflow-hidden group hover:-translate-y-1 transition-transform">
+                <div class="absolute top-0 left-0 w-1 h-full bg-yellow-500"></div>
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-500/20 to-amber-500/5 border border-yellow-500/20 flex items-center justify-center text-yellow-400 text-2xl shadow-[0_0_15px_rgba(234,179,8,0.15)] group-hover:scale-110 transition-transform">
                     <i class="fa-solid fa-coins"></i>
                 </div>
                 <div>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">G-Coins</p>
-                    <h3 id="uiCoins" class="font-orbitron font-bold text-2xl text-white">0</h3>
+                    <p class="text-[11px] text-gray-400 uppercase tracking-widest font-bold mb-1">G-Coins</p>
+                    <h3 id="uiCoins" class="font-orbitron font-bold text-3xl text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">0</h3>
                 </div>
             </div>
 
-            <div class="glass-panel p-5 rounded-2xl flex items-center gap-4 border-l-4 border-l-gpink">
-                <div class="w-12 h-12 rounded-xl bg-gpink/10 flex items-center justify-center text-gpink text-xl">
+            <div class="glass-panel p-6 rounded-3xl flex items-center gap-5 relative overflow-hidden group hover:-translate-y-1 transition-transform">
+                <div class="absolute top-0 left-0 w-1 h-full bg-gpink"></div>
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500/20 to-rose-500/5 border border-pink-500/20 flex items-center justify-center text-gpink text-2xl shadow-[0_0_15px_rgba(236,72,153,0.15)] group-hover:scale-110 transition-transform">
                     <i class="fa-solid fa-fire"></i>
                 </div>
                 <div>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">Login Streak</p>
-                    <h3 class="font-orbitron font-bold text-2xl text-white"><span id="uiStreak">0</span><span class="text-sm text-gray-400 ml-1">Days</span></h3>
+                    <p class="text-[11px] text-gray-400 uppercase tracking-widest font-bold mb-1">Login Streak</p>
+                    <h3 class="font-orbitron font-bold text-3xl text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]"><span id="uiStreak">0</span><span class="text-sm text-gray-400 ml-1 font-sans">Days</span></h3>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- 1. EDIT PROFILE MODAL (WITH FILE UPLOAD) -->
-    <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeEditModal()"></div>
-        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-white/20 rounded-2xl p-6 md:p-8 m-4 shadow-2xl">
-            <h2 class="font-orbitron font-bold text-2xl text-white mb-6 border-b border-white/10 pb-4">Edit Profile</h2>
+    <!-- 1. EDIT PROFILE MODAL -->
+    <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+        <div class="absolute inset-0 bg-darkbg/80 backdrop-blur-md" onclick="closeEditModal()"></div>
+        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25]/90 border border-white/10 rounded-[2rem] p-8 m-4 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform scale-95 transition-transform duration-300" id="editModalContent">
+            <h2 class="font-orbitron font-bold text-3xl text-white mb-6 border-b border-white/10 pb-4">Edit <span class="text-primary">Profile</span></h2>
             
-            <form id="editForm" class="space-y-4">
+            <form id="editForm" class="space-y-5">
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Display Name</label>
-                    <input type="text" id="editUsername" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary">
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Display Name</label>
+                    <input type="text" id="editUsername" class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
                 </div>
                 
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Bio</label>
-                    <textarea id="editBio" rows="2" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary"></textarea>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Bio</label>
+                    <textarea id="editBio" rows="3" class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none"></textarea>
                 </div>
 
-                <!-- FILE UPLOAD INPUTS -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Upload Avatar</label>
-                        <input type="file" id="inputAvatarFile" accept="image/*" class="text-xs text-gray-400 file:mr-2 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer">
+                        <label class="block text-[10px] font-bold text-primary uppercase tracking-widest mb-2"><i class="fa-solid fa-image mr-1"></i> Avatar</label>
+                        <input type="file" id="inputAvatarFile" accept="image/*" class="w-full text-xs text-gray-400 file:mr-2 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer transition-colors">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Upload Banner</label>
-                        <input type="file" id="inputBannerFile" accept="image/*" class="text-xs text-gray-400 file:mr-2 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gcyan/20 file:text-gcyan hover:file:bg-gcyan/30 cursor-pointer">
+                        <label class="block text-[10px] font-bold text-gcyan uppercase tracking-widest mb-2"><i class="fa-solid fa-panorama mr-1"></i> Banner</label>
+                        <input type="file" id="inputBannerFile" accept="image/*" class="w-full text-xs text-gray-400 file:mr-2 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gcyan/20 file:text-gcyan hover:file:bg-gcyan/30 cursor-pointer transition-colors">
                     </div>
                 </div>
 
                 <div class="flex justify-end gap-3 pt-4 border-t border-white/10 mt-6">
-                    <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-white/5 hover:bg-white/10 text-white">Cancel</button>
-                    <button type="submit" id="saveBtn" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-primary hover:bg-primary/80 text-white">Save Changes</button>
+                    <button type="button" onclick="closeEditModal()" class="px-6 py-2.5 rounded-xl font-bold text-sm bg-white/5 hover:bg-white/10 text-white transition-colors">Cancel</button>
+                    <button type="submit" id="saveBtn" class="btn-premium px-6 py-2.5 rounded-xl font-bold text-sm bg-primary hover:bg-primaryDark text-white shadow-[0_0_15px_rgba(139,92,246,0.3)] transition-all">Save Changes</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- 2. IN-GAME G-COIN STORE MODAL -->
-    <div id="storeModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeStoreModal()"></div>
-        <div class="relative w-full max-w-2xl glass-panel bg-[#0a0f25] border border-yellow-500/30 rounded-2xl p-6 md:p-8 m-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <div id="storeModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+        <div class="absolute inset-0 bg-darkbg/80 backdrop-blur-md" onclick="closeStoreModal()"></div>
+        <div class="relative w-full max-w-3xl glass-panel bg-[#0a0f25]/90 border border-yellow-500/20 rounded-[2rem] p-8 m-4 shadow-[0_0_50px_rgba(234,179,8,0.1)] max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300">
             
-            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+            <div class="flex justify-between items-start border-b border-white/10 pb-6 mb-6">
                 <div>
-                    <h2 class="font-orbitron font-bold text-2xl text-yellow-400 flex items-center gap-2">
-                        <i class="fa-solid fa-store"></i> G-Coin Store
+                    <h2 class="font-orbitron font-black text-3xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-600 flex items-center gap-3 drop-shadow-sm">
+                        <i class="fa-solid fa-store text-yellow-500"></i> G-Coin Store
                     </h2>
-                    <p class="text-xs text-gray-400">Unlock Titles & Cyber Items</p>
+                    <p class="text-sm text-gray-400 mt-1">Unlock exclusive Titles, Banners & Cyber Items</p>
                 </div>
-                <button onclick="closeStoreModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="closeStoreModal()" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-500/20 transition-all"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
             <!-- SHOP ITEMS GRID -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5">
+                <!-- Shop items with upgraded cards -->
+                <div class="glass-card p-5 rounded-2xl flex flex-col justify-between border-white/5 hover:border-yellow-500/30">
                     <div>
-                        <span class="text-[10px] text-gcyan font-bold tracking-widest uppercase">Title</span>
-                        <h4 class="font-orbitron font-bold text-lg text-white">CYBER LEGEND</h4>
-                        <p class="text-xs text-gray-400 mt-1">Special status title badge on profile.</p>
+                        <span class="inline-block px-2 py-1 bg-gcyan/10 text-gcyan text-[10px] font-bold tracking-widest uppercase rounded mb-2">Title</span>
+                        <h4 class="font-orbitron font-bold text-xl text-white">CYBER LEGEND</h4>
+                        <p class="text-xs text-gray-400 mt-2">Special status title badge displayed on your public profile.</p>
                     </div>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 200</span>
-                        <button onclick="buyItem('CYBER LEGEND', 'title', 200)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Title</button>
+                    <div class="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
+                        <span class="font-orbitron font-black text-xl text-yellow-400 drop-shadow-[0_0_5px_rgba(234,179,8,0.5)]"><i class="fa-solid fa-coins"></i> 200</span>
+                        <button onclick="buyItem('CYBER LEGEND', 'title', 200)" class="btn-premium px-5 py-2 bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-bold text-sm rounded-xl hover:shadow-[0_0_15px_rgba(234,179,8,0.4)] transition-all">Purchase</button>
                     </div>
                 </div>
 
-                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                <div class="glass-card p-5 rounded-2xl flex flex-col justify-between border-white/5 hover:border-yellow-500/30">
                     <div>
-                        <span class="text-[10px] text-gpink font-bold tracking-widest uppercase">Title</span>
-                        <h4 class="font-orbitron font-bold text-lg text-white">SHADOW NINJA</h4>
-                        <p class="text-xs text-gray-400 mt-1">Exclusive title for stealth masters.</p>
+                        <span class="inline-block px-2 py-1 bg-gpink/10 text-gpink text-[10px] font-bold tracking-widest uppercase rounded mb-2">Title</span>
+                        <h4 class="font-orbitron font-bold text-xl text-white">SHADOW NINJA</h4>
+                        <p class="text-xs text-gray-400 mt-2">Exclusive title for stealth masters of the arena.</p>
                     </div>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 350</span>
-                        <button onclick="buyItem('SHADOW NINJA', 'title', 350)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Title</button>
+                    <div class="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
+                        <span class="font-orbitron font-black text-xl text-yellow-400 drop-shadow-[0_0_5px_rgba(234,179,8,0.5)]"><i class="fa-solid fa-coins"></i> 350</span>
+                        <button onclick="buyItem('SHADOW NINJA', 'title', 350)" class="btn-premium px-5 py-2 bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-bold text-sm rounded-xl hover:shadow-[0_0_15px_rgba(234,179,8,0.4)] transition-all">Purchase</button>
                     </div>
                 </div>
 
-                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                <div class="glass-card p-5 rounded-2xl flex flex-col justify-between border-white/5 hover:border-yellow-500/30">
                     <div>
-                        <span class="text-[10px] text-primary font-bold tracking-widest uppercase">Neon Banner</span>
-                        <h4 class="font-orbitron font-bold text-lg text-white">Cyberpunk City</h4>
-                        <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=300&auto=format&fit=crop" class="w-full h-16 rounded-lg object-cover mt-2">
+                        <span class="inline-block px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold tracking-widest uppercase rounded mb-2">Neon Banner</span>
+                        <h4 class="font-orbitron font-bold text-xl text-white mb-3">Cyberpunk City</h4>
+                        <div class="rounded-xl overflow-hidden shadow-lg border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=300&auto=format&fit=crop" class="w-full h-24 object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
                     </div>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 500</span>
-                        <button onclick="buyItem('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=2070&auto=format&fit=crop', 'banner', 500)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Banner</button>
+                    <div class="flex items-center justify-between mt-5 pt-4 border-t border-white/5">
+                        <span class="font-orbitron font-black text-xl text-yellow-400 drop-shadow-[0_0_5px_rgba(234,179,8,0.5)]"><i class="fa-solid fa-coins"></i> 500</span>
+                        <button onclick="buyItem('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=2070&auto=format&fit=crop', 'banner', 500)" class="btn-premium px-5 py-2 bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-bold text-sm rounded-xl hover:shadow-[0_0_15px_rgba(234,179,8,0.4)] transition-all">Purchase</button>
                     </div>
                 </div>
 
-                <div class="glass-card p-4 rounded-xl flex flex-col justify-between border-white/10">
+                <div class="glass-card p-5 rounded-2xl flex flex-col justify-between border-white/5 hover:border-yellow-500/30">
                     <div>
-                        <span class="text-[10px] text-green-400 font-bold tracking-widest uppercase">Mech Avatar</span>
-                        <h4 class="font-orbitron font-bold text-lg text-white">Neon Mecha</h4>
-                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=NeonMecha" class="w-12 h-12 rounded-full bg-gray-900 border border-primary mt-2">
+                        <span class="inline-block px-2 py-1 bg-green-400/10 text-green-400 text-[10px] font-bold tracking-widest uppercase rounded mb-2">Mech Avatar</span>
+                        <h4 class="font-orbitron font-bold text-xl text-white mb-3">Neon Mecha</h4>
+                        <div class="w-20 h-20 rounded-2xl bg-[#0a0f25] border border-primary/50 shadow-[0_0_15px_rgba(139,92,246,0.2)] flex items-center justify-center p-1">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=NeonMecha" class="w-full h-full object-cover">
+                        </div>
                     </div>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="font-orbitron font-bold text-yellow-400"><i class="fa-solid fa-coins"></i> 300</span>
-                        <button onclick="buyItem('https://api.dicebear.com/7.x/bottts/svg?seed=NeonMecha', 'avatar', 300)" class="px-4 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs rounded-lg transition-all">Buy Avatar</button>
+                    <div class="flex items-center justify-between mt-5 pt-4 border-t border-white/5">
+                        <span class="font-orbitron font-black text-xl text-yellow-400 drop-shadow-[0_0_5px_rgba(234,179,8,0.5)]"><i class="fa-solid fa-coins"></i> 300</span>
+                        <button onclick="buyItem('https://api.dicebear.com/7.x/bottts/svg?seed=NeonMecha', 'avatar', 300)" class="btn-premium px-5 py-2 bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-bold text-sm rounded-xl hover:shadow-[0_0_15px_rgba(234,179,8,0.4)] transition-all">Purchase</button>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <!-- 3. DAILY QUESTS MODAL -->
-    <div id="questModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeQuestModal()"></div>
-        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-purple-500/30 rounded-2xl p-6 md:p-8 m-4 shadow-2xl">
+    <div id="questModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+        <div class="absolute inset-0 bg-darkbg/80 backdrop-blur-md" onclick="closeQuestModal()"></div>
+        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25]/90 border border-primary/30 rounded-[2rem] p-8 m-4 shadow-[0_0_50px_rgba(139,92,246,0.15)] transform scale-95 transition-transform duration-300">
             
-            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+            <div class="flex justify-between items-start border-b border-white/10 pb-6 mb-6">
                 <div>
-                    <h2 class="font-orbitron font-bold text-2xl text-purple-400 flex items-center gap-2">
-                        <i class="fa-solid fa-scroll"></i> Daily Quests
+                    <h2 class="font-orbitron font-black text-3xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-indigo-400 flex items-center gap-3">
+                        <i class="fa-solid fa-scroll text-primary"></i> Daily Quests
                     </h2>
-                    <p class="text-xs text-gray-400">Complete tasks to earn extra EXP & G-Coins!</p>
+                    <p class="text-sm text-gray-400 mt-1">Complete tasks to earn extra EXP & G-Coins!</p>
                 </div>
-                <button onclick="closeQuestModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="closeQuestModal()" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-500/20 transition-all"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
-            <div class="space-y-3" id="questListContainer">
-                <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+            <div class="space-y-4" id="questListContainer">
+                <div class="glass-card p-5 rounded-2xl flex items-center justify-between border-white/5 hover:border-primary/30 group">
                     <div>
-                        <h4 class="font-bold text-sm text-white">Daily Shop Visit</h4>
-                        <p class="text-xs text-gray-400">+20 XP • +30 Coins</p>
+                        <h4 class="font-bold text-base text-white group-hover:text-primary transition-colors">Daily Shop Visit</h4>
+                        <div class="flex gap-2 mt-1">
+                            <span class="text-[10px] font-bold bg-primary/20 text-primary px-2 py-0.5 rounded">+20 XP</span>
+                            <span class="text-[10px] font-bold bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded">+30 Coins</span>
+                        </div>
                     </div>
-                    <button id="questBtn_shop" onclick="claimQuestReward('shop', 20, 30)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
+                    <button id="questBtn_shop" onclick="claimQuestReward('shop', 20, 30)" class="btn-premium px-5 py-2 bg-gradient-to-r from-primary to-indigo-600 text-white font-bold text-sm rounded-xl hover:shadow-[0_0_15px_rgba(139,92,246,0.4)] transition-all">Claim</button>
                 </div>
 
-                <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                <div class="glass-card p-5 rounded-2xl flex items-center justify-between border-white/5 hover:border-primary/30 group">
                     <div>
-                        <h4 class="font-bold text-sm text-white">Profile Stylist</h4>
-                        <p class="text-xs text-gray-400">+30 XP • +50 Coins</p>
+                        <h4 class="font-bold text-base text-white group-hover:text-primary transition-colors">Profile Stylist</h4>
+                        <div class="flex gap-2 mt-1">
+                            <span class="text-[10px] font-bold bg-primary/20 text-primary px-2 py-0.5 rounded">+30 XP</span>
+                            <span class="text-[10px] font-bold bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded">+50 Coins</span>
+                        </div>
                     </div>
-                    <button id="questBtn_profile" onclick="claimQuestReward('profile', 30, 50)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
+                    <button id="questBtn_profile" onclick="claimQuestReward('profile', 30, 50)" class="btn-premium px-5 py-2 bg-gradient-to-r from-primary to-indigo-600 text-white font-bold text-sm rounded-xl hover:shadow-[0_0_15px_rgba(139,92,246,0.4)] transition-all">Claim</button>
                 </div>
 
-                <div class="glass-card p-4 rounded-xl flex items-center justify-between border-white/10">
+                <div class="glass-card p-5 rounded-2xl flex items-center justify-between border-white/5 hover:border-primary/30 group">
                     <div>
-                        <h4 class="font-bold text-sm text-white">Play Arena Match</h4>
-                        <p class="text-xs text-gray-400">+50 XP • +100 Coins</p>
+                        <h4 class="font-bold text-base text-white group-hover:text-primary transition-colors">Play Arena Match</h4>
+                        <div class="flex gap-2 mt-1">
+                            <span class="text-[10px] font-bold bg-primary/20 text-primary px-2 py-0.5 rounded">+50 XP</span>
+                            <span class="text-[10px] font-bold bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded">+100 Coins</span>
+                        </div>
                     </div>
-                    <button id="questBtn_match" onclick="claimQuestReward('match', 50, 100)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all">Claim</button>
+                    <button id="questBtn_match" onclick="claimQuestReward('match', 50, 100)" class="btn-premium px-5 py-2 bg-gradient-to-r from-primary to-indigo-600 text-white font-bold text-sm rounded-xl hover:shadow-[0_0_15px_rgba(139,92,246,0.4)] transition-all">Claim</button>
                 </div>
             </div>
-
         </div>
     </div>
 
     <!-- 4. FRIENDS & REQUESTS MODAL -->
-    <div id="friendsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeFriendsModal()"></div>
-        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25] border border-cyan-500/30 rounded-2xl p-6 m-4 shadow-2xl max-h-[85vh] flex flex-col">
+    <div id="friendsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+        <div class="absolute inset-0 bg-darkbg/80 backdrop-blur-md" onclick="closeFriendsModal()"></div>
+        <div class="relative w-full max-w-lg glass-panel bg-[#0a0f25]/90 border border-cyan-500/30 rounded-[2rem] p-8 m-4 shadow-[0_0_50px_rgba(0,240,255,0.1)] max-h-[85vh] flex flex-col transform scale-95 transition-transform duration-300">
             
-            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-4">
-                <h2 class="font-orbitron font-bold text-xl text-gcyan flex items-center gap-2">
-                    <i class="fa-solid fa-user-group"></i> Friends Hub
+            <div class="flex justify-between items-center border-b border-white/10 pb-5 mb-5">
+                <h2 class="font-orbitron font-black text-2xl text-transparent bg-clip-text bg-gradient-to-r from-gcyan to-blue-500 flex items-center gap-3">
+                    <i class="fa-solid fa-user-group text-gcyan"></i> Friends Hub
                 </h2>
-                <button onclick="closeFriendsModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="closeFriendsModal()" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-500/20 transition-all"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <!-- SEARCH BAR -->
-            <div class="flex gap-2 mb-4">
-                <input type="text" id="searchUserInput" placeholder="Enter exact Username..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-gcyan">
-                <button onclick="searchUser()" class="px-4 py-2 bg-gcyan text-black font-bold text-xs rounded-xl hover:bg-cyan-400 transition-all">Search</button>
+            <div class="flex gap-3 mb-6 bg-black/40 p-2 rounded-2xl border border-white/5">
+                <div class="relative flex-1">
+                    <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                    <input type="text" id="searchUserInput" placeholder="Enter exact Username..." class="w-full bg-transparent border-none px-10 py-2 text-sm text-white focus:outline-none placeholder-gray-600">
+                </div>
+                <button onclick="searchUser()" class="btn-premium px-5 py-2 bg-gcyan text-black font-bold text-sm rounded-xl hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all">Find</button>
             </div>
 
             <!-- SEARCH RESULT DISPLAY -->
-            <div id="searchResultArea" class="mb-4 hidden"></div>
+            <div id="searchResultArea" class="mb-6 hidden"></div>
 
-            <!-- TABS: MY FRIENDS & REQUESTS -->
-            <div class="flex-1 overflow-y-auto space-y-4">
-                <div>
-                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Pending Requests</h4>
-                    <div id="requestsListContainer" class="space-y-2 text-xs text-gray-400">No pending requests</div>
+            <!-- TABS -->
+            <div class="flex-1 overflow-y-auto space-y-6 pr-2">
+                <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <h4 class="text-[10px] font-bold text-gcyan uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-bell"></i> Pending Requests</h4>
+                    <div id="requestsListContainer" class="space-y-3 text-sm text-gray-400">No pending requests</div>
                 </div>
 
-                <div>
-                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">My Friends</h4>
-                    <div id="friendsListContainer" class="space-y-2 text-xs text-gray-400">No friends added yet</div>
+                <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <h4 class="text-[10px] font-bold text-primary uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-users"></i> My Squad</h4>
+                    <div id="friendsListContainer" class="space-y-3 text-sm text-gray-400">No friends added yet</div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 5. REALTIME DM CHAT MODAL -->
-    <div id="chatModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeChatModal()"></div>
-        <div class="relative w-full max-w-md glass-panel bg-[#0a0f25] border border-primary/30 rounded-2xl p-4 m-4 shadow-2xl h-[550px] flex flex-col">
+    <div id="chatModal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+        <div class="absolute inset-0 bg-darkbg/80 backdrop-blur-md" onclick="closeChatModal()"></div>
+        <div class="relative w-full max-w-md glass-panel bg-[#0a0f25]/95 border border-primary/40 rounded-[2rem] p-5 m-4 shadow-[0_0_40px_rgba(139,92,246,0.2)] h-[600px] flex flex-col transform scale-95 transition-transform duration-300">
             
             <!-- CHAT HEADER -->
-            <div class="flex justify-between items-center border-b border-white/10 pb-3">
-                <div class="flex items-center gap-3">
-                    <img id="chatFriendAvatar" src="" class="w-10 h-10 rounded-full border border-primary object-cover">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 px-2">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <img id="chatFriendAvatar" src="" class="w-12 h-12 rounded-full border-2 border-primary object-cover shadow-[0_0_10px_rgba(139,92,246,0.3)]">
+                        <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-[#0a0f25]"></div>
+                    </div>
                     <div>
-                        <h3 id="chatFriendName" class="font-orbitron font-bold text-sm text-white">Friend</h3>
-                        <p class="text-[10px] text-gcyan">Online Chat</p>
+                        <h3 id="chatFriendName" class="font-orbitron font-bold text-base text-white tracking-wide">Friend</h3>
+                        <p class="text-[10px] text-gcyan uppercase tracking-wider font-bold">Online</p>
                     </div>
                 </div>
-                <button onclick="closeChatModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeChatModal()" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-500/20 transition-all"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <!-- CHAT MESSAGES BOX -->
-            <div id="chatMessagesBox" class="flex-1 overflow-y-auto my-3 space-y-2 p-2 bg-black/20 rounded-xl text-xs">
+            <div id="chatMessagesBox" class="flex-1 overflow-y-auto my-4 space-y-3 p-4 bg-black/40 rounded-2xl text-sm border border-white/5 scroll-smooth custom-scroll">
                 <!-- Messages dynamically load here -->
             </div>
 
             <!-- INPUT BOX -->
-            <form id="chatForm" class="flex gap-2 border-t border-white/10 pt-3">
-                <input type="text" id="chatMessageInput" placeholder="Type a message..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-primary" required>
-                <button type="submit" class="px-4 py-2 bg-primary text-white font-bold text-xs rounded-xl hover:bg-primary/80 transition-all"><i class="fa-solid fa-paper-plane"></i></button>
+            <form id="chatForm" class="flex gap-3 bg-black/40 p-2 rounded-2xl border border-white/5">
+                <input type="text" id="chatMessageInput" placeholder="Type a message..." class="flex-1 bg-transparent border-none px-4 py-2 text-sm text-white focus:outline-none placeholder-gray-500" required>
+                <button type="submit" class="btn-premium w-10 h-10 flex items-center justify-center bg-primary text-white rounded-xl hover:shadow-[0_0_15px_rgba(139,92,246,0.4)] transition-all">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- FIREBASE & CORE LOGIC SCRIPT -->
+    <!-- FIREBASE & CORE LOGIC SCRIPT (Untouched exactly as provided) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -448,7 +548,7 @@
             streak: document.getElementById('uiStreak')
         };
 
-        // IMAGE COMPRESSION UTILITY (Zero Storage Expense)
+        // IMAGE COMPRESSION UTILITY
         function compressAndConvertFile(file, maxWidth, maxHeight) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -528,7 +628,8 @@
             }
 
             updateProfileUI(currentDbUser);
-            uiElements.loader.style.display = 'none';
+            uiElements.loader.style.opacity = '0';
+            setTimeout(() => { uiElements.loader.style.display = 'none'; }, 500);
             uiElements.content.classList.remove('hidden');
         }
 
@@ -552,14 +653,21 @@
 
         // 1. EDIT PROFILE LOGIC
         const editModal = document.getElementById('editModal');
+        const editContent = document.getElementById('editModalContent');
         window.openEditModal = () => {
             document.getElementById('editUsername').value = currentDbUser.username || '';
             document.getElementById('editBio').value = currentDbUser.bio || '';
             editModal.classList.remove('hidden');
-            setTimeout(() => editModal.classList.remove('opacity-0'), 10);
+            setTimeout(() => {
+                editModal.classList.remove('opacity-0');
+                editContent.classList.remove('scale-95');
+                editContent.classList.add('scale-100');
+            }, 10);
         };
         window.closeEditModal = () => {
             editModal.classList.add('opacity-0');
+            editContent.classList.remove('scale-100');
+            editContent.classList.add('scale-95');
             setTimeout(() => editModal.classList.add('hidden'), 300);
         };
 
@@ -600,10 +708,14 @@
         const storeModal = document.getElementById('storeModal');
         window.openStoreModal = () => {
             storeModal.classList.remove('hidden');
-            setTimeout(() => storeModal.classList.remove('opacity-0'), 10);
+            setTimeout(() => {
+                storeModal.classList.remove('opacity-0');
+                storeModal.children[1].classList.remove('scale-95');
+            }, 10);
         };
         window.closeStoreModal = () => {
             storeModal.classList.add('opacity-0');
+            storeModal.children[1].classList.add('scale-95');
             setTimeout(() => storeModal.classList.add('hidden'), 300);
         };
 
@@ -639,12 +751,16 @@
         const questModal = document.getElementById('questModal');
         window.openQuestModal = () => {
             questModal.classList.remove('hidden');
-            setTimeout(() => questModal.classList.remove('opacity-0'), 10);
+            setTimeout(() => {
+                questModal.classList.remove('opacity-0');
+                questModal.children[1].classList.remove('scale-95');
+            }, 10);
             renderQuestStatus();
         };
 
         window.closeQuestModal = () => {
             questModal.classList.add('opacity-0');
+            questModal.children[1].classList.add('scale-95');
             setTimeout(() => questModal.classList.add('hidden'), 300);
         };
 
@@ -653,9 +769,9 @@
             ['shop', 'profile', 'match'].forEach(questId => {
                 const btn = document.getElementById(`questBtn_${questId}`);
                 if (btn && claimedList.includes(questId)) {
-                    btn.innerText = "Claimed ✔";
+                    btn.innerHTML = 'Claimed <i class="fa-solid fa-check ml-1"></i>';
                     btn.disabled = true;
-                    btn.className = "px-4 py-1.5 bg-gray-700 text-gray-400 font-bold text-xs rounded-lg cursor-not-allowed";
+                    btn.className = "px-5 py-2 bg-white/5 text-gray-500 font-bold text-sm rounded-xl cursor-not-allowed border border-white/5";
                 }
             });
         }
@@ -701,12 +817,16 @@
 
         window.openFriendsModal = () => {
             friendsModal.classList.remove('hidden');
-            setTimeout(() => friendsModal.classList.remove('opacity-0'), 10);
+            setTimeout(() => {
+                friendsModal.classList.remove('opacity-0');
+                friendsModal.children[1].classList.remove('scale-95');
+            }, 10);
             renderFriendsAndRequests();
         };
 
         window.closeFriendsModal = () => {
             friendsModal.classList.add('opacity-0');
+            friendsModal.children[1].classList.add('scale-95');
             setTimeout(() => friendsModal.classList.add('hidden'), 300);
         };
 
@@ -716,14 +836,14 @@
             if (!usernameQuery) return;
 
             resultArea.classList.remove('hidden');
-            resultArea.innerHTML = `<p class="text-xs text-gray-400">Searching...</p>`;
+            resultArea.innerHTML = `<div class="flex items-center justify-center p-4"><div class="loader !w-6 !h-6 !border-2"></div></div>`;
 
             const usersRef = collection(db, "users");
             const q = query(usersRef, where("username", "==", usernameQuery));
             const querySnapshot = await getDocs(q);
 
             if (querySnapshot.empty) {
-                resultArea.innerHTML = `<p class="text-xs text-red-400">User not found!</p>`;
+                resultArea.innerHTML = `<p class="text-sm text-red-400 bg-red-500/10 p-3 rounded-xl border border-red-500/20 text-center">User not found! Check spelling.</p>`;
                 return;
             }
 
@@ -732,20 +852,20 @@
                 const targetUid = userDoc.id;
 
                 if (targetUid === currentUserUid) {
-                    resultArea.innerHTML = `<p class="text-xs text-yellow-400">That's your username!</p>`;
+                    resultArea.innerHTML = `<p class="text-sm text-yellow-400 bg-yellow-500/10 p-3 rounded-xl border border-yellow-500/20 text-center">That's your own username!</p>`;
                     return;
                 }
 
                 resultArea.innerHTML = `
-                    <div class="glass-card p-3 rounded-xl flex items-center justify-between border-gcyan/30">
-                        <div class="flex items-center gap-2">
-                            <img src="${uData.avatar}" class="w-8 h-8 rounded-full">
+                    <div class="glass-card p-4 rounded-xl flex items-center justify-between border-gcyan/30 bg-gcyan/5">
+                        <div class="flex items-center gap-3">
+                            <img src="${uData.avatar}" class="w-10 h-10 rounded-full border border-gcyan/50">
                             <div>
-                                <p class="font-bold text-xs text-white">${uData.username}</p>
-                                <p class="text-[10px] text-gray-400">Lvl ${uData.level || 1}</p>
+                                <p class="font-bold text-sm text-white">${uData.username}</p>
+                                <p class="text-[10px] text-gcyan font-bold">Lvl ${uData.level || 1}</p>
                             </div>
                         </div>
-                        <button onclick="sendFriendRequest('${targetUid}')" class="px-3 py-1 bg-gcyan text-black font-bold text-xs rounded-lg">Add Friend</button>
+                        <button onclick="sendFriendRequest('${targetUid}')" class="btn-premium px-4 py-1.5 bg-gcyan text-black font-bold text-xs rounded-lg hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]">Add Friend</button>
                     </div>
                 `;
             });
@@ -775,30 +895,30 @@
 
             const requests = currentDbUser.incomingRequests || [];
             if (requests.length === 0) {
-                reqBox.innerHTML = `<p class="text-gray-500">No pending requests</p>`;
+                reqBox.innerHTML = `<p class="text-gray-500 p-2 text-center text-xs">No pending requests</p>`;
             } else {
                 reqBox.innerHTML = requests.map(r => `
-                    <div class="glass-card p-2 rounded-xl flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <img src="${r.avatar}" class="w-7 h-7 rounded-full">
-                            <span class="font-semibold text-white">${r.username}</span>
+                    <div class="glass-card p-3 rounded-xl flex items-center justify-between border-white/5 bg-black/20">
+                        <div class="flex items-center gap-3">
+                            <img src="${r.avatar}" class="w-8 h-8 rounded-full border border-white/10">
+                            <span class="font-bold text-white text-sm">${r.username}</span>
                         </div>
-                        <button onclick="acceptFriendRequest('${r.uid}', '${r.username}', '${r.avatar}')" class="px-3 py-1 bg-green-500 text-black font-bold text-[10px] rounded-lg">Accept</button>
+                        <button onclick="acceptFriendRequest('${r.uid}', '${r.username}', '${r.avatar}')" class="px-4 py-1.5 bg-green-500/20 hover:bg-green-500 text-green-400 hover:text-black border border-green-500/30 font-bold text-xs rounded-lg transition-all">Accept</button>
                     </div>
                 `).join('');
             }
 
             const friends = currentDbUser.friendsList || [];
             if (friends.length === 0) {
-                friendsBox.innerHTML = `<p class="text-gray-500">No friends added yet</p>`;
+                friendsBox.innerHTML = `<p class="text-gray-500 p-2 text-center text-xs">Search and add friends to play together!</p>`;
             } else {
                 friendsBox.innerHTML = friends.map(f => `
-                    <div class="glass-card p-2 rounded-xl flex items-center justify-between border-white/10">
-                        <div class="flex items-center gap-2">
-                            <img src="${f.avatar}" class="w-8 h-8 rounded-full">
-                            <span class="font-semibold text-white">${f.username}</span>
+                    <div class="glass-card p-3 rounded-xl flex items-center justify-between border-white/5 bg-black/20 hover:bg-white/5 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <img src="${f.avatar}" class="w-9 h-9 rounded-full border border-primary/50">
+                            <span class="font-bold text-white text-sm">${f.username}</span>
                         </div>
-                        <button onclick="openChatModal('${f.uid}', '${f.username}', '${f.avatar}')" class="px-3 py-1 bg-primary text-white font-bold text-[10px] rounded-lg flex items-center gap-1">
+                        <button onclick="openChatModal('${f.uid}', '${f.username}', '${f.avatar}')" class="btn-premium px-4 py-1.5 bg-primary text-white font-bold text-xs rounded-lg flex items-center gap-2 hover:shadow-[0_0_10px_rgba(139,92,246,0.5)]">
                             <i class="fa-solid fa-comment"></i> Chat
                         </button>
                     </div>
@@ -826,7 +946,7 @@
                 currentDbUser.incomingRequests = updatedRequests;
                 currentDbUser.friendsList = updatedFriends;
                 renderFriendsAndRequests();
-                alert("🤝 Friend Added!");
+                alert("🤝 Friend Added Successfully!");
             } catch (e) {
                 console.error(e);
             }
@@ -839,7 +959,10 @@
             document.getElementById('chatFriendAvatar').src = fAvatar;
 
             chatModal.classList.remove('hidden');
-            setTimeout(() => chatModal.classList.remove('opacity-0'), 10);
+            setTimeout(() => {
+                chatModal.classList.remove('opacity-0');
+                chatModal.children[1].classList.remove('scale-95');
+            }, 10);
 
             const chatId = [currentUserUid, fUid].sort().join('_');
             const chatRef = doc(db, "chats", chatId);
@@ -849,15 +972,15 @@
                 if (docSnap.exists()) {
                     const msgs = docSnap.data().messages || [];
                     box.innerHTML = msgs.map(m => `
-                        <div class="flex flex-col ${m.sender === currentUserUid ? 'items-end' : 'items-start'} my-1">
-                            <div class="px-3 py-1.5 rounded-xl max-w-[80%] ${m.sender === currentUserUid ? 'bg-primary text-white' : 'bg-white/10 text-gray-200'}">
+                        <div class="flex flex-col ${m.sender === currentUserUid ? 'items-end' : 'items-start'} my-2">
+                            <div class="px-4 py-2.5 rounded-2xl max-w-[75%] text-sm shadow-md ${m.sender === currentUserUid ? 'bg-gradient-to-r from-primary to-indigo-600 text-white rounded-tr-sm' : 'bg-white/10 text-gray-100 rounded-tl-sm backdrop-blur-md'}">
                                 ${m.text}
                             </div>
                         </div>
                     `).join('');
                     box.scrollTop = box.scrollHeight;
                 } else {
-                    box.innerHTML = `<p class="text-center text-gray-500 my-4">No messages yet. Say Hi 👋</p>`;
+                    box.innerHTML = `<div class="flex flex-col items-center justify-center h-full text-center text-gray-500 opacity-70"><i class="fa-solid fa-hand-wave text-3xl mb-2"></i><p>No messages yet.<br>Start the conversation!</p></div>`;
                 }
             });
         };
@@ -865,6 +988,7 @@
         window.closeChatModal = () => {
             if (chatUnsubscribe) chatUnsubscribe();
             chatModal.classList.add('opacity-0');
+            chatModal.children[1].classList.add('scale-95');
             setTimeout(() => chatModal.classList.add('hidden'), 300);
         };
 
